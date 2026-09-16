@@ -9,9 +9,9 @@ export function motionPresets() {
   return {
     textDuration: number("--motion-text-ms", 900),
     stagger: number("--motion-stagger-ms", 20),
-    heroDelay: number("--motion-hero-delay-ms", 520),
-    introDuration: number("--motion-intro-ms", 340),
-    introExit: number("--motion-intro-exit-ms", 360),
+    introDuration: number("--motion-intro-ms", 2000),
+    introExit: number("--motion-intro-exit-ms", 500),
+    introQuick: number("--motion-intro-quick-ms", 220),
     introEnter: number("--motion-intro-enter-ms", 380),
     revealDuration: number("--motion-reveal-ms", 1200),
     blurReveal: number("--motion-blur-reveal-px", 2.5),
@@ -34,4 +34,23 @@ export function motionPresets() {
       styles.getPropertyValue("--ease-out").trim() ||
       "cubic-bezier(.2,.8,.2,1)",
   };
+}
+
+/** True once this session has already played the full opening. */
+export const quickCurtain = () =>
+  document.documentElement.classList.contains("intro-quick");
+
+/**
+ * How long the curtain holds before it starts lifting. Everything that has to
+ * arrive with the page reads this rather than carrying its own copy, so a
+ * change to the opening cannot leave an entrance stranded behind the curtain.
+ */
+export function curtainHold() {
+  const presets = motionPresets();
+  return quickCurtain() ? presets.introQuick : presets.introDuration;
+}
+
+/** The moment the reveal underneath the curtain should begin, in seconds. */
+export function entranceDelay() {
+  return (curtainHold() + motionPresets().introExit * 0.5) / 1000;
 }

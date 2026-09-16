@@ -1,6 +1,6 @@
 import { query, type BehaviorContext, type Cleanup } from "../../utilities/dom";
 import { gsap, setupEngine } from "../engine";
-import { motionPresets } from "../presets";
+import { entranceDelay } from "../presets";
 
 /**
  * The page assembles as the curtain lifts rather than being whole behind it.
@@ -10,8 +10,7 @@ import { motionPresets } from "../presets";
 export function initEntrance({ reducedMotion }: BehaviorContext): Cleanup {
   setupEngine();
   if (reducedMotion) return () => {};
-  const presets = motionPresets();
-  const start = (presets.introDuration + presets.introExit * 0.5) / 1000;
+  const start = entranceDelay();
   const context = gsap.context(() => {
     const timeline = gsap.timeline({ delay: start });
     if (query(".site-header"))

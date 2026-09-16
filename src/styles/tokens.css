@@ -83,7 +83,6 @@
   /* Numeric millisecond tokens are consumed by the motion modules. */
   --motion-text-ms: 900;
   --motion-stagger-ms: 20;
-  --motion-hero-delay-ms: 2250;
   /*
    * The opening curtain. --motion-intro-ms is how long it holds before it
    * starts lifting; the hero entrance is timed to begin as it lifts, not
@@ -92,6 +91,9 @@
    */
   --motion-intro-ms: 2000;
   --motion-intro-exit-ms: 500;
+  /* How long the curtain holds on an in-session navigation, where there is
+     no count to wait for -- just long enough for the new page to paint. */
+  --motion-intro-quick-ms: 220;
   --motion-intro-enter-ms: 380;
   --motion-reveal-ms: 1200;
   /*

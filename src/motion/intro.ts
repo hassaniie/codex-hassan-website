@@ -1,5 +1,5 @@
 import { query, type BehaviorContext, type Cleanup } from "../utilities/dom";
-import { motionPresets } from "./presets";
+import { curtainHold, motionPresets, quickCurtain } from "./presets";
 import { getSmoothScroll, lockScroll } from "./smooth-scroll";
 
 export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
@@ -8,7 +8,8 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
   if (!intro || !count) return () => {};
   let frame = 0;
   let release: ReturnType<typeof setTimeout> | undefined;
-  const { introDuration, introExit } = motionPresets();
+  let lifter: ReturnType<typeof setTimeout> | undefined;
+  const { introExit } = motionPresets();
   // The counter is an opening sequence, not a network progress indicator.
   function play() {
     if (reducedMotion || !intro || !count) return;
@@ -20,16 +21,26 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
     lockScroll(true);
     // A dropped animationend must never strand the page in a locked state.
     clearTimeout(release);
+    clearTimeout(lifter);
+    const hold = curtainHold();
     release = setTimeout(
       () => {
         document.documentElement.classList.remove("intro-armed");
         lockScroll(false);
       },
-      introDuration + introExit + 600,
+      hold + introExit + 600,
     );
+    // An in-session arrival has nothing to count: hold only long enough for
+    // the new page to paint behind the curtain, then lift.
+    if (quickCurtain()) {
+      lifter = setTimeout(() => intro!.classList.add("lift"), hold);
+      return;
+    }
     const start = performance.now();
     function tick(time: number) {
-      const progress = Math.min((time - start) / introDuration, 1);
+      // Clamped at both ends: a rAF timestamp can predate the start we
+      // captured, which rendered a negative count on the very first frame.
+      const progress = Math.min(Math.max((time - start) / hold, 0), 1);
       // A gentle ease keeps the count moving for the whole duration: a
       // steeper one reaches 100 early and then sits there, which reads as a
       // stall rather than as loading.
@@ -48,6 +59,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
         intro.classList.remove("playing", "lift");
         document.documentElement.classList.remove("intro-armed");
         clearTimeout(release);
+        clearTimeout(lifter);
         lockScroll(false);
       }
     },
@@ -59,6 +71,8 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
       const scroller = getSmoothScroll();
       if (scroller) scroller.scrollTo(0, { immediate: true });
       else window.scrollTo({ top: 0, behavior: "instant" });
+      // Replay is a deliberate request for the full opening.
+      document.documentElement.classList.remove("intro-quick");
       document.documentElement.classList.add("intro-armed");
       play();
     },
@@ -68,6 +82,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
   return () => {
     cancelAnimationFrame(frame);
     clearTimeout(release);
+    clearTimeout(lifter);
     intro.classList.remove("playing", "lift");
     document.documentElement.classList.remove("intro-armed");
     lockScroll(false);

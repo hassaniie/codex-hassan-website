@@ -61,6 +61,15 @@ const {
         } catch (error) {
           return;
         }
+        // The count belongs to arriving at the site. Once this session has
+        // entered, later documents get the curtain without the loader.
+        try {
+          if (sessionStorage.getItem("hm-entered") === "1")
+            root.classList.add("intro-quick");
+          sessionStorage.setItem("hm-entered", "1");
+        } catch (error) {
+          /* private mode: fall back to the full opening */
+        }
         root.classList.add("intro-armed");
         setTimeout(function () {
           root.classList.remove("intro-armed");

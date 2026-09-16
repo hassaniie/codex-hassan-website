@@ -1,6 +1,6 @@
 import { queryAll, type BehaviorContext, type Cleanup } from "../utilities/dom";
 import { gsap, ScrollTrigger, setupEngine } from "./engine";
-import { motionPresets } from "./presets";
+import { entranceDelay, motionPresets } from "./presets";
 
 /** Split a heading into per-character spans, preserving its accessible text. */
 function split(element: HTMLElement) {
@@ -87,7 +87,7 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
           ...to,
           ease: "power3.out",
           duration: presets.textDuration / 1000,
-          delay: presets.heroDelay / 1000,
+          delay: entranceDelay(),
           stagger: presets.stagger / 1000,
         }),
       );
@@ -98,7 +98,7 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
             filter: "blur(0px)",
             ease: "power3.out",
             duration: presets.textDuration / 1000,
-            delay: presets.heroDelay / 1000,
+            delay: entranceDelay(),
             stagger: presets.stagger / 1000,
           }),
         );

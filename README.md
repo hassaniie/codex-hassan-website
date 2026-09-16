@@ -41,7 +41,9 @@ The opening curtain and the wipe between routes:
 - `--motion-intro-ms` — how long the curtain holds before it starts lifting
 - `--motion-intro-exit-ms` — the wipe that reveals the page
 - `--motion-intro-enter-ms` — the wipe that covers the page when leaving for another route
-- `--motion-hero-delay-ms` — when the headline reveal begins; keep it near `--motion-intro-ms` so the reveal is seen rather than played behind the curtain
+- `--motion-intro-quick-ms` — how long the curtain holds when moving between pages in the same session, where there is no count to wait for
+
+The headline and hero entrance are derived from these, so they always arrive as the curtain lifts.
 
 The cursor dot has its own values:
 

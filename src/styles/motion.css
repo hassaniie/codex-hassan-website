@@ -44,6 +44,12 @@
   width: 150px;
   height: 60px;
 }
+/* The count is only ever shown while it is actually counting: not on the
+   curtain that covers a departing page, and not on an in-session arrival. */
+.intro.covering .intro-count,
+.intro-quick .intro-count {
+  display: none;
+}
 .intro-count {
   font: 12px var(--mono);
   position: absolute;
