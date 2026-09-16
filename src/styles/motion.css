@@ -69,7 +69,15 @@
 .motion-ready .reveal {
   will-change: transform, opacity, filter;
 }
+/*
+ * The from-state is required. Without it the implicit start is the element's
+ * clip-path: none, which cannot interpolate to an inset, so the curtain
+ * jumped straight to hidden instead of rising.
+ */
 @keyframes intro-exit {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
   to {
     clip-path: inset(0 0 100% 0);
   }
