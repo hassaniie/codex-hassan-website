@@ -1,0 +1,37 @@
+---
+import Barcode from "../ui/Barcode.astro";
+
+import { process } from "../../content/process";
+import "./Process.css";
+---
+
+<section class="process section-pad" id="process">
+  <div class="section-intro reveal">
+    <h2>
+      How I work <sup>({String(process.length).padStart(2, "0")})</sup>
+    </h2>
+    <Barcode accent label="H. MUSHTAQ" variant={3} />
+  </div>
+  {/* The rail is read sideways. Nothing inside it is focusable, so tabbing
+      can never pull the page to a panel that is still off screen. */}
+  <div class="process-viewport">
+    <ol class="process-track">
+      {process.map((step) => (
+        <li class="process-step">
+          <span class="mono process-number">{step.number}</span>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+          <span class="mono process-meta">{step.meta}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+  <div class="process-progress" aria-hidden="true">
+    <div class="process-rule">
+      <span></span>
+    </div>
+    <span class="mono process-count">
+      (01 / {String(process.length).padStart(2, "0")})
+    </span>
+  </div>
+</section>

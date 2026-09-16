@@ -2,22 +2,6 @@
   padding-top: 130px;
   padding-bottom: 80px;
 }
-.section-intro {
-  text-align: center;
-  color: var(--color-accent);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 28px;
-}
-.section-intro h2 {
-  font-size: 34px;
-}
-.section-intro sup {
-  font: 12px var(--mono);
-  margin-left: 12px;
-  vertical-align: top;
-}
 .about-statement {
   margin: 130px auto 50px;
   max-width: var(--content-statement);

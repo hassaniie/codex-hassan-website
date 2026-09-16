@@ -74,6 +74,25 @@
 .barcode.accent {
   color: var(--accent);
 }
+/* The quieter section heading: a centred title with its count, over a mark.
+   Shared by more than one section, so it lives here rather than in the
+   stylesheet of whichever section happened to need it first. */
+.section-intro {
+  text-align: center;
+  color: var(--color-accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+.section-intro h2 {
+  font-size: 34px;
+}
+.section-intro sup {
+  font: 12px var(--mono);
+  margin-left: 12px;
+  vertical-align: top;
+}
 .display-heading {
   display: flex;
   align-items: center;

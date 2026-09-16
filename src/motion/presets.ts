@@ -15,6 +15,10 @@ export function motionPresets() {
     introLiftIn: number("--motion-intro-lift-in-ms", 320),
     introExit: number("--motion-intro-exit-ms", 500),
     revealDuration: number("--motion-reveal-ms", 1200),
+    // Process.css owns the mode, so the rail cannot be pinned by one and
+    // handed to the finger by the other.
+    processPin: number("--motion-process-pin", 0) === 1,
+    processScrub: number("--motion-process-scrub", 1),
     appearDuration: number("--motion-appear-ms", 500),
     appearStep: number("--motion-appear-step-ms", 100),
     appearRise: number("--motion-appear-rise", 32),

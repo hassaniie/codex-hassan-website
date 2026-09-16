@@ -1,0 +1,144 @@
+/*
+ * Which mode the rail runs in is decided here, once, and read back by
+ * src/motion/scenes/process.ts. The stylesheet and the scene can then never
+ * disagree about whether the section is pinned, which is the failure that
+ * would leave a viewport clipped with nothing to scroll it.
+ */
+:root {
+  --motion-process-pin: 0;
+}
+@media (hover: hover) and (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  :root {
+    --motion-process-pin: 1;
+  }
+}
+.process {
+  --process-panel: clamp(300px, 32vw, 520px);
+  --process-gap: var(--space-6);
+  padding-top: 150px;
+  padding-bottom: 140px;
+}
+/*
+ * The baseline is a rail you can scroll: that is what touch, reduced motion
+ * and a desktop browser with JavaScript switched off all get, and it needs no
+ * script at all. Clipping the rail is the enhancement, and only the scene
+ * that can actually move it is allowed to ask for it.
+ */
+.process-viewport {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  margin-top: 70px;
+  /* Let the panels run to the screen edge rather than stopping at the
+     gutter, so the rail reads as continuing past the fold. */
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+}
+.process-viewport::-webkit-scrollbar {
+  display: none;
+}
+.process-step {
+  scroll-snap-align: start;
+}
+.process-track {
+  display: flex;
+  gap: var(--process-gap);
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* Given a floor, the panels read as a band of work rather than as a thin
+   line of text adrift in a full-height section. The meta line is pushed to
+   the foot so every panel closes on the same edge whatever its copy runs to. */
+.process-step {
+  flex: 0 0 var(--process-panel);
+  min-height: clamp(215px, 27vh, 290px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  padding-top: 26px;
+}
+.process-number {
+  color: var(--color-accent);
+  font-size: var(--text-meta);
+}
+.process-step h3 {
+  font-size: 34px;
+  color: var(--color-heading-accent);
+}
+.process-step p {
+  font-size: var(--text-body-small);
+  line-height: 1.55;
+  margin: 0;
+}
+.process-meta {
+  margin-top: auto;
+  font-size: var(--text-small);
+  color: var(--color-muted);
+}
+/* The scrubber. A pin with no feedback reads as a page that has frozen, so
+   the rule and the count say how far through the rail the reader is. */
+.process-progress {
+  display: none;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: 50px;
+}
+.process-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.process-rule span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.process-count {
+  font-size: var(--text-meta);
+  color: var(--color-accent);
+}
+/*
+ * Set by the scene once it has the rail. Pinned, the section owns exactly one
+ * screen and centres itself in it, so the rail cannot outgrow the viewport it
+ * is held in however tall the panels get. Scroll then drives the track and
+ * the viewport stops being a scroller of its own.
+ */
+.process.is-pinned {
+  height: 100svh;
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
+}
+.process.is-pinned .process-viewport {
+  /* clip rather than hidden: it crops the rail without turning the element
+     back into a scroll container. */
+  overflow-x: clip;
+  scroll-snap-type: none;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+.process.is-pinned .process-progress {
+  display: flex;
+}
+@media (max-width: 600px) {
+  .process {
+    --process-panel: min(78vw, 320px);
+    padding-top: 110px;
+    padding-bottom: 70px;
+  }
+  .process-viewport {
+    margin-top: 45px;
+  }
+  .process-step h3 {
+    font-size: 28px;
+  }
+}

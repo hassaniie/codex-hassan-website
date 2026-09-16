@@ -2,6 +2,7 @@ import type { BehaviorContext, Cleanup } from "../../utilities/dom";
 import { initHeroScene } from "./hero";
 import { initTokenScene } from "./token";
 import { initWorkScene } from "./work";
+import { initProcessScene } from "./process";
 import { initSectionScenes } from "./sections";
 import { initVelocityScene } from "./velocity";
 
@@ -11,6 +12,7 @@ export function initScenes(context: BehaviorContext): Cleanup {
     initHeroScene(context),
     initTokenScene(context),
     initWorkScene(context),
+    initProcessScene(context),
     initSectionScenes(context),
     initVelocityScene(context),
   ];

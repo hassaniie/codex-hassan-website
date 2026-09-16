@@ -51,6 +51,11 @@ another, and the name wipes across the barcode while the first of them counts:
 than chosen. There is no token for a closing wipe because there is no closing
 animation: leaving a route puts the curtain up in a single frame.
 
+The process rail is the page's one horizontal moment:
+
+- `--motion-process-pin` — `1` where the rail is pinned and scroll drives it sideways, `0` where it is handed back to the finger as a native swipe rail. Process.css sets it per media query and the scene reads it back, so the stylesheet and the script can never disagree about the mode.
+- `--motion-process-scrub` — how far the rail trails the scroll
+
 The entrance uses one duration and one curve for every element, with the
 choreography carried by a delay ladder:
 
