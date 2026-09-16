@@ -64,20 +64,11 @@ export function initTokenScene({ reducedMotion }: BehaviorContext): Cleanup {
         },
         0.3,
       );
-    gsap.fromTo(
-      ".interlude-atmosphere",
-      { yPercent: -7 },
-      {
-        yPercent: 7,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".identity-interlude",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.2,
-        },
-      },
-    );
+    // The backdrop itself is deliberately not parallaxed. Its gradient runs
+    // white-to-white with no margin (white at 0%, white again at 98%), and the
+    // section is bordered by white above and below, so shifting it by any
+    // amount crops a coloured band against a white neighbour at one edge or
+    // the other. The monogram's sweep carries this section instead.
   });
   return () => context.revert();
 }
