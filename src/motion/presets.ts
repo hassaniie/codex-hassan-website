@@ -25,6 +25,9 @@ export function motionPresets() {
     anchorDuration: number("--scroll-anchor-ms", 1500),
     headerOffset: number("--scroll-anchor-offset", 90),
     velocitySkew: number("--scroll-velocity-skew", 4),
+    cursorLerp: number("--cursor-lerp", 0.16),
+    cursorMagnetRadius: number("--cursor-magnet-radius", 70),
+    cursorMagnetPull: number("--cursor-magnet-pull", 14),
     ease:
       styles.getPropertyValue("--ease-out").trim() ||
       "cubic-bezier(.2,.8,.2,1)",

@@ -36,6 +36,12 @@ Entry blur is tuned separately, and deliberately stays near the viewport edge:
 - `--motion-blur-band` — how far into the screen, in viewport percent, blur may persist before it must be fully resolved
 - `--motion-blur-exit-px` — the softening on the hero as it leaves
 
+The cursor dot has its own values:
+
+- `--cursor-lerp` — follow weight; lower trails further behind the pointer
+- `--cursor-magnet-radius` — how near a control has to be before it attracts the dot
+- `--cursor-magnet-pull` — the furthest the dot is ever pulled off the pointer, in px
+
 Reduced-motion visitors bypass all of it and get native scrolling.
 
 `npm run preview` serves the built site. `npm run format` formats the source. The lockfile records the installed dependency versions.

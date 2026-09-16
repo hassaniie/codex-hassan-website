@@ -14,7 +14,8 @@ The authored homepage is now an Astro page composed of reusable components. Astr
 | `src/components/navigation/`   | Header, mobile dialog, footer                                        |
 | `src/content/`                 | Typed profile, project, experience, and principle data               |
 | `src/styles/`                  | Tokens, fonts, base rules, shared primitives, motion defaults        |
-| `src/motion/`                  | Intro, reveals, cursor, scroll scene, shared motion settings         |
+| `src/motion/`                  | Intro, reveals, cursor, damped scrolling, shared motion settings     |
+| `src/motion/scenes/`           | Scroll-linked choreography per section, composed by one orchestrator |
 | `src/scripts/`                 | Site/homepage lifecycles, navigation, clock, clipboard               |
 | `public/assets/`               | Original local images, fonts, licenses, and resume                   |
 | `tests/`                       | Built-output integrity checks                                        |
@@ -30,6 +31,6 @@ Lenis drives the real scroll position rather than transforming a wrapper, so `po
 
 ## Deliberate scope boundaries
 
-Only the homepage route exists. The project links still open Behance. Dedicated case studies, additional pages, advanced 3D, CMS editing, final SEO/social cards, and publishing belong to later milestones. The intro is a decorative timed sequence and holds the scroller until its curtain clears. The HM scene remains a transformed image, now swept in three dimensions across a taller stage rather than rendered in WebGL. Header contrast retains the prototype's gradient thresholds; it now expresses its result with a themed data attribute.
+Only the homepage route exists. The project links still open Behance. Dedicated case studies, additional pages, advanced 3D, CMS editing, final SEO/social cards, and publishing belong to later milestones. The intro is a decorative timed sequence and holds the scroller until its curtain clears. The cursor dot is an accent over the native pointer rather than a replacement for it, damped to trail the pointer and drawn with difference blending so it stays visible on any background; it is hidden on touch layouts and under reduced motion. The HM scene remains a transformed image, now swept in three dimensions across a taller stage rather than rendered in WebGL. Header contrast retains the prototype's gradient thresholds; it now expresses its result with a themed data attribute.
 
 The approved visual source remains `research/reference-lock.md`. This milestone migrates the established composition rather than introducing a new design.

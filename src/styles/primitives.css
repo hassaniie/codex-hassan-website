@@ -3,17 +3,21 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent);
+  /*
+   * White is what makes difference blending work: the dot then inverts
+   * whatever sits behind it and stays visible on the blue hero and on white
+   * alike. Tinting it accent would blend to almost nothing over the deep
+   * navy, which is the problem this solves. JavaScript owns the transform.
+   */
+  background: #fff;
+  mix-blend-mode: difference;
   z-index: var(--layer-overlay);
   pointer-events: none;
   top: 0;
   left: 0;
   opacity: 0;
-  transition:
-    width var(--duration-fast),
-    height var(--duration-fast),
-    opacity 0.2s;
-  transform: translate(-50%, -50%);
+  transition: opacity 0.2s;
+  will-change: transform;
 }
 .statement-frame {
   width: 100%;

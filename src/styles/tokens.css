@@ -111,4 +111,12 @@
   --scroll-anchor-ms: 1500;
   --scroll-anchor-offset: 90;
   --scroll-velocity-skew: 4;
+  /*
+   * Cursor. --cursor-lerp is the follow weight: lower trails further behind
+   * the pointer. The magnet pulls the dot toward a nearby control's centre,
+   * capped at --cursor-magnet-pull px so it never fights a precise click.
+   */
+  --cursor-lerp: 0.16;
+  --cursor-magnet-radius: 70;
+  --cursor-magnet-pull: 14;
 }
