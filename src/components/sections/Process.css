@@ -22,7 +22,14 @@
   );
   /* A bordered card at 520px is wider than it can be scanned. */
   --process-panel: clamp(300px, 28vw, 420px);
-  --process-gap: var(--space-6);
+  /* Wide enough that the connector shows as a line between the cards. At 32px
+     the dash read as an artefact rather than as anything deliberate. */
+  --process-gap: var(--space-7);
+  /* The card's head padding and the badge's own height. The connector's
+     height is derived from the pair, so the line tracks the badge instead of
+     being a number that drifts the moment either changes. */
+  --process-card-pad: 28px;
+  --process-badge-h: 28px;
   /* How far the rail is pulled in from the page gutter, and how far its two
      ends dissolve. The fade is what stops a card being guillotined mid-word
      at the boundary; the inset is what makes the rail read as a window. */
@@ -49,8 +56,6 @@
      the dissolve, or it sits half-washed out before anything has moved. */
   padding-inline: var(--process-fade);
   scroll-padding-inline: var(--process-fade);
-  /* The badges overhang the track; this keeps them off the heading above. */
-  padding-block: 16px;
   -webkit-mask-image: var(--process-mask);
   mask-image: var(--process-mask);
 }
@@ -70,19 +75,20 @@
   list-style: none;
 }
 /*
- * The connector, at the height of the cards' top edge. The opaque card bodies
- * hide it along their own width, so what shows is the line in the gaps and a
- * badge sitting astride it on every card: one axis running the length of the
- * rail, with five stations on it. Dropped lower, between the cards, it read
- * as a stray dash beside a border rather than as a line at all.
+ * The connector, at the centre of the badge row. It runs the length of the
+ * rail behind the cards, and because that height is well inside their opaque
+ * fill and clear of the corner radius, each card genuinely covers it: what
+ * shows is the line in the gaps, so the five steps read as stations on one
+ * axis. At the cards' top edge it instead lined up with every card border and
+ * merged into a single unbroken rule, which is a different thing entirely.
  */
 .process-track::before {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
-  border-top: 1px solid var(--color-border-strong);
+  top: calc(var(--process-card-pad) + var(--process-badge-h) / 2);
+  border-top: 1px solid #494fed55;
 }
 /*
  * The same surface the principle cards use, left-aligned rather than centred
@@ -98,8 +104,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 14px;
-  /* Room at the head for the badge that straddles the top border. */
-  padding: 38px 28px 26px;
+  padding: var(--process-card-pad) 28px 26px;
   background: var(--color-paper);
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
@@ -111,12 +116,12 @@
   border-color: #494fed88;
   transform: translateY(-5px);
 }
-/* Astride the top border, on the connector. overflow-x: clip leaves vertical
-   overflow visible, so the badge is free to sit above the card. */
+/* An explicit height rather than one implied by line-height and padding, so
+   the connector can be centred on it arithmetically. */
 .process-step .number-square {
-  position: absolute;
-  top: -14px;
-  left: 26px;
+  display: inline-flex;
+  align-items: center;
+  height: var(--process-badge-h);
   background: var(--accent);
 }
 .process-step h3 {
@@ -197,6 +202,12 @@
  */
 .process.is-pinned .process-track {
   padding-inline: var(--process-fade);
+}
+/* The connector spans the cards, not the track's fade padding: running it out
+   into the dissolve would imply a step before 01 and another after 05. */
+.process.is-pinned .process-track::before {
+  left: var(--process-fade);
+  right: var(--process-fade);
 }
 /* Aligned to the rail rather than to the section, so the rule and the window
    it reports on start and end together. */
