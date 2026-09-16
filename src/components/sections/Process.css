@@ -30,6 +30,7 @@
      being a number that drifts the moment either changes. */
   --process-card-pad: 38px;
   --process-badge-h: 28px;
+  --process-title-size: 30px;
   /* How far the rail is pulled in from the page gutter, and how far its two
      ends dissolve. The fade is what stops a card being guillotined mid-word
      at the boundary; the inset is what makes the rail read as a window. */
@@ -119,21 +120,30 @@
 /*
  * The connector, drawn one segment at a time into the gap on each card's
  * right. Built as a single line across the track and hidden behind the cards,
- * it could sit at the badges' height or be occluded but never both, because
- * a card's fill starts below its border. Per gap there is nothing to hide
- * from: no line passes under a card, so it can run through the badge centres.
- * The last card emits none, so nothing runs on past step 05.
+ * it could sit at a given height or be occluded but never both, because a
+ * card's fill starts below its border. Per gap there is nothing to hide from:
+ * no line passes under a card. The last card emits none, so nothing runs on
+ * past step 05.
+ *
+ * It is drawn level with the titles. top is measured from the card's padding
+ * edge, just inside the border, while the heading — the first in-flow child,
+ * since the badge is taken out of flow — begins a further padding-top down
+ * from there. So the offset is that padding plus half a title line box, built
+ * from the values that decide it rather than measured once and pasted in.
  */
 .process-step:not(:last-child)::after {
   content: "";
   position: absolute;
   left: 100%;
   width: var(--process-gap);
-  top: 0;
+  top: calc(
+    var(--process-card-pad) + var(--process-title-size) *
+      var(--leading-display) / 2
+  );
   border-top: 1px solid #494fed55;
 }
 .process-step h3 {
-  font-size: 30px;
+  font-size: var(--process-title-size);
 }
 .process-step p {
   font-size: var(--text-body-small);
@@ -222,13 +232,12 @@
     --process-panel: min(78vw, 320px);
     /* A phone has no width to spend on a wide dissolve. */
     --process-fade: 28px;
+    /* The connector follows this down on its own. */
+    --process-title-size: 28px;
     padding-top: 110px;
     padding-bottom: 70px;
   }
   .process-viewport {
     margin-top: 45px;
-  }
-  .process-step h3 {
-    font-size: 28px;
   }
 }
