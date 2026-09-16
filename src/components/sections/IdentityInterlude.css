@@ -2,8 +2,8 @@
    place while this distance is consumed, which is what makes the monogram
    read as a held moment rather than something passing by. */
 .identity-interlude {
-  height: 190svh;
-  min-height: 1100px;
+  height: 250svh;
+  min-height: 1450px;
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -45,8 +45,8 @@
 }
 @media (max-width: 600px) {
   .identity-interlude {
-    height: 150svh;
-    min-height: 900px;
+    height: 190svh;
+    min-height: 1150px;
   }
   .token-stage {
     top: 15svh;

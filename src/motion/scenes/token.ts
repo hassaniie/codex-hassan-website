@@ -53,10 +53,13 @@ export function initTokenScene({ reducedMotion }: BehaviorContext): Cleanup {
           yPercent: -14,
           filter: soft,
           ease: "none",
-          duration: 0.45,
+          duration: 0.5,
         },
-        0.55,
+        0.5,
       )
+      // The sweep ends by dissolving into the gradient's white tail rather
+      // than sliding off, so the section hands over instead of stopping.
+      .to(".identity-token", { opacity: 0, ease: "none", duration: 0.22 }, 0.78)
       .fromTo(
         ".token-caption",
         { opacity: 0, y: 36, filter: `blur(${presets.blurText}px)` },
@@ -67,7 +70,12 @@ export function initTokenScene({ reducedMotion }: BehaviorContext): Cleanup {
           ease: "none",
           duration: 0.22,
         },
-        0.3,
+        0.28,
+      )
+      .to(
+        ".token-caption",
+        { opacity: 0, y: -18, ease: "none", duration: 0.22 },
+        0.78,
       );
     // The backdrop itself is deliberately not parallaxed. Its gradient runs
     // white-to-white with no margin (white at 0%, white again at 98%), and the
