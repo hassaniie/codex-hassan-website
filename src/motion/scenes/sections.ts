@@ -34,8 +34,9 @@ export function initSectionScenes({ reducedMotion }: BehaviorContext): Cleanup {
         },
       );
     };
-    // The standing label holds while its rows travel past it.
-    drift(".experience-label", ".experience", 70, -70);
+    // The experience label used to drift here to suggest standing still. It
+    // is genuinely sticky now, in CSS, and a transform on top of that would
+    // slide it back out of the alignment it holds.
     drift(".contact-atmosphere", ".contact", -60, 60);
     drift(".about-statement", ".principles", 46, -46);
 

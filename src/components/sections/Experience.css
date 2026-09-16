@@ -6,8 +6,26 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 40px;
+  /*
+   * The first row's heading sits this far into the list: its own top border
+   * plus the row's padding. Dropping the label by the same distance puts the
+   * two first lines on one line, and taking it back out of the sticky offset
+   * keeps them reading as a pair once the label is held.
+   */
+  --experience-label-drop: 33px;
 }
+/*
+ * The label holds against the top edge while its rows pass, then leaves with
+ * the section. align-self is what makes that possible: a stretched grid item
+ * fills its area and has nowhere to travel, so it would never move. The
+ * offset is the shared header clearance, so the label and an anchored heading
+ * come to rest at the same height.
+ */
 .experience-label {
+  position: sticky;
+  align-self: start;
+  top: calc(var(--scroll-anchor-offset) * 1px - var(--experience-label-drop));
+  padding-top: var(--experience-label-drop);
   font-size: 36px;
   color: var(--color-accent);
 }
@@ -31,7 +49,11 @@
     grid-template-columns: 1fr;
     gap: 35px;
   }
+  /* Stacked above the list, the label has no row heading to align with and
+     nothing to hold over: it goes back to standing at the top of its column. */
   .experience-label {
+    position: static;
+    padding-top: 0;
     font-size: 30px;
   }
   .experience-label br {
