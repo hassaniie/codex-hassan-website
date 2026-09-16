@@ -3,7 +3,6 @@ import { initClock } from "./clock";
 import { initContact } from "./contact";
 import { initSmoothScroll } from "../motion/smooth-scroll";
 import { initIntro } from "../motion/intro";
-import { initPageTransition } from "../motion/page-transition";
 import { initEntrance } from "../motion/scenes/entrance";
 import type { Cleanup } from "../utilities/dom";
 
@@ -31,7 +30,6 @@ export function initSite() {
     cleanups = [
       initSmoothScroll(context),
       initIntro(context),
-      initPageTransition(context),
       initEntrance(context),
       initNavigation(context),
       initClock(),

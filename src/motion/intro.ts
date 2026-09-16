@@ -1,11 +1,12 @@
 import { query, type BehaviorContext, type Cleanup } from "../utilities/dom";
-import { curtainHold, motionPresets, quickCurtain } from "./presets";
+import { motionPresets, quickCurtain } from "./presets";
 import { getSmoothScroll, lockScroll } from "./smooth-scroll";
 
 export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
   const intro = query(".intro");
   const count = query(".intro-count");
-  if (!intro || !count) return () => {};
+  // An in-session arrival has no curtain; the entrance ladder carries it.
+  if (!intro || !count || quickCurtain()) return () => {};
   let frame = 0;
   let release: ReturnType<typeof setTimeout> | undefined;
   let lifter: ReturnType<typeof setTimeout> | undefined;
@@ -22,7 +23,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
     // A dropped animationend must never strand the page in a locked state.
     clearTimeout(release);
     clearTimeout(lifter);
-    const hold = curtainHold();
+    const hold = motionPresets().introDuration;
     release = setTimeout(
       () => {
         document.documentElement.classList.remove("intro-armed");
@@ -30,12 +31,6 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
       },
       hold + introExit + 600,
     );
-    // An in-session arrival has nothing to count: hold only long enough for
-    // the new page to paint behind the curtain, then lift.
-    if (quickCurtain()) {
-      lifter = setTimeout(() => intro!.classList.add("lift"), hold);
-      return;
-    }
     const start = performance.now();
     function tick(time: number) {
       // Clamped at both ends: a rAF timestamp can predate the start we

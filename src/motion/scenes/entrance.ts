@@ -1,51 +1,66 @@
-import { query, type BehaviorContext, type Cleanup } from "../../utilities/dom";
+import {
+  query,
+  queryAll,
+  type BehaviorContext,
+  type Cleanup,
+} from "../../utilities/dom";
 import { gsap, setupEngine } from "../engine";
-import { entranceDelay } from "../presets";
+import { entranceDelay, motionPresets } from "../presets";
 
 /**
- * The page assembles as the curtain lifts rather than being whole behind it.
- * Timings hang off the same intro tokens, so shortening the curtain keeps the
- * entrance in step with it automatically.
+ * The opening, matched to the reference build. Every element shares one
+ * duration and one curve; the choreography is a ladder of 0.1s delays rather
+ * than a stagger inside any one element. Each element fades from 0.001 and
+ * travels a single axis: content rises, the header drops. Nothing scales,
+ * rotates or blurs, which is what keeps it quiet.
+ *
+ * A first load waits for the curtain; an in-session arrival starts at once,
+ * so the same ladder doubles as the page-change animation.
  */
 export function initEntrance({ reducedMotion }: BehaviorContext): Cleanup {
   setupEngine();
   if (reducedMotion) return () => {};
-  const start = entranceDelay();
+  const presets = motionPresets();
+  const base = entranceDelay();
+  const step = presets.appearStep / 1000;
+  const duration = presets.appearDuration / 1000;
+  const ease = `cubic-bezier(${presets.easeAppear.replace(/cubic-bezier\(|\)/g, "")})`;
+
+  // [selector, rung on the ladder, travel] — content first, header last,
+  // which is the order the reference uses.
+  const score: [string, number, { y?: number; x?: number }][] = [
+    [".hero h1", 0, { y: presets.appearRise }],
+    [".identity-card", 1, { y: presets.appearRise }],
+    [".hero-bottom > *", 2, { y: presets.appearRise }],
+    [".site-header", 5, { y: presets.appearDrop }],
+    // Contact and privacy: the first screen arrives on the same ladder.
+    [".contact-page-hero h1", 0, { y: presets.appearRise }],
+    [".contact-page-hero .down-cue", 2, { y: presets.appearRise }],
+    [".policy > *", 0, { y: presets.appearRise }],
+  ];
+
   const context = gsap.context(() => {
-    const timeline = gsap.timeline({ delay: start });
-    if (query(".site-header"))
-      timeline.from(
-        ".site-header",
-        { opacity: 0, y: -20, duration: 0.7, ease: "power3.out" },
-        0,
-      );
-    // The backdrop settles on its own channel; see Hero.css.
-    if (query(".hero-atmosphere"))
-      timeline.fromTo(
-        ".hero-atmosphere",
-        { "--entrance-scale": 1.07 },
-        { "--entrance-scale": 1, duration: 1.5, ease: "power2.out" },
-        0,
-      );
-    if (query(".identity-card"))
-      timeline.from(
-        ".identity-card",
-        { opacity: 0, y: 36, duration: 0.85, ease: "power3.out" },
-        0.16,
-      );
-    // Children, not .hero-bottom itself: the scroll scene owns that element.
-    if (query(".hero-bottom > *"))
-      timeline.from(
-        ".hero-bottom > *",
-        {
-          opacity: 0,
-          y: 28,
-          duration: 0.75,
-          stagger: 0.09,
-          ease: "power3.out",
-        },
-        0.26,
-      );
+    score.forEach(([selector, rung, travel]) => {
+      const targets = queryAll(selector);
+      if (!targets.length) return;
+      targets.forEach((target, index) => {
+        gsap.fromTo(
+          target,
+          { opacity: 0.001, ...travel },
+          {
+            opacity: 1,
+            y: 0,
+            x: 0,
+            duration,
+            ease,
+            delay: base + (rung + index) * step,
+          },
+        );
+      });
+    });
   });
   return () => context.revert();
 }
+
+/** The hero headline is part of the entrance, so reveals leaves it alone. */
+export const heroHeadline = () => query(".hero h1");

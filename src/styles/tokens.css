@@ -89,13 +89,22 @@
    * behind it, so the headline reveal is actually seen. --motion-intro-enter-ms
    * is the wipe that covers the page when leaving for another route.
    */
-  --motion-intro-ms: 2000;
+  --motion-intro-ms: 1500;
   --motion-intro-exit-ms: 500;
-  /* How long the curtain holds on an in-session navigation, where there is
-     no count to wait for -- just long enough for the new page to paint. */
-  --motion-intro-quick-ms: 220;
-  --motion-intro-enter-ms: 380;
   --motion-reveal-ms: 1200;
+  /*
+   * Entrance, matched to the reference build: one duration and one curve for
+   * every element, with the choreography carried entirely by a delay ladder
+   * rather than by per-element stagger. Elements move on a single axis and
+   * fade; nothing scales, rotates or blurs.
+   */
+  --ease-appear: cubic-bezier(0.12, 0.23, 0.5, 1);
+  --motion-appear-ms: 500;
+  --motion-appear-step-ms: 100;
+  --motion-appear-rise: 32;
+  --motion-appear-drop: -48;
+  /* First load only: when content starts arriving, once the curtain is off. */
+  --motion-appear-hold-ms: 2000;
   /*
    * Entry blur. It is a softening at the very edge of the viewport, not a
    * veil over the content: --motion-blur-band is how far into the screen

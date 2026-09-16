@@ -1,6 +1,6 @@
 import { queryAll, type BehaviorContext, type Cleanup } from "../utilities/dom";
 import { gsap, ScrollTrigger, setupEngine } from "./engine";
-import { entranceDelay, motionPresets } from "./presets";
+import { motionPresets } from "./presets";
 
 /** Split a heading into per-character spans, preserving its accessible text. */
 function split(element: HTMLElement) {
@@ -68,6 +68,9 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
   };
 
   queryAll(".split-reveal").forEach((element) => {
+    // The hero headline belongs to the entrance now: it arrives as one
+    // element on the shared curve rather than character by character.
+    if (element.tagName === "H1") return;
     originals.set(element, element.innerHTML);
     const chars = split(element);
     if (!chars.length) return;
@@ -79,32 +82,6 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
       transformOrigin: "50% 100%",
     };
     const to = { opacity: 1, yPercent: 0, rotateX: 0, ease: "none" as const };
-    if (element.tagName === "H1") {
-      // Above the fold on load: a timed entrance, since there is no scroll yet.
-      gsap.set(chars, from);
-      tweens.push(
-        gsap.to(chars, {
-          ...to,
-          ease: "power3.out",
-          duration: presets.textDuration / 1000,
-          delay: entranceDelay(),
-          stagger: presets.stagger / 1000,
-        }),
-      );
-      if (presets.blurText > 0) {
-        gsap.set(chars, { filter: `blur(${presets.blurText}px)` });
-        tweens.push(
-          gsap.to(chars, {
-            filter: "blur(0px)",
-            ease: "power3.out",
-            duration: presets.textDuration / 1000,
-            delay: entranceDelay(),
-            stagger: presets.stagger / 1000,
-          }),
-        );
-      }
-      return;
-    }
     // Scroll drives the reveal, but it finishes well before the text exits.
     tweens.push(
       gsap.fromTo(chars, from, {

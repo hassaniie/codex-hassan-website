@@ -41,9 +41,16 @@ The opening curtain and the wipe between routes:
 - `--motion-intro-ms` — how long the curtain holds before it starts lifting
 - `--motion-intro-exit-ms` — the wipe that reveals the page
 - `--motion-intro-enter-ms` — the wipe that covers the page when leaving for another route
-- `--motion-intro-quick-ms` — how long the curtain holds when moving between pages in the same session, where there is no count to wait for
 
-The headline and hero entrance are derived from these, so they always arrive as the curtain lifts.
+The entrance uses one duration and one curve for every element, with the
+choreography carried by a delay ladder:
+
+- `--ease-appear` / `--motion-appear-ms` — the shared curve and duration
+- `--motion-appear-step-ms` — the gap between rungs of the ladder
+- `--motion-appear-rise` / `--motion-appear-drop` — how far content rises and the header drops
+- `--motion-appear-hold-ms` — on a first load, when content starts arriving
+
+A page change within the same session has no curtain: the ladder alone carries it.
 
 The cursor dot has its own values:
 

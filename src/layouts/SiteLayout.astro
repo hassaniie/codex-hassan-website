@@ -63,12 +63,18 @@ const {
         }
         // The count belongs to arriving at the site. Once this session has
         // entered, later documents get the curtain without the loader.
+        var entered = false;
         try {
-          if (sessionStorage.getItem("hm-entered") === "1")
-            root.classList.add("intro-quick");
+          entered = sessionStorage.getItem("hm-entered") === "1";
           sessionStorage.setItem("hm-entered", "1");
         } catch (error) {
           /* private mode: fall back to the full opening */
+        }
+        // A page change carries no curtain: content simply re-enters on the
+        // delay ladder, so nothing covers the swap.
+        if (entered) {
+          root.classList.add("intro-quick");
+          return;
         }
         root.classList.add("intro-armed");
         setTimeout(function () {

@@ -11,9 +11,12 @@ export function motionPresets() {
     stagger: number("--motion-stagger-ms", 20),
     introDuration: number("--motion-intro-ms", 2000),
     introExit: number("--motion-intro-exit-ms", 500),
-    introQuick: number("--motion-intro-quick-ms", 220),
-    introEnter: number("--motion-intro-enter-ms", 380),
     revealDuration: number("--motion-reveal-ms", 1200),
+    appearDuration: number("--motion-appear-ms", 500),
+    appearStep: number("--motion-appear-step-ms", 100),
+    appearRise: number("--motion-appear-rise", 32),
+    appearDrop: number("--motion-appear-drop", -48),
+    appearHold: number("--motion-appear-hold-ms", 2000),
     blurReveal: number("--motion-blur-reveal-px", 2.5),
     blurText: number("--motion-blur-text-px", 2.5),
     blurExit: number("--motion-blur-exit-px", 3),
@@ -33,6 +36,9 @@ export function motionPresets() {
     ease:
       styles.getPropertyValue("--ease-out").trim() ||
       "cubic-bezier(.2,.8,.2,1)",
+    easeAppear:
+      styles.getPropertyValue("--ease-appear").trim() ||
+      "cubic-bezier(.12,.23,.5,1)",
   };
 }
 
@@ -41,16 +47,10 @@ export const quickCurtain = () =>
   document.documentElement.classList.contains("intro-quick");
 
 /**
- * How long the curtain holds before it starts lifting. Everything that has to
- * arrive with the page reads this rather than carrying its own copy, so a
- * change to the opening cannot leave an entrance stranded behind the curtain.
+ * When content starts arriving, in seconds. A first load waits for the
+ * curtain to clear; an in-session arrival has no curtain, so it starts at
+ * once and the ladder alone carries the choreography.
  */
-export function curtainHold() {
-  const presets = motionPresets();
-  return quickCurtain() ? presets.introQuick : presets.introDuration;
-}
-
-/** The moment the reveal underneath the curtain should begin, in seconds. */
 export function entranceDelay() {
-  return (curtainHold() + motionPresets().introExit * 0.5) / 1000;
+  return quickCurtain() ? 0 : motionPresets().appearHold / 1000;
 }
