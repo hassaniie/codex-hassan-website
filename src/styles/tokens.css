@@ -91,6 +91,10 @@
    */
   --motion-intro-ms: 1500;
   --motion-intro-exit-ms: 500;
+  /* A page change is covered briefly: long enough for the next document to
+     paint behind it, with no count to wait for. */
+  --motion-intro-quick-ms: 220;
+  --motion-intro-enter-ms: 380;
   --motion-reveal-ms: 1200;
   /*
    * Entrance, matched to the reference build: one duration and one curve for

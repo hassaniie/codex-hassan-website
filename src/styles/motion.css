@@ -26,6 +26,12 @@
  * the curtain rises off the count itself rather than off a parallel delay
  * that can drift away from it on a slow first paint.
  */
+/* Leaving for another route: the curtain closes back over the page. */
+.intro.covering {
+  display: flex;
+  animation: intro-enter calc(var(--motion-intro-enter-ms) * 1ms)
+    var(--ease-curtain) forwards;
+}
 .intro.lift {
   animation: intro-exit calc(var(--motion-intro-exit-ms) * 1ms)
     var(--ease-curtain) forwards;
@@ -40,6 +46,7 @@
 }
 /* The count is only ever shown while it is actually counting: not on the
    curtain that covers a departing page, and not on an in-session arrival. */
+.intro.covering .intro-count,
 .intro-quick .intro-count {
   display: none;
 }
@@ -73,6 +80,15 @@
  * clip-path: none, which cannot interpolate to an inset, so the curtain
  * jumped straight to hidden instead of rising.
  */
+/* Mirrors the exit, so both wipes travel the same way up the screen. */
+@keyframes intro-enter {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
 @keyframes intro-exit {
   from {
     clip-path: inset(0 0 0 0);

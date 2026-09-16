@@ -70,12 +70,7 @@ const {
         } catch (error) {
           /* private mode: fall back to the full opening */
         }
-        // A page change carries no curtain: content simply re-enters on the
-        // delay ladder, so nothing covers the swap.
-        if (entered) {
-          root.classList.add("intro-quick");
-          return;
-        }
+        if (entered) root.classList.add("intro-quick");
         root.classList.add("intro-armed");
         setTimeout(function () {
           root.classList.remove("intro-armed");

@@ -5,8 +5,7 @@ import { getSmoothScroll, lockScroll } from "./smooth-scroll";
 export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
   const intro = query(".intro");
   const count = query(".intro-count");
-  // An in-session arrival has no curtain; the entrance ladder carries it.
-  if (!intro || !count || quickCurtain()) return () => {};
+  if (!intro || !count) return () => {};
   let frame = 0;
   let release: ReturnType<typeof setTimeout> | undefined;
   let lifter: ReturnType<typeof setTimeout> | undefined;
@@ -23,7 +22,13 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
     // A dropped animationend must never strand the page in a locked state.
     clearTimeout(release);
     clearTimeout(lifter);
-    const hold = motionPresets().introDuration;
+    const presets = motionPresets();
+    const hold = quickCurtain() ? presets.introQuick : presets.introDuration;
+    // A page change has nothing to count: hold for the paint, then lift.
+    if (quickCurtain()) {
+      lifter = setTimeout(() => intro!.classList.add("lift"), hold);
+      return;
+    }
     release = setTimeout(
       () => {
         document.documentElement.classList.remove("intro-armed");

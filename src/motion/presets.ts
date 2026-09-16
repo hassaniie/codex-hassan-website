@@ -11,6 +11,8 @@ export function motionPresets() {
     stagger: number("--motion-stagger-ms", 20),
     introDuration: number("--motion-intro-ms", 2000),
     introExit: number("--motion-intro-exit-ms", 500),
+    introQuick: number("--motion-intro-quick-ms", 220),
+    introEnter: number("--motion-intro-enter-ms", 380),
     revealDuration: number("--motion-reveal-ms", 1200),
     appearDuration: number("--motion-appear-ms", 500),
     appearStep: number("--motion-appear-step-ms", 100),
@@ -52,5 +54,8 @@ export const quickCurtain = () =>
  * once and the ladder alone carries the choreography.
  */
 export function entranceDelay() {
-  return quickCurtain() ? 0 : motionPresets().appearHold / 1000;
+  const presets = motionPresets();
+  return quickCurtain()
+    ? (presets.introQuick + presets.introExit * 0.5) / 1000
+    : presets.appearHold / 1000;
 }
