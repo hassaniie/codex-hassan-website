@@ -23,13 +23,6 @@
   max-width: var(--content-principles);
   margin: auto;
 }
-.number-square {
-  color: white;
-  background: var(--ink);
-  padding: 5px;
-  font-size: 13px;
-  border-radius: 2px;
-}
 @media (min-width: 1600px) {
   .principle-grid {
     max-width: 1200px;

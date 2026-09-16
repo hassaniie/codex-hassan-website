@@ -74,6 +74,15 @@
 .barcode.accent {
   color: var(--accent);
 }
+/* The counter badge. base.css gives it its mono typography; this is the
+   surface half, shared by any section that numbers its items. */
+.number-square {
+  color: white;
+  background: var(--ink);
+  padding: 5px;
+  font-size: 13px;
+  border-radius: 2px;
+}
 /* The quieter section heading: a centred title with its count, over a mark.
    Shared by more than one section, so it lives here rather than in the
    stylesheet of whichever section happened to need it first. */
