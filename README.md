@@ -21,6 +21,17 @@ npm run build
 npm test
 ```
 
+### Tuning the scroll feel
+
+Every scroll value lives in `src/styles/tokens.css`, not in JavaScript:
+
+- `--scroll-lerp` — lower is heavier and slower to settle (`0.075` is the current weight)
+- `--scroll-wheel-multiplier` — distance travelled per wheel notch
+- `--scroll-touch-sync` — set to `0` to hand phones back their native momentum
+- `--scroll-anchor-ms` — how long an in-page anchor takes to travel
+
+Reduced-motion visitors bypass all of it and get native scrolling.
+
 `npm run preview` serves the built site. `npm run format` formats the source. The lockfile records the installed dependency versions.
 
 ## Where to edit
@@ -30,6 +41,7 @@ npm test
 - `src/components/` — reusable UI and homepage sections, with adjacent styles
 - `src/styles/tokens.css` — shared design and motion values
 - `src/motion/` and `src/scripts/` — browser interactions
+- `src/motion/scenes/` — scroll-linked choreography per section
 - `public/assets/` — images, fonts, font licenses, and resume
 
 `dist/` is generated. Do not edit it directly. The original prototype source is preserved under `research/prototype-v1/`; its assets are retained in `public/assets/`.

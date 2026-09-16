@@ -1,0 +1,21 @@
+/*
+ * Lenis drives the real scroll position, so position: sticky, the native
+ * scrollbar, and IntersectionObserver all keep working. CSS smooth scrolling
+ * would fight the damped tween, so it stands down while Lenis is active.
+ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

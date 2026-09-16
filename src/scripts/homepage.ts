@@ -1,6 +1,7 @@
 import { initIntro } from "../motion/intro";
 import { initReveals } from "../motion/reveals";
 import { initScrollScene } from "../motion/scroll-scene";
+import { initScenes } from "../motion/scenes";
 import { initCursor } from "../motion/cursor";
 import type { Cleanup } from "../utilities/dom";
 
@@ -27,6 +28,7 @@ export function initHomepage() {
       initIntro(context),
       initReveals(context),
       initScrollScene(context),
+      initScenes(context),
       initCursor(context),
     ];
   };

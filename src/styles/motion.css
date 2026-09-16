@@ -38,19 +38,14 @@
   display: inline-block;
   will-change: transform, filter, opacity;
 }
+/* Without JavaScript every section stays visible; the scrubbed reveal is
+   additive. GSAP owns the in-between state, so no CSS transition competes
+   with the scrub. */
 .reveal {
   opacity: 1;
 }
 .motion-ready .reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity var(--duration-reveal) ease,
-    transform var(--duration-reveal) var(--ease-out);
-}
-.motion-ready .reveal.in-view {
-  opacity: 1;
-  transform: none;
+  will-change: transform, opacity, filter;
 }
 @keyframes intro-exit {
   to {

@@ -1,4 +1,5 @@
 import { query, queryAll, type BehaviorContext } from "../utilities/dom";
+import { lockScroll } from "../motion/smooth-scroll";
 
 export function initNavigation({ signal }: BehaviorContext) {
   const menu = query<HTMLDialogElement>("#menu");
@@ -8,6 +9,8 @@ export function initNavigation({ signal }: BehaviorContext) {
     "click",
     () => {
       menu.showModal();
+      // The damped scroller keeps running behind a modal unless it is paused.
+      lockScroll(true);
       toggle.setAttribute("aria-expanded", "true");
     },
     { signal },
@@ -17,7 +20,10 @@ export function initNavigation({ signal }: BehaviorContext) {
   });
   menu.addEventListener(
     "close",
-    () => toggle.setAttribute("aria-expanded", "false"),
+    () => {
+      lockScroll(false);
+      toggle.setAttribute("aria-expanded", "false");
+    },
     { signal },
   );
   queryAll<HTMLAnchorElement>("nav a", menu).forEach((link) => {
@@ -25,6 +31,7 @@ export function initNavigation({ signal }: BehaviorContext) {
   });
   return () => {
     if (menu.open) menu.close();
+    lockScroll(false);
     toggle.setAttribute("aria-expanded", "false");
   };
 }

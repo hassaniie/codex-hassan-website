@@ -77,12 +77,28 @@
   --layer-skip-link: 200;
   --duration-fast: 0.25s;
   --duration-hover: 0.4s;
-  --duration-reveal: 0.85s;
+  --duration-reveal: 1.2s;
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
-  /* Numeric millisecond tokens are consumed by the Web Animations modules. */
-  --motion-text-ms: 700;
-  --motion-stagger-ms: 12;
+  /* Numeric millisecond tokens are consumed by the motion modules. */
+  --motion-text-ms: 900;
+  --motion-stagger-ms: 20;
   --motion-hero-delay-ms: 950;
   --motion-intro-ms: 1000;
+  --motion-reveal-ms: 1200;
+  /*
+   * Scroll feel. Lower --scroll-lerp is heavier and slower to settle.
+   * Set --scroll-touch-sync to 0 to hand phones back their native momentum
+   * without touching any other behaviour.
+   */
+  --scroll-lerp: 0.075;
+  --scroll-wheel-multiplier: 0.9;
+  --scroll-touch-sync: 1;
+  --scroll-touch-lerp: 0.075;
+  --scroll-touch-multiplier: 1.1;
+  /* Exponent, not a multiplier: higher means longer touch glide. */
+  --scroll-touch-inertia: 1.9;
+  --scroll-anchor-ms: 1500;
+  --scroll-anchor-offset: 90;
+  --scroll-velocity-skew: 4;
 }

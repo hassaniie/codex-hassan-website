@@ -1,5 +1,9 @@
 import { query, type BehaviorContext, type Cleanup } from "../utilities/dom";
 
+/**
+ * Header contrast and the identity card's tab, kept on the prototype's
+ * gradient thresholds. The monogram itself belongs to the interlude scene.
+ */
 export function initScrollScene({
   signal,
   reducedMotion,
@@ -8,8 +12,7 @@ export function initScrollScene({
   const hero = query(".hero");
   const contact = query(".contact");
   const interlude = query(".identity-interlude");
-  const token = query(".identity-token");
-  if (!header || !hero || !contact || !interlude || !token) return () => {};
+  if (!header || !hero || !contact || !interlude) return () => {};
   const card = query(".identity-card");
   let frame = 0;
   const update = () => {
@@ -28,13 +31,6 @@ export function initScrollScene({
       : Math.max(0, Math.min(1, -opening.top / 240));
     const eased = tabProgress * tabProgress * (3 - 2 * tabProgress);
     card?.style.setProperty("--tab-progress", String(eased));
-    if (reducedMotion || stage.bottom <= 0 || stage.top >= innerHeight) return;
-    const progress = Math.max(
-      0,
-      Math.min(1, (innerHeight - stage.top) / (innerHeight + stage.height)),
-    );
-    const offset = progress - 0.5;
-    token.style.transform = `perspective(1000px) rotateY(${offset * 40}deg) rotateZ(${offset * -24}deg) translateY(${offset * -60}px)`;
   };
   const requestUpdate = () => {
     if (!frame) frame = requestAnimationFrame(update);
@@ -44,7 +40,6 @@ export function initScrollScene({
   update();
   return () => {
     cancelAnimationFrame(frame);
-    token.style.removeProperty("transform");
     card?.style.removeProperty("--tab-progress");
   };
 }

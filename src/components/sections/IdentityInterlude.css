@@ -1,6 +1,9 @@
+/* The stage is deliberately taller than a screen: the sticky token holds in
+   place while this distance is consumed, which is what makes the monogram
+   read as a held moment rather than something passing by. */
 .identity-interlude {
-  height: 115svh;
-  min-height: 720px;
+  height: 190svh;
+  min-height: 1100px;
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -42,8 +45,8 @@
 }
 @media (max-width: 600px) {
   .identity-interlude {
-    height: 95svh;
-    min-height: 620px;
+    height: 150svh;
+    min-height: 900px;
   }
   .token-stage {
     top: 15svh;

@@ -16,24 +16,35 @@
   min-height: 560px;
   isolation: isolate;
 }
+/* Independent transform properties keep the scrubbed parallax (translate)
+   from inheriting the hover transition that belongs to scale alone. The
+   resting scale gives the drift room to travel without exposing an edge. */
 .project-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.9s var(--ease-out);
-  will-change: transform;
+  --media-scale: 1.12;
+  --media-hover: 1.17;
+  translate: 0 var(--parallax-y, 0px);
+  scale: var(--media-scale);
+  transition: scale 0.9s var(--ease-out);
+  will-change: translate, scale;
 }
 .project-media:hover img {
-  transform: scale(1.04);
+  --media-scale: var(--media-hover);
 }
 .survey-media {
   background: linear-gradient(140deg, #b9c7e3, #e3e9f5);
   padding: 9% 5%;
 }
+/* This one is a framed screenshot rather than a bleed, so it keeps its
+   authored size and drifts within the surrounding padding. */
 .survey-media img {
   height: auto;
   box-shadow: 0 25px 45px #10275130;
   border-radius: var(--radius-control);
+  --media-scale: 1;
+  --media-hover: 1.04;
 }
 .mycah-media {
   background: #f1f8f5;
