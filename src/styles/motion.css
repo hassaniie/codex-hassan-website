@@ -9,10 +9,25 @@
   justify-content: center;
   pointer-events: none;
 }
+/*
+ * Armed by an inline script before first paint, so the curtain is already
+ * covering the page rather than appearing a moment after the content does.
+ * The script never runs for reduced motion, and drops the class on a timer,
+ * so a failed bundle cannot leave the page hidden behind it.
+ */
+.intro-armed .intro {
+  display: flex;
+}
 .intro.playing {
   display: flex;
-  animation: intro-exit 0.75s var(--ease-curtain)
-    calc(var(--motion-intro-ms) * 1ms + 50ms) forwards;
+  animation: intro-exit calc(var(--motion-intro-exit-ms) * 1ms)
+    var(--ease-curtain) calc(var(--motion-intro-ms) * 1ms + 40ms) forwards;
+}
+/* Leaving for another route: the curtain closes back over the page. */
+.intro.covering {
+  display: flex;
+  animation: intro-enter calc(var(--motion-intro-enter-ms) * 1ms)
+    var(--ease-curtain) forwards;
 }
 .intro-inner {
   position: relative;
@@ -50,6 +65,15 @@
 @keyframes intro-exit {
   to {
     clip-path: inset(0 0 100% 0);
+  }
+}
+/* Mirrors the exit, so both wipes travel the same way up the screen. */
+@keyframes intro-enter {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
   }
 }
 @keyframes menu-in {

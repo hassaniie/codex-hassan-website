@@ -1,4 +1,3 @@
-import { initIntro } from "../motion/intro";
 import { initCursor } from "../motion/cursor";
 import { initReveals } from "../motion/reveals";
 import { initContactForm } from "./contact-form";
@@ -24,7 +23,6 @@ export function initContactPage() {
       reducedMotion: preference.matches,
     };
     cleanups = [
-      initIntro(context),
       initReveals(context),
       initCursor(context),
       initContactForm(context),

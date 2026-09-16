@@ -1,4 +1,3 @@
-import { initIntro } from "../motion/intro";
 import { initReveals } from "../motion/reveals";
 import { initScrollScene } from "../motion/scroll-scene";
 import { initScenes } from "../motion/scenes";
@@ -25,7 +24,6 @@ export function initHomepage() {
       reducedMotion: preference.matches,
     };
     cleanups = [
-      initIntro(context),
       initReveals(context),
       initScrollScene(context),
       initScenes(context),

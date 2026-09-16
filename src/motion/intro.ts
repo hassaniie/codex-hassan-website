@@ -8,7 +8,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
   if (!intro || !count) return () => {};
   let frame = 0;
   let release: ReturnType<typeof setTimeout> | undefined;
-  const { introDuration } = motionPresets();
+  const { introDuration, introExit } = motionPresets();
   // The counter is an opening sequence, not a network progress indicator.
   function play() {
     if (reducedMotion || !intro || !count) return;
@@ -20,7 +20,13 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
     lockScroll(true);
     // A dropped animationend must never strand the page in a locked state.
     clearTimeout(release);
-    release = setTimeout(() => lockScroll(false), introDuration + 1600);
+    release = setTimeout(
+      () => {
+        document.documentElement.classList.remove("intro-armed");
+        lockScroll(false);
+      },
+      introDuration + introExit + 600,
+    );
     const start = performance.now();
     function tick(time: number) {
       const progress = Math.min((time - start) / introDuration, 1);
@@ -34,6 +40,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
     (event) => {
       if (event.animationName === "intro-exit") {
         intro.classList.remove("playing");
+        document.documentElement.classList.remove("intro-armed");
         clearTimeout(release);
         lockScroll(false);
       }
@@ -46,6 +53,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
       const scroller = getSmoothScroll();
       if (scroller) scroller.scrollTo(0, { immediate: true });
       else window.scrollTo({ top: 0, behavior: "instant" });
+      document.documentElement.classList.add("intro-armed");
       play();
     },
     { signal },
@@ -55,6 +63,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
     cancelAnimationFrame(frame);
     clearTimeout(release);
     intro.classList.remove("playing");
+    document.documentElement.classList.remove("intro-armed");
     lockScroll(false);
   };
 }

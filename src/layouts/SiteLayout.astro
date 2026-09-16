@@ -49,6 +49,24 @@ const {
     />
   </head>
   <body>
+    <script is:inline>
+      // Arm the curtain before first paint so content never flashes ahead of
+      // it. Reduced motion opts out entirely, and the timer guarantees the
+      // page is revealed even if the bundle never runs.
+      (function () {
+        var root = document.documentElement;
+        try {
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+            return;
+        } catch (error) {
+          return;
+        }
+        root.classList.add("intro-armed");
+        setTimeout(function () {
+          root.classList.remove("intro-armed");
+        }, 4000);
+      })();
+    </script>
     <a class="skip-link" href={skipHref}>
       {skipLabel}
     </a>

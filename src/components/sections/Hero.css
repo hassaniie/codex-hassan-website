@@ -13,6 +13,13 @@
   inset: 0;
   z-index: -1;
   background: var(--atmosphere-edge-overlay), var(--atmosphere-gradient);
+  /*
+   * The opening settle rides this independent scale property, which composes
+   * with the transform the scroll scene owns rather than fighting it over the
+   * same value. It inherits transform-origin, so it stays bottom-anchored and
+   * cannot expose the gradient's edge against the section below.
+   */
+  scale: var(--entrance-scale, 1);
 }
 .hero-main {
   margin-top: -5vh;

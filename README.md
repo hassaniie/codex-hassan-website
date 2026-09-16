@@ -36,6 +36,13 @@ Entry blur is tuned separately, and deliberately stays near the viewport edge:
 - `--motion-blur-band` — how far into the screen, in viewport percent, blur may persist before it must be fully resolved
 - `--motion-blur-exit-px` — the softening on the hero as it leaves
 
+The opening curtain and the wipe between routes:
+
+- `--motion-intro-ms` — how long the curtain holds before it starts lifting
+- `--motion-intro-exit-ms` — the wipe that reveals the page
+- `--motion-intro-enter-ms` — the wipe that covers the page when leaving for another route
+- `--motion-hero-delay-ms` — when the headline reveal begins; keep it near `--motion-intro-ms` so the reveal is seen rather than played behind the curtain
+
 The cursor dot has its own values:
 
 - `--cursor-lerp` — follow weight; lower trails further behind the pointer

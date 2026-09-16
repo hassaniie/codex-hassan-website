@@ -2,6 +2,9 @@ import { initNavigation } from "./navigation";
 import { initClock } from "./clock";
 import { initContact } from "./contact";
 import { initSmoothScroll } from "../motion/smooth-scroll";
+import { initIntro } from "../motion/intro";
+import { initPageTransition } from "../motion/page-transition";
+import { initEntrance } from "../motion/scenes/entrance";
 import type { Cleanup } from "../utilities/dom";
 
 let dispose: Cleanup | undefined;
@@ -23,9 +26,13 @@ export function initSite() {
       signal: controller.signal,
       reducedMotion: preference.matches,
     };
-    // Damped scrolling is shell behavior: every route gets the same feel.
+    // Shell behavior: every route gets the same scroll feel, the same opening
+    // curtain, and the same wipe when it hands over to another route.
     cleanups = [
       initSmoothScroll(context),
+      initIntro(context),
+      initPageTransition(context),
+      initEntrance(context),
       initNavigation(context),
       initClock(),
       initContact(context),

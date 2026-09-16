@@ -9,8 +9,10 @@ export function motionPresets() {
   return {
     textDuration: number("--motion-text-ms", 900),
     stagger: number("--motion-stagger-ms", 20),
-    heroDelay: number("--motion-hero-delay-ms", 950),
-    introDuration: number("--motion-intro-ms", 1000),
+    heroDelay: number("--motion-hero-delay-ms", 520),
+    introDuration: number("--motion-intro-ms", 340),
+    introExit: number("--motion-intro-exit-ms", 360),
+    introEnter: number("--motion-intro-enter-ms", 380),
     revealDuration: number("--motion-reveal-ms", 1200),
     blurReveal: number("--motion-blur-reveal-px", 2.5),
     blurText: number("--motion-blur-text-px", 2.5),
