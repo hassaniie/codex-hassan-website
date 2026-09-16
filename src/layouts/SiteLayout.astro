@@ -51,8 +51,11 @@ const {
   <body>
     <script is:inline>
       // Arm the curtain before first paint so content never flashes ahead of
-      // it. Reduced motion opts out entirely, and the timer guarantees the
-      // page is revealed even if the bundle never runs.
+      // it. Every document opens the same way, whether it was reached by a
+      // reload or by a link, because that is what the source does and it is
+      // the only way a link click shows one count instead of two. Reduced
+      // motion opts out entirely, and the timer guarantees the page is
+      // revealed even if the bundle never runs.
       (function () {
         var root = document.documentElement;
         try {
@@ -61,16 +64,6 @@ const {
         } catch (error) {
           return;
         }
-        // The count belongs to arriving at the site. Once this session has
-        // entered, later documents get the curtain without the loader.
-        var entered = false;
-        try {
-          entered = sessionStorage.getItem("hm-entered") === "1";
-          sessionStorage.setItem("hm-entered", "1");
-        } catch (error) {
-          /* private mode: fall back to the full opening */
-        }
-        if (entered) root.classList.add("intro-quick");
         root.classList.add("intro-armed");
         setTimeout(function () {
           root.classList.remove("intro-armed");

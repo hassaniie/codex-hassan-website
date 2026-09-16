@@ -9,10 +9,11 @@ export function motionPresets() {
   return {
     textDuration: number("--motion-text-ms", 900),
     stagger: number("--motion-stagger-ms", 20),
-    introDuration: number("--motion-intro-ms", 2000),
+    introCount: number("--motion-intro-count-ms", 1000),
+    introHold: number("--motion-intro-hold-ms", 550),
+    introFade: number("--motion-intro-fade-ms", 400),
+    introLiftIn: number("--motion-intro-lift-in-ms", 320),
     introExit: number("--motion-intro-exit-ms", 500),
-    introQuick: number("--motion-intro-quick-ms", 220),
-    introEnter: number("--motion-intro-enter-ms", 380),
     revealDuration: number("--motion-reveal-ms", 1200),
     appearDuration: number("--motion-appear-ms", 500),
     appearStep: number("--motion-appear-step-ms", 100),
@@ -44,18 +45,15 @@ export function motionPresets() {
   };
 }
 
-/** True once this session has already played the full opening. */
-export const quickCurtain = () =>
-  document.documentElement.classList.contains("intro-quick");
+/** When the curtain starts lifting, in ms from the start of the sequence. */
+export function liftAt(presets = motionPresets()) {
+  return presets.introCount + presets.introHold + presets.introLiftIn;
+}
 
 /**
- * When content starts arriving, in seconds. A first load waits for the
- * curtain to clear; an in-session arrival has no curtain, so it starts at
- * once and the ladder alone carries the choreography.
+ * When content starts arriving, in seconds. Every document opens the same
+ * way now, so there is one answer: the frame the curtain finishes clearing.
  */
 export function entranceDelay() {
-  const presets = motionPresets();
-  return quickCurtain()
-    ? (presets.introQuick + presets.introExit * 0.5) / 1000
-    : presets.appearHold / 1000;
+  return motionPresets().appearHold / 1000;
 }

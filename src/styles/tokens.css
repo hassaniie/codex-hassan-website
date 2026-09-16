@@ -79,22 +79,37 @@
   --duration-hover: 0.4s;
   --duration-reveal: 1.2s;
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+  /* Fitted to the source's own lift: 30 sampled frames, RMSE 0.005. It is
+     slower to leave than a symmetric ease and slower to land than a fast one,
+     which is what gives the reveal its weight. */
+  --ease-curtain: cubic-bezier(0.74, 0.22, 0.4, 0.6);
   /* Numeric millisecond tokens are consumed by the motion modules. */
   --motion-text-ms: 900;
   --motion-stagger-ms: 20;
   /*
-   * The opening curtain. --motion-intro-ms is how long it holds before it
-   * starts lifting; the hero entrance is timed to begin as it lifts, not
-   * behind it, so the headline reveal is actually seen. --motion-intro-enter-ms
-   * is the wipe that covers the page when leaving for another route.
+   * The opening sequence, measured off the approved source in
+   * research/reference-lock.md. It runs as four consecutive phases, and every
+   * one of them is a token here so the whole opening can be retimed from this
+   * block alone:
+   *
+   *   count   the loader reads (0) to (100)
+   *   hold    it sits at (100)
+   *   fade    the loader dissolves
+   *   exit    the curtain lifts off the bottom edge
+   *
+   * The lift starts --motion-intro-lift-in-ms into the fade rather than after
+   * it, which is what keeps the two from reading as separate events. The
+   * source covers a departing page with a cut, not a wipe, so there is no
+   * token for a closing duration: there is no closing animation.
    */
-  --motion-intro-ms: 1500;
+  --motion-intro-count-ms: 1000;
+  --motion-intro-hold-ms: 550;
+  --motion-intro-fade-ms: 400;
+  --motion-intro-lift-in-ms: 320;
   --motion-intro-exit-ms: 500;
-  /* A page change is covered briefly: long enough for the next document to
-     paint behind it, with no count to wait for. */
-  --motion-intro-quick-ms: 220;
-  --motion-intro-enter-ms: 380;
+  /* The name wipes across the barcode while the count climbs. */
+  --motion-intro-name-ms: 640;
+  --motion-intro-name-delay-ms: 60;
   --motion-reveal-ms: 1200;
   /*
    * Entrance, matched to the reference build: one duration and one curve for
@@ -107,8 +122,9 @@
   --motion-appear-step-ms: 100;
   --motion-appear-rise: 32;
   --motion-appear-drop: -48;
-  /* First load only: when content starts arriving, once the curtain is off. */
-  --motion-appear-hold-ms: 2000;
+  /* When content starts arriving: the frame the curtain finishes clearing,
+     which is count + hold + lift-in + exit. */
+  --motion-appear-hold-ms: 2370;
   /*
    * Entry blur. It is a softening at the very edge of the viewport, not a
    * veil over the content: --motion-blur-band is how far into the screen

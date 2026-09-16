@@ -1,11 +1,19 @@
 ---
 import Barcode from "../ui/Barcode.astro";
+import { profile } from "../../content/profile";
+
+// "H. MUSHTAQ" from "Hassan Mushtaq": the source stamps the loader with the
+// owner's mark, so this one carries Hassan's rather than borrowing theirs.
+const [first, ...rest] = profile.name.split(" ");
+const stamp = `${first[0]}. ${rest.join(" ")}`.toUpperCase();
 ---
 
 <div class="intro" aria-hidden="true">
   <div class="intro-inner">
-    <Barcode />
-    <span class="intro-count">(00)</span>
-    <small>H. MUSHTAQ</small>
+    <div class="intro-loader">
+      <Barcode />
+      <small class="intro-name">{stamp}</small>
+      <span class="intro-count">(0)</span>
+    </div>
   </div>
 </div>

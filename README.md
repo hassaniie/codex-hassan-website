@@ -36,11 +36,20 @@ Entry blur is tuned separately, and deliberately stays near the viewport edge:
 - `--motion-blur-band` — how far into the screen, in viewport percent, blur may persist before it must be fully resolved
 - `--motion-blur-exit-px` — the softening on the hero as it leaves
 
-The opening curtain and the wipe between routes:
+The opening sequence. Every document plays it, whether it was reached by a
+reload, by the header monogram or by a link. Four phases run one after
+another, and the name wipes across the barcode while the first of them counts:
 
-- `--motion-intro-ms` — how long the curtain holds before it starts lifting
-- `--motion-intro-exit-ms` — the wipe that reveals the page
-- `--motion-intro-enter-ms` — the wipe that covers the page when leaving for another route
+- `--motion-intro-count-ms` — the loader reads `(0)` to `(100)`
+- `--motion-intro-hold-ms` — how long it sits at `(100)`
+- `--motion-intro-fade-ms` — the loader dissolving
+- `--motion-intro-lift-in-ms` — how far into that dissolve the curtain starts to lift
+- `--motion-intro-exit-ms` — the lift itself, off the bottom edge
+- `--motion-intro-name-ms` / `--motion-intro-name-delay-ms` — the name wiping across the barcode
+
+`--ease-curtain` is the lift's curve, fitted to the approved source rather
+than chosen. There is no token for a closing wipe because there is no closing
+animation: leaving a route puts the curtain up in a single frame.
 
 The entrance uses one duration and one curve for every element, with the
 choreography carried by a delay ladder:
@@ -48,9 +57,9 @@ choreography carried by a delay ladder:
 - `--ease-appear` / `--motion-appear-ms` — the shared curve and duration
 - `--motion-appear-step-ms` — the gap between rungs of the ladder
 - `--motion-appear-rise` / `--motion-appear-drop` — how far content rises and the header drops
-- `--motion-appear-hold-ms` — on a first load, when content starts arriving
+- `--motion-appear-hold-ms` — when content starts arriving, which is the frame the curtain finishes clearing
 
-A page change within the same session is covered by a short curtain with no count, and the ladder then carries the content in.
+A page change is the same opening: the departing page is cut under the curtain at `(0)`, and the arriving document runs the one count. That is why the ladder and the curtain share a timeline rather than two.
 
 The cursor dot has its own values:
 

@@ -22,21 +22,26 @@
   display: flex;
 }
 /*
- * The counter owns the timing. It adds .lift on the frame it reads 100, so
- * the curtain rises off the count itself rather than off a parallel delay
- * that can drift away from it on a slow first paint.
+ * Leaving for another route: the curtain cuts in whole, with no wipe. The
+ * source covers a departing page in a single frame, and the cut is also what
+ * keeps the seam invisible here, where the next document paints a fresh
+ * curtain of its own behind this one.
  */
-/* Leaving for another route: the curtain closes back over the page. */
 .intro.covering {
   display: flex;
-  animation: intro-enter calc(var(--motion-intro-enter-ms) * 1ms)
-    var(--ease-curtain) forwards;
+}
+/* The loader dissolves before the curtain moves, and the lift starts while
+   that dissolve is still running, so the two read as one event. */
+.intro.dissolving .intro-loader {
+  animation: intro-dissolve calc(var(--motion-intro-fade-ms) * 1ms) linear
+    forwards;
 }
 .intro.lift {
   animation: intro-exit calc(var(--motion-intro-exit-ms) * 1ms)
     var(--ease-curtain) forwards;
 }
-.intro-inner {
+.intro-inner,
+.intro-loader {
   position: relative;
 }
 .intro .barcode {
@@ -44,11 +49,16 @@
   width: 150px;
   height: 60px;
 }
-/* The count is only ever shown while it is actually counting: not on the
-   curtain that covers a departing page, and not on an in-session arrival. */
-.intro.covering .intro-count,
-.intro-quick .intro-count {
-  display: none;
+/*
+ * A second, faster cycle over the shared breathing one. The source's bars do
+ * not all sit at full strength: they step between roughly two thirds and full
+ * opacity, which is what stops the block reading as a flat rectangle.
+ */
+.intro .barcode i {
+  animation:
+    barcode-breathe 5s ease-in-out infinite alternate,
+    barcode-flicker 1.9s steps(1, end) infinite;
+  animation-delay: calc(var(--i) * -180ms), calc(var(--i) * -230ms);
 }
 .intro-count {
   font: 12px var(--mono);
@@ -56,8 +66,29 @@
   left: calc(100% + 12px);
   top: 0;
 }
-.intro small {
-  font: 9px var(--mono);
+/*
+ * The name is stamped into the foot of the barcode and wiped in from the
+ * left. Its own ink band is inside the clip, so the bars behind it are cut
+ * back as the name passes rather than all at once.
+ */
+.intro-name {
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  padding: 0 4px 0 3px;
+  background: var(--ink);
+  font: 10px/1.35 var(--mono);
+  white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
+}
+.intro.playing .intro-name {
+  animation: intro-name-wipe calc(var(--motion-intro-name-ms) * 1ms) linear
+    calc(var(--motion-intro-name-delay-ms) * 1ms) forwards;
+}
+/* A departing page shows the loader at rest: the count it is about to run
+   from, and no name yet. The arriving document plays the sequence. */
+.intro.covering .intro-name {
+  visibility: hidden;
 }
 .split-reveal .word {
   display: inline-block;
@@ -80,15 +111,6 @@
  * clip-path: none, which cannot interpolate to an inset, so the curtain
  * jumped straight to hidden instead of rising.
  */
-/* Mirrors the exit, so both wipes travel the same way up the screen. */
-@keyframes intro-enter {
-  from {
-    clip-path: inset(100% 0 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
 @keyframes intro-exit {
   from {
     clip-path: inset(0 0 0 0);
@@ -118,6 +140,34 @@
   }
   to {
     transform: scale(1.12) translateY(2%);
+  }
+}
+@keyframes intro-dissolve {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes intro-name-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes barcode-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 0.66;
+  }
+  60% {
+    opacity: 0.86;
   }
 }
 @keyframes barcode-breathe {

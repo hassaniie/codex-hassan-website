@@ -1,11 +1,15 @@
 import { query, type BehaviorContext, type Cleanup } from "../utilities/dom";
-import { motionPresets } from "./presets";
 import { lockScroll } from "./smooth-scroll";
 
 /**
- * Leaving a route closes the same curtain the page opened with, so a
- * navigation reads as one continuous wipe rather than a hard cut. The
- * document still loads normally; the curtain covers the swap.
+ * Leaving a route puts the curtain up in one frame, with no wipe, because
+ * that is what the source does and because there is nothing here to wipe
+ * over: the next document paints its own identical curtain behind this one,
+ * and a cut is the only cover with no seam to get wrong.
+ *
+ * The count belongs to the arriving document, which plays the whole opening.
+ * This one only resets the reading to (0), so the page being left never shows
+ * the 100 it finished on.
  */
 export function initPageTransition({
   signal,
@@ -13,7 +17,6 @@ export function initPageTransition({
 }: BehaviorContext): Cleanup {
   const intro = query(".intro");
   if (!intro || reducedMotion) return () => {};
-  const presets = motionPresets();
   let leaving = false;
   let fallback: ReturnType<typeof setTimeout> | undefined;
 
@@ -21,23 +24,18 @@ export function initPageTransition({
     if (leaving) return;
     leaving = true;
     lockScroll(true);
-    intro.classList.remove("playing", "lift");
-    void intro.offsetWidth;
+    intro.classList.remove("playing", "dissolving", "lift");
+    const count = query(".intro-count", intro);
+    if (count) count.textContent = "(0)";
     intro.classList.add("covering");
-    // Navigate when the wipe lands, with a timer in case the event is dropped.
+    // Navigate once the cover has actually been painted, so the page is never
+    // still visible at the moment it is replaced.
     const navigate = () => {
       clearTimeout(fallback);
       location.href = href;
     };
-    intro.addEventListener(
-      "animationend",
-      (event) => {
-        if ((event as AnimationEvent).animationName === "intro-enter")
-          navigate();
-      },
-      { once: true },
-    );
-    fallback = setTimeout(navigate, presets.introEnter + 320);
+    requestAnimationFrame(() => requestAnimationFrame(navigate));
+    fallback = setTimeout(navigate, 160);
   };
 
   document.addEventListener(
@@ -51,7 +49,7 @@ export function initPageTransition({
       if (link.target === "_blank" || link.hasAttribute("download")) return;
       const url = new URL(link.href, location.href);
       if (url.origin !== location.origin) return;
-      // Same-document hashes belong to the damped scroller, not to a wipe.
+      // Same-document hashes belong to the damped scroller, not to a curtain.
       if (url.pathname === location.pathname) return;
       event.preventDefault();
       go(url.href);
