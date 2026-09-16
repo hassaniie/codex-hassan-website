@@ -1,5 +1,6 @@
 import { query, type BehaviorContext, type Cleanup } from "../../utilities/dom";
 import { gsap, setupEngine } from "../engine";
+import { motionPresets } from "../presets";
 
 /**
  * The interlude holds while the monogram turns through the viewer, replacing
@@ -8,6 +9,10 @@ import { gsap, setupEngine } from "../engine";
 export function initTokenScene({ reducedMotion }: BehaviorContext): Cleanup {
   setupEngine();
   if (reducedMotion || !query(".identity-interlude")) return () => {};
+  const presets = motionPresets();
+  // Depth softening on the artwork only, at the extremes of its sweep.
+  const soft = `blur(${presets.blurReveal}px) drop-shadow(0 35px 25px #1113)`;
+  const sharp = "blur(0px) drop-shadow(0 35px 25px #1113)";
   const context = gsap.context(() => {
     const timeline = gsap.timeline({
       scrollTrigger: {
@@ -26,14 +31,14 @@ export function initTokenScene({ reducedMotion }: BehaviorContext): Cleanup {
           rotateZ: 22,
           scale: 0.8,
           yPercent: 14,
-          filter: "blur(5px) drop-shadow(0 35px 25px #1113)",
+          filter: soft,
         },
         {
           rotateY: 0,
           rotateZ: 0,
           scale: 1.08,
           yPercent: 0,
-          filter: "blur(0px) drop-shadow(0 35px 25px #1113)",
+          filter: sharp,
           ease: "none",
           duration: 0.55,
         },
@@ -46,7 +51,7 @@ export function initTokenScene({ reducedMotion }: BehaviorContext): Cleanup {
           rotateZ: -21,
           scale: 0.84,
           yPercent: -14,
-          filter: "blur(5px) drop-shadow(0 35px 25px #1113)",
+          filter: soft,
           ease: "none",
           duration: 0.45,
         },
@@ -54,7 +59,7 @@ export function initTokenScene({ reducedMotion }: BehaviorContext): Cleanup {
       )
       .fromTo(
         ".token-caption",
-        { opacity: 0, y: 36, filter: "blur(6px)" },
+        { opacity: 0, y: 36, filter: `blur(${presets.blurText}px)` },
         {
           opacity: 1,
           y: 0,

@@ -30,6 +30,12 @@ Every scroll value lives in `src/styles/tokens.css`, not in JavaScript:
 - `--scroll-touch-sync` — set to `0` to hand phones back their native momentum
 - `--scroll-anchor-ms` — how long an in-page anchor takes to travel
 
+Entry blur is tuned separately, and deliberately stays near the viewport edge:
+
+- `--motion-blur-reveal-px` / `--motion-blur-text-px` — how soft content is as it enters (`0` turns blur off)
+- `--motion-blur-band` — how far into the screen, in viewport percent, blur may persist before it must be fully resolved
+- `--motion-blur-exit-px` — the softening on the hero as it leaves
+
 Reduced-motion visitors bypass all of it and get native scrolling.
 
 `npm run preview` serves the built site. `npm run format` formats the source. The lockfile records the installed dependency versions.

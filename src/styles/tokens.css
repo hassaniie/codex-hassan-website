@@ -87,6 +87,16 @@
   --motion-intro-ms: 1000;
   --motion-reveal-ms: 1200;
   /*
+   * Entry blur. It is a softening at the very edge of the viewport, not a
+   * veil over the content: --motion-blur-band is how far into the screen
+   * (in viewport percent) the blur is allowed to persist before it must be
+   * fully resolved. Set the px values to 0 to switch blur off entirely.
+   */
+  --motion-blur-reveal-px: 2.5;
+  --motion-blur-text-px: 2.5;
+  --motion-blur-exit-px: 3;
+  --motion-blur-band: 13;
+  /*
    * Scroll feel. Lower --scroll-lerp is heavier and slower to settle.
    * Set --scroll-touch-sync to 0 to hand phones back their native momentum
    * without touching any other behaviour.

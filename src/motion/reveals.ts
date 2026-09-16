@@ -27,7 +27,6 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
   setupEngine();
   const presets = motionPresets();
   const originals = new Map<HTMLElement, string>();
-  const triggers: ScrollTrigger[] = [];
   const tweens: gsap.core.Tween[] = [];
 
   if (reducedMotion) {
@@ -36,25 +35,50 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
   }
   document.body.classList.add("motion-ready");
 
+  /**
+   * Blur runs on its own short trigger rather than alongside the travel, so
+   * it is a softening as content clears the edge of the viewport instead of a
+   * veil that follows it well into the page. It resolves within
+   * --motion-blur-band percent of the viewport and is skipped at zero.
+   */
+  const edgeBlur = (
+    targets: HTMLElement[],
+    trigger: HTMLElement,
+    amount: number,
+    stagger: number,
+  ) => {
+    if (amount <= 0 || !targets.length) return;
+    tweens.push(
+      gsap.fromTo(
+        targets,
+        { filter: `blur(${amount}px)` },
+        {
+          filter: "blur(0px)",
+          ease: "none",
+          stagger,
+          scrollTrigger: {
+            trigger,
+            start: "top 99%",
+            end: `top ${Math.max(40, 99 - presets.blurBand)}%`,
+            scrub: 0.6,
+          },
+        },
+      ),
+    );
+  };
+
   queryAll(".split-reveal").forEach((element) => {
     originals.set(element, element.innerHTML);
     const chars = split(element);
     if (!chars.length) return;
     const from = {
       opacity: 0.04,
-      filter: "blur(8px)",
       yPercent: 60,
       rotateX: -55,
       transformPerspective: 600,
       transformOrigin: "50% 100%",
     };
-    const to = {
-      opacity: 1,
-      filter: "blur(0px)",
-      yPercent: 0,
-      rotateX: 0,
-      ease: "none" as const,
-    };
+    const to = { opacity: 1, yPercent: 0, rotateX: 0, ease: "none" as const };
     if (element.tagName === "H1") {
       // Above the fold on load: a timed entrance, since there is no scroll yet.
       gsap.set(chars, from);
@@ -67,6 +91,18 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
           stagger: presets.stagger / 1000,
         }),
       );
+      if (presets.blurText > 0) {
+        gsap.set(chars, { filter: `blur(${presets.blurText}px)` });
+        tweens.push(
+          gsap.to(chars, {
+            filter: "blur(0px)",
+            ease: "power3.out",
+            duration: presets.textDuration / 1000,
+            delay: presets.heroDelay / 1000,
+            stagger: presets.stagger / 1000,
+          }),
+        );
+      }
       return;
     }
     // Scroll drives the reveal, but it finishes well before the text exits.
@@ -77,32 +113,33 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
         scrollTrigger: {
           trigger: element,
           start: "top 88%",
-          end: "top 45%",
+          end: "top 50%",
           scrub: 1.1,
         },
       }),
     );
+    edgeBlur(chars, element, presets.blurText, presets.stagger / 2000);
   });
 
   queryAll(".reveal").forEach((element) => {
     tweens.push(
       gsap.fromTo(
         element,
-        { opacity: 0, y: 64, filter: "blur(5px)" },
+        { opacity: 0, y: 64 },
         {
           opacity: 1,
           y: 0,
-          filter: "blur(0px)",
           ease: "none",
           scrollTrigger: {
             trigger: element,
             start: "top 92%",
-            end: "top 58%",
+            end: "top 62%",
             scrub: 1.1,
           },
         },
       ),
     );
+    edgeBlur([element], element, presets.blurReveal, 0);
   });
 
   ScrollTrigger.refresh();
@@ -112,7 +149,6 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
       tween.scrollTrigger?.kill();
       tween.kill();
     });
-    triggers.forEach((trigger) => trigger.kill());
     originals.forEach((markup, element) => {
       gsap.set(element, { clearProps: "all" });
       element.innerHTML = markup;

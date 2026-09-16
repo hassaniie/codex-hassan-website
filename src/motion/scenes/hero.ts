@@ -1,10 +1,12 @@
 import { query, type BehaviorContext, type Cleanup } from "../../utilities/dom";
 import { gsap, setupEngine } from "../engine";
+import { motionPresets } from "../presets";
 
 /** The opening leaves in layers: content lifts, atmosphere trails behind it. */
 export function initHeroScene({ reducedMotion }: BehaviorContext): Cleanup {
   setupEngine();
   if (reducedMotion || !query(".hero")) return () => {};
+  const presets = motionPresets();
   const context = gsap.context(() => {
     // The gradient only holds pure white for its last 6% (~54px), and that
     // buffer is what lets the hero meet the white section below it invisibly.
@@ -22,11 +24,19 @@ export function initHeroScene({ reducedMotion }: BehaviorContext): Cleanup {
     timeline
       .to(
         ".hero-main",
-        { yPercent: -18, opacity: 0, filter: "blur(9px)", ease: "none" },
+        { yPercent: -18, opacity: 0, ease: "none", duration: 1 },
         0,
       )
-      .to(".hero-atmosphere", { scale: 1.16, ease: "none" }, 0)
-      .to(".hero-bottom", { y: -50, opacity: 0, ease: "none" }, 0);
+      .to(".hero-atmosphere", { scale: 1.16, ease: "none", duration: 1 }, 0)
+      .to(".hero-bottom", { y: -50, opacity: 0, ease: "none", duration: 1 }, 0);
+    // The headline stays sharp while it is still readable; the softening only
+    // arrives late in the exit, once it is most of the way faded out.
+    if (presets.blurExit > 0)
+      timeline.to(
+        ".hero-main",
+        { filter: `blur(${presets.blurExit}px)`, ease: "none", duration: 0.4 },
+        0.6,
+      );
   });
   return () => context.revert();
 }
