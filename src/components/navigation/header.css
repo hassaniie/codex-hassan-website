@@ -1,0 +1,224 @@
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--layer-header);
+  padding: 14px var(--gutter);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  color: white;
+  mix-blend-mode: normal;
+  pointer-events: none;
+  /* Switch text and its surface together to preserve contrast during scroll. */
+}
+.site-header a,
+.site-header button {
+  pointer-events: auto;
+}
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+.header-right {
+  gap: 20px;
+}
+.monogram {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--mono);
+  font-size: 24px;
+  line-height: 1;
+}
+.monogram img {
+  width: 65px;
+  height: 32px;
+}
+.site-header[data-theme="light"] .monogram img {
+  filter: invert(1);
+}
+.header-photo {
+  object-fit: cover;
+  border-radius: var(--radius-small);
+  width: 44px;
+  height: 44px;
+  filter: none;
+}
+.header-left {
+  padding-top: 5px;
+}
+.location {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+.location time {
+  font-size: 14px;
+  display: inline-flex;
+  gap: 3px;
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+.timezone {
+  opacity: 0.65;
+  font-size: 10px;
+}
+.header-right .action {
+  margin-top: 10px;
+}
+.menu-toggle {
+  display: none;
+}
+
+.menu-dialog {
+  border: 0;
+  padding: 100px 7vw 40px;
+  background: linear-gradient(#c9cbfa, white 55%);
+  color: var(--ink);
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+}
+.menu-dialog::backdrop {
+  background: #25296b99;
+  backdrop-filter: blur(5px);
+}
+.menu-dialog[open] {
+  animation: menu-in 0.5s ease both;
+}
+.menu-dialog nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  font-family: var(--serif);
+  font-size: 42px;
+}
+.menu-dialog sup {
+  font: 12px var(--mono);
+  color: var(--accent);
+}
+.menu-close {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+}
+
+.menu-bottom {
+  margin-top: 100px;
+}
+@media (max-width: 900px) {
+  .location {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .site-header {
+    padding-top: 12px;
+  }
+  .header-left {
+    gap: 18px;
+    padding-top: 5px;
+  }
+  .monogram {
+    font-size: 22px;
+  }
+  .header-right {
+    gap: 14px;
+  }
+  .header-photo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+  .menu-dialog nav {
+    font-size: 38px;
+  }
+}
+.site-header[data-theme="dark"] {
+  color: var(--color-paper);
+  --header-inverse: var(--ink);
+}
+.site-header[data-theme="light"] {
+  color: var(--ink);
+  --header-inverse: var(--color-paper);
+}
+
+@media (max-width: 600px) {
+  .desktop-work {
+    display: none;
+  }
+}
+
+.menu-dialog nav .action {
+  align-self: flex-start;
+}
+
+/* Figma 26:86 — location and clock */
+.location {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: normal;
+  letter-spacing: -0.26px;
+}
+.location > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.location time {
+  gap: 2px;
+}
+.clock-unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 20%);
+}
+.clock-unit,
+.location .timezone {
+  font-family: Doto, var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.28px;
+  font-variation-settings: "ROND" 16;
+  line-height: normal;
+}
+.location .timezone {
+  opacity: 1;
+}
+.site-header[data-theme="light"] .clock-unit {
+  background: rgb(23 24 25 / 8%);
+}
+@media (max-width: 900px) {
+  .location {
+    display: none;
+  }
+}
+
+.site-header[data-theme="dark"] {
+  --action-accent: var(--color-action-on-dark);
+  --action-icon-ink: var(--color-action-dark-surface);
+}
+.site-header[data-theme="light"] {
+  --action-accent: var(--color-accent);
+  --action-icon-ink: var(--color-paper);
+}

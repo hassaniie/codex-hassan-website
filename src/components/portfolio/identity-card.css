@@ -1,0 +1,117 @@
+.identity-card {
+  width: 365px;
+  position: relative;
+  isolation: isolate;
+  --tab-progress: 0;
+}
+.identity-surface {
+  z-index: 1;
+  padding: 9px;
+  border: 1px solid var(--color-identity-border);
+  border-radius: var(--radius-card);
+  display: flex;
+  gap: var(--space-4);
+  position: relative;
+  background: #ffffff24;
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 0 0 2px #fff1;
+  transition: border-color var(--duration-hover);
+}
+.identity-card:is(:hover, :focus-visible) .identity-surface {
+  border-color: var(--color-identity-border-hover);
+}
+.identity-surface > img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.identity-copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 2px;
+}
+.identity-copy h2 {
+  font: 14px var(--mono);
+  text-transform: uppercase;
+  margin: 0 0 2px;
+}
+.identity-copy p {
+  font-size: var(--text-small);
+  color: #44465d;
+}
+.availability {
+  font-size: 9px;
+  color: #3035a8;
+  position: absolute;
+  right: 14px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.identity-tab {
+  position: absolute;
+  top: 40%;
+  font: 13px var(--mono);
+  background: var(--accent);
+  color: white;
+  width: 20px;
+  text-align: center;
+  border-radius: 2px;
+  z-index: 0;
+  opacity: calc(1 - var(--tab-progress));
+  transform: translateX(
+    calc(var(--tab-direction) * var(--tab-progress) * 28px)
+  );
+}
+.tab-left {
+  left: -22px;
+  --tab-direction: 1;
+}
+.tab-right {
+  right: -22px;
+  --tab-direction: -1;
+}
+
+@media (max-width: 600px) {
+  .identity-card {
+    width: min(288px, calc(100vw - 84px));
+  }
+  .identity-surface {
+    gap: var(--space-3);
+    border-radius: 7px;
+    padding: 6px;
+  }
+  .identity-surface > img {
+    width: 60px;
+    height: 60px;
+  }
+  .availability {
+    font-size: 8px;
+    right: 9px;
+    top: 7px;
+  }
+  .identity-tab {
+    font-size: var(--text-meta);
+    width: 17px;
+  }
+  .tab-left {
+    left: -20px;
+  }
+  .tab-right {
+    right: -20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .identity-copy h2 {
+    font-size: var(--text-meta);
+  }
+  .identity-copy p {
+    font-size: 10px;
+  }
+}

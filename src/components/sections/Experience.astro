@@ -1,0 +1,40 @@
+---
+import { profile } from "../../content/profile";
+
+import Action from "../ui/Action.astro";
+
+import { experience } from "../../content/experience";
+import ExperienceRow from "../portfolio/ExperienceRow.astro";
+import "./Experience.css";
+---
+
+<section class="experience section-pad" id="experience">
+  <div class="display-heading reveal">
+    <span class="mono">
+      People, products,
+      <br />
+      and everything between.
+    </span>
+    <h2 class="split-reveal">Experience</h2>
+    <span class="mono">({String(experience.length).padStart(2, "0")})</span>
+  </div>
+  <div class="experience-layout">
+    <h3 class="experience-label">
+      Where I've <br />
+      made a difference.
+    </h3>
+    <div class="experience-list">
+      {experience.map((entry) => (
+        <ExperienceRow entry={entry} />
+      ))}
+
+      <Action
+        href={profile.resume}
+        label="Explore my resume"
+        class="resume-link"
+        arrow
+        external
+      />
+    </div>
+  </div>
+</section>

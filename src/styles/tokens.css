@@ -1,0 +1,88 @@
+/* Shared palette and atmosphere, based on Hassan’s Figma hero. */
+:root {
+  --color-action-on-dark: #e2e4ff;
+  --color-action-dark-surface: #171b52;
+  --atmosphere-edge-overlay: linear-gradient(
+    180deg,
+    rgb(23 27 82 / 90%) 0%,
+    rgb(23 27 82 / 65%) 42%,
+    rgb(23 27 82 / 0%) 72%
+  );
+  --font-weight-regular: 400;
+  --font-weight-light: 300;
+  --action-target-size: 44px;
+  --action-icon-size: 20px;
+  --action-navigation-size: 42px;
+  --action-navigation-size-mobile: 38px;
+  --action-portrait-size: 56px;
+  --action-portrait-padding: 9px 22px 9px 9px;
+  --action-portrait-gap: 22px;
+  --action-radius-increase: 5px;
+  --atmosphere-gradient: linear-gradient(
+    180deg,
+    #494fed 0%,
+    #494fed 28%,
+    #6269e9 43%,
+    #a6abf3 59%,
+    #e3e5fc 75%,
+    #fff 94%
+  );
+  --color-ink: #171819;
+  --color-paper: #fff;
+  --color-accent: #494fed;
+  --color-deep: #25296b;
+  --color-identity-border: rgb(255 255 255 / 72%);
+  --color-identity-border-hover: rgb(255 255 255 / 84%);
+  --text-body-small: 0.875rem;
+  --color-border: #e7e7e7;
+  --color-border-strong: #d7d9e2;
+  --color-field-placeholder: #777b86;
+  --color-contact-muted: rgb(23 24 25 / 38%);
+  --color-contact-wash: #e3e5fc;
+  --color-heading-accent: var(--color-accent);
+  --color-label-accent: var(--color-accent);
+  --color-muted: #737373;
+  --color-tag-surface: #f0f2f3;
+  --color-tag-text: #56595b;
+  --ink: var(--color-ink);
+  --accent: var(--color-accent);
+  --deep: var(--color-deep);
+  --line: var(--color-border);
+  --serif: Instrument, Georgia, serif;
+  --mono: Mono, monospace;
+  --sans: Geist, Arial, sans-serif;
+  --text-body: 1rem;
+  --text-meta: 0.75rem;
+  --text-small: 0.6875rem;
+  --leading-body: 1.45;
+  --leading-display: 1.08;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 5rem;
+  --gutter: var(--space-5);
+  --content-principles: 68.75rem;
+  --content-statement: 70rem;
+  --radius-small: 0.1875rem;
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --layer-header: 40;
+  --layer-intro: 100;
+  --layer-overlay: 150;
+  --layer-skip-link: 200;
+  --duration-fast: 0.25s;
+  --duration-hover: 0.4s;
+  --duration-reveal: 0.85s;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+  /* Numeric millisecond tokens are consumed by the Web Animations modules. */
+  --motion-text-ms: 700;
+  --motion-stagger-ms: 12;
+  --motion-hero-delay-ms: 950;
+  --motion-intro-ms: 1000;
+}

@@ -1,0 +1,18 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import ContactPage from "../components/contact/ContactPage.astro";
+---
+
+<SiteLayout
+  title="Contact Hassan Mushtaq — Product & UX/UI Designer"
+  description="Contact Hassan Mushtaq about product design, UX/UI work, design systems, and new opportunities."
+  initialHeaderTheme="light"
+  skipHref="#contact-form"
+  skipLabel="Skip to contact form"
+>
+  <ContactPage />
+  <script>
+    import { initContactPage } from "../scripts/contact-page";
+    initContactPage();
+  </script>
+</SiteLayout>

@@ -1,0 +1,31 @@
+@font-face {
+  font-family: Instrument;
+  src: url("/assets/instrument.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: Mono;
+  src: url("/assets/geist-mono.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: Geist;
+  src: url("/assets/geist.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Doto;
+  src: url("/assets/doto-bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Mono;
+  src: url("/assets/geist-mono-light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}

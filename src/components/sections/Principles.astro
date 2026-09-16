@@ -1,0 +1,33 @@
+---
+import Barcode from "../ui/Barcode.astro";
+
+import { principles } from "../../content/principles";
+import PrincipleCard from "../portfolio/PrincipleCard.astro";
+import "./Principles.css";
+---
+
+<section class="principles section-pad" id="about">
+  <div class="section-intro reveal">
+    <h2>
+      Behind the work <sup>({String(principles.length).padStart(2, "0")})</sup>
+    </h2>
+    <Barcode accent label="H. MUSHTAQ" variant={1} />
+  </div>
+  <div class="statement-frame about-statement">
+    <span class="side-letter" aria-hidden="true">
+      Ⓗ
+    </span>
+    <p class="split-reveal">
+      I bring clarity to complex products. From the first question to the final
+      interaction, I design around the people who use them.
+    </p>
+    <span class="side-letter" aria-hidden="true">
+      Ⓜ
+    </span>
+  </div>
+  <div class="principle-grid">
+    {principles.map((principle, i) => (
+      <PrincipleCard principle={principle} variant={i + 2} />
+    ))}
+  </div>
+</section>

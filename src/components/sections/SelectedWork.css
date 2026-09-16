@@ -1,0 +1,25 @@
+.work {
+  padding-top: 60px;
+}
+.all-work {
+  padding: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+}
+.all-work > .mono {
+  color: var(--color-muted);
+}
+@media (max-width: 600px) {
+  .work {
+    padding-top: 35px;
+  }
+  .all-work {
+    align-items: flex-start;
+    gap: 25px;
+  }
+  .all-work > .mono {
+    font-size: 10px;
+    max-width: 135px;
+  }
+}

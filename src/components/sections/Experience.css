@@ -1,0 +1,40 @@
+.experience {
+  padding-top: 170px;
+  padding-bottom: 140px;
+}
+.experience-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+}
+.experience-label {
+  font-size: 36px;
+  color: var(--color-accent);
+}
+.resume-link {
+  margin-top: 20px;
+}
+@media (max-width: 900px) {
+  .experience-layout {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+@media (max-width: 600px) {
+  .experience {
+    padding-top: 110px;
+    padding-bottom: 70px;
+  }
+  .experience .display-heading h2 {
+    font-size: 90px;
+  }
+  .experience-layout {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .experience-label {
+    font-size: 30px;
+  }
+  .experience-label br {
+    display: none;
+  }
+}

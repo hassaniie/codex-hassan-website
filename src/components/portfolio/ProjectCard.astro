@@ -1,0 +1,57 @@
+---
+import "./project-card.css";
+import type { Project } from "../../content/projects";
+import Barcode from "../ui/Barcode.astro";
+import Action from "../ui/Action.astro";
+interface Props {
+  project: Project;
+  variant?: number;
+}
+const { project, variant = 0 } = Astro.props;
+---
+
+<article class="project reveal">
+  <Action
+    appearance="media"
+    label="Explore project ↗"
+    class={`project-media ${project.id}-media`}
+    href={project.href}
+    external
+    aria-label={`View ${project.title.join(" ")} on Behance`}
+  >
+    <img {...project.image} loading="lazy" />
+  </Action>
+  <div class="project-info">
+    <div class="project-story">
+      <div class="project-top">
+        <h3>
+          {project.title.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
+        </h3>
+        <span class="mono">({project.year})</span>
+      </div>
+      <div class="project-description">
+        <p>{project.description}</p>
+        <ul class="tags">
+          {project.tags.map((tag) => (
+            <li>{tag}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    <div class="project-bottom">
+      <Action
+        href={project.href}
+        label="View case study"
+        weight="light"
+        arrow
+        external
+      />
+      <Barcode variant={variant} />
+    </div>
+  </div>
+</article>

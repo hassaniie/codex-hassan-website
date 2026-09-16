@@ -1,0 +1,35 @@
+---
+import { behance } from "../../content/profile";
+
+import Action from "../ui/Action.astro";
+
+import { projects } from "../../content/projects";
+import ProjectCard from "../portfolio/ProjectCard.astro";
+import "./SelectedWork.css";
+---
+
+<section class="work section-pad" id="work">
+  <div class="display-heading reveal">
+    <span class="mono">
+      Selected explorations
+      <br />
+      (2025 — 2026)
+    </span>
+    <h2 class="split-reveal">Projects</h2>
+    <span class="mono">({String(projects.length).padStart(2, "0")})</span>
+  </div>
+  {projects.map((project, i) => (
+    <ProjectCard project={project} variant={i + 5} />
+  ))}
+
+  <div class="all-work">
+    <span class="mono">A few things I've put into the world.</span>
+    <Action
+      href={behance}
+      label="More on Behance"
+      size="responsive"
+      arrow
+      external
+    />
+  </div>
+</section>

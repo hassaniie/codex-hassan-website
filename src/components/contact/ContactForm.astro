@@ -1,0 +1,53 @@
+---
+import Action from "../ui/Action.astro";
+---
+
+<form class="contact-form" id="contact-form" novalidate>
+  <label class="contact-field">
+    <span>Name</span>
+    <input
+      name="name"
+      type="text"
+      autocomplete="name"
+      placeholder="Name*"
+      required
+    />
+  </label>
+  <label class="contact-field">
+    <span>Email</span>
+    <input
+      name="email"
+      type="email"
+      autocomplete="email"
+      placeholder="Email*"
+      required
+    />
+  </label>
+  <label class="contact-field">
+    <span>Company</span>
+    <input
+      name="company"
+      type="text"
+      autocomplete="organization"
+      placeholder="Company"
+    />
+  </label>
+  <label class="contact-field contact-field-message">
+    <span>Project details</span>
+    <textarea
+      name="details"
+      placeholder="Project details"
+      rows="4"
+      required
+    ></textarea>
+  </label>
+  <div class="contact-form-actions">
+    <label class="consent">
+      <input name="consent" type="checkbox" required />
+      <span>
+        I accept and agree to the <a href="/privacy-policy/">Privacy Policy</a>
+      </span>
+    </label>
+    <Action appearance="solid" label="Send the form" type="submit" arrow />
+  </div>
+</form>

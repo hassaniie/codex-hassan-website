@@ -1,0 +1,65 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import "./action.css";
+type Props = Omit<HTMLAttributes<"button">, "class"> & {
+  href?: string;
+  label: string;
+  external?: boolean;
+  arrow?: boolean;
+  class?: string;
+  appearance?:
+    | "text"
+    | "portrait"
+    | "quiet"
+    | "icon"
+    | "navigation"
+    | "media"
+    | "solid"
+    | "editorial";
+  size?: "small" | "default" | "responsive";
+  weight?: "regular" | "light";
+  tone?: "inherit" | "inverse";
+};
+const {
+  href,
+  label,
+  external = false,
+  arrow = false,
+  class: className,
+  appearance = "text",
+  size = "default",
+  weight = "regular",
+  tone = "inherit",
+  ...attributes
+} = Astro.props;
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  {...attributes}
+  class:list={["action", className]}
+  data-appearance={appearance}
+  data-size={size}
+  data-weight={weight}
+  data-tone={tone}
+  href={href}
+  type={href ? undefined : (attributes.type ?? "button")}
+  target={href && external ? "_blank" : undefined}
+  rel={href && external ? "noopener" : undefined}
+>
+  <slot />
+  <slot name="leading" />
+  <span class="action-label">
+    <span class="action-track">
+      <span>{label}</span>
+      <span class="action-copy" aria-hidden="true">
+        {label}
+      </span>
+    </span>
+  </span>
+  {arrow && (
+    <b class="arrow-box" aria-hidden="true">
+      ↗
+    </b>
+  )}
+</Tag>

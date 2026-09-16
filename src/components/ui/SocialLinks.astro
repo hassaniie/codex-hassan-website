@@ -1,0 +1,15 @@
+---
+import { profile } from "../../content/profile";
+import Action from "./Action.astro";
+interface Props {
+  includeResume?: boolean;
+}
+const { includeResume = false } = Astro.props;
+---
+
+<div class="socials">
+  {profile.socialLinks.map((link) => (
+    <Action {...link} external />
+  ))}
+  {includeResume && <Action href={profile.resume} label="Resume ↗" external />}
+</div>

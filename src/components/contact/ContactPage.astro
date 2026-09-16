@@ -1,0 +1,73 @@
+---
+import { profile, mailto } from "../../content/profile";
+import Footer from "../navigation/Footer.astro";
+import Action from "../ui/Action.astro";
+import ContactForm from "./ContactForm.astro";
+import "./contact-page.css";
+---
+
+<section class="contact-page-hero" aria-labelledby="contact-title">
+  <div class="statement-frame contact-page-frame">
+    <img
+      class="bracket left"
+      src="/assets/hero-curve.svg"
+      alt=""
+      width="57"
+      height="165"
+    />
+    <div class="contact-page-heading">
+      <h1 class="split-reveal" id="contact-title">
+        Want to connect?
+      </h1>
+      <p>
+        Feel free to email me or use
+        <br />
+        the form below{" "}
+        <span class="down-cue" aria-hidden="true">
+          ↓
+        </span>{" "}
+        with any questions
+      </p>
+    </div>
+    <img
+      class="bracket right"
+      src="/assets/hero-curve.svg"
+      alt=""
+      width="57"
+      height="165"
+    />
+  </div>
+  <ContactForm />
+</section>
+
+<section class="contact-directory" aria-labelledby="contact-directory-title">
+  <div class="contact-directory-content">
+    <h2 class="split-reveal" id="contact-directory-title">
+      Or contact
+      <br />
+      me here
+    </h2>
+    <div class="contact-directory-socials reveal">
+      <span class="contact-directory-label">Socials:</span>
+      <div class="contact-directory-links">
+        {profile.socialLinks.map((link) => (
+          <Action
+            appearance="editorial"
+            {...link}
+            label={`${link.label} ↗`}
+            external
+          />
+        ))}
+      </div>
+    </div>
+    <div class="contact-directory-email reveal">
+      <span>Work email:</span>
+      <Action
+        appearance="editorial"
+        href={mailto}
+        label={`${profile.email} ↗`}
+      />
+    </div>
+  </div>
+  <Footer leading="privacy" />
+</section>

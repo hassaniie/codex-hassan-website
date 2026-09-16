@@ -1,0 +1,67 @@
+---
+import "../styles/global.css";
+import { profile } from "../content/profile";
+
+import Header from "../components/navigation/Header.astro";
+import Intro from "../components/ui/Intro.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  initialHeaderTheme?: "dark" | "light";
+  skipHref?: string;
+  skipLabel?: string;
+}
+const {
+  title = profile.title,
+  description = profile.description,
+  initialHeaderTheme = "dark",
+  skipHref = "#work",
+  skipLabel = "Skip to selected work",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#25296b" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='5' fill='%23ed783e'/%3E%3Ctext x='20' y='27' text-anchor='middle' font-family='serif' font-size='25' fill='%23171819'%3EH%3C/text%3E%3C/svg%3E"
+    />
+    <link
+      rel="preload"
+      href="/assets/instrument.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/geist-mono.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+  </head>
+  <body>
+    <a class="skip-link" href={skipHref}>
+      {skipLabel}
+    </a>
+    <Intro />
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <Header initialTheme={initialHeaderTheme} />
+    <main>
+      <slot />
+    </main>
+    <div class="toast" role="status" aria-live="polite"></div>
+    <script>
+      import { initSite } from "../scripts/site";
+      initSite();
+    </script>
+  </body>
+</html>

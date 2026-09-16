@@ -1,0 +1,58 @@
+.identity-interlude {
+  height: 115svh;
+  min-height: 720px;
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+.interlude-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    white 0%,
+    #dfe4ec 20%,
+    #7e8fae 40%,
+    #282831 57%,
+    #7a869b 75%,
+    white 98%
+  );
+}
+.token-stage {
+  position: sticky;
+  top: 20svh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 8vh;
+}
+.identity-token {
+  width: clamp(260px, 30vw, 500px);
+  height: auto;
+  will-change: transform;
+  filter: drop-shadow(0 35px 25px #1113);
+}
+.token-caption {
+  text-align: center;
+  color: white;
+  margin-top: 30px;
+  line-height: 1.7;
+  font-size: var(--text-meta);
+  letter-spacing: 0.05em;
+}
+@media (max-width: 600px) {
+  .identity-interlude {
+    height: 95svh;
+    min-height: 620px;
+  }
+  .token-stage {
+    top: 15svh;
+    padding-top: 10vh;
+  }
+  .identity-token {
+    width: 285px;
+  }
+  .token-caption {
+    margin-top: 16px;
+  }
+}

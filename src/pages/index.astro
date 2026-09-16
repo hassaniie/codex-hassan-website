@@ -1,0 +1,22 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import Principles from "../components/sections/Principles.astro";
+import IdentityInterlude from "../components/sections/IdentityInterlude.astro";
+import SelectedWork from "../components/sections/SelectedWork.astro";
+import Experience from "../components/sections/Experience.astro";
+import Contact from "../components/sections/Contact.astro";
+---
+
+<SiteLayout>
+  <Hero />
+  <Principles />
+  <IdentityInterlude />
+  <SelectedWork />
+  <Experience />
+  <Contact />
+  <script>
+    import { initHomepage } from "../scripts/homepage";
+    initHomepage();
+  </script>
+</SiteLayout>

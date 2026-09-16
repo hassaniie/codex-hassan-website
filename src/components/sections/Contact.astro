@@ -1,0 +1,61 @@
+---
+import { profile } from "../../content/profile";
+
+import Action from "../ui/Action.astro";
+import Footer from "../navigation/Footer.astro";
+import "./Contact.css";
+---
+
+<section class="contact" id="contact">
+  <div class="contact-atmosphere" aria-hidden="true"></div>
+  <div class="contact-content">
+    <span class="mono contact-kicker">
+      Good things start with a conversation{" "}
+      <i class="status-dot" aria-hidden="true"></i>
+    </span>
+    <div class="statement-frame">
+      <img
+        class="bracket left"
+        src="/assets/hero-curve.svg"
+        alt=""
+        width="57"
+        height="165"
+      />
+      <h2 class="split-reveal">
+        A product to rethink, a team to join,
+        <br /> or an idea you can't leave alone.
+      </h2>
+      <img
+        class="bracket right"
+        src="/assets/hero-curve.svg"
+        alt=""
+        width="57"
+        height="165"
+      />
+    </div>
+    <Action
+      class="contact-button"
+      appearance="portrait"
+      href="/contact/"
+      label="Let's talk"
+      aria-label="Email Hassan — let’s talk"
+      arrow
+    >
+      <img
+        slot="leading"
+        src={profile.portrait}
+        alt=""
+        width="56"
+        height="56"
+      />
+    </Action>
+    <Action
+      class="copy-email"
+      appearance="quiet"
+      size="small"
+      tone="inverse"
+      label="Copy email address"
+    />
+  </div>
+  <Footer />
+</section>

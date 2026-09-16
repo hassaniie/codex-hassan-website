@@ -1,0 +1,17 @@
+---
+import "./experience-row.css";
+import type { Experience } from "../../content/experience";
+interface Props {
+  entry: Experience;
+}
+const { entry } = Astro.props;
+---
+
+<article class="experience-row reveal">
+  <div class="experience-title">
+    <h4>{entry.company}</h4>
+    <span>{entry.period}</span>
+  </div>
+  <p>{entry.description}</p>
+  <span class="mono job-title">{entry.role}</span>
+</article>

@@ -1,0 +1,39 @@
+---
+import { profile, mailto } from "../../content/profile";
+
+import Action from "../ui/Action.astro";
+import SocialLinks from "../ui/SocialLinks.astro";
+import IdentityCard from "../portfolio/IdentityCard.astro";
+import "./Hero.css";
+---
+
+<section class="hero" id="home">
+  <div class="hero-atmosphere" aria-hidden="true"></div>
+  <div class="hero-main">
+    <div class="statement-frame">
+      <img
+        class="bracket left"
+        src="/assets/hero-curve.svg"
+        alt=""
+        width="57"
+        height="165"
+      />
+      <h1 class="split-reveal">
+        Designing thoughtful digital products for a world that never stands
+        still.
+      </h1>
+      <img
+        class="bracket right"
+        src="/assets/hero-curve.svg"
+        alt=""
+        width="57"
+        height="165"
+      />
+    </div>
+    <IdentityCard />
+  </div>
+  <div class="hero-bottom">
+    <SocialLinks includeResume />
+    <Action href={mailto} label={profile.email} class="email-link" arrow />
+  </div>
+</section>

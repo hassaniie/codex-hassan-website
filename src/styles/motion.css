@@ -1,0 +1,126 @@
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-intro);
+  background: var(--ink);
+  color: var(--accent);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.intro.playing {
+  display: flex;
+  animation: intro-exit 0.75s var(--ease-curtain)
+    calc(var(--motion-intro-ms) * 1ms + 50ms) forwards;
+}
+.intro-inner {
+  position: relative;
+}
+.intro .barcode {
+  color: var(--accent);
+  width: 150px;
+  height: 60px;
+}
+.intro-count {
+  font: 12px var(--mono);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 0;
+}
+.intro small {
+  font: 9px var(--mono);
+}
+.split-reveal .word {
+  display: inline-block;
+}
+.split-reveal .char {
+  display: inline-block;
+  will-change: transform, filter, opacity;
+}
+.reveal {
+  opacity: 1;
+}
+.motion-ready .reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity var(--duration-reveal) ease,
+    transform var(--duration-reveal) var(--ease-out);
+}
+.motion-ready .reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+@keyframes intro-exit {
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes atmosphere {
+  from {
+    transform: scale(1.05) translateY(-1%);
+  }
+  to {
+    transform: scale(1.12) translateY(2%);
+  }
+}
+@keyframes barcode-breathe {
+  0%,
+  60% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(0.72);
+  }
+}
+@media (max-width: 600px) {
+  .intro .barcode {
+    width: 130px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .intro {
+    display: none !important;
+  }
+  .motion-ready .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .cursor-dot {
+    display: none;
+  }
+  .identity-token {
+    transform: none !important;
+  }
+  .split-reveal .char {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}

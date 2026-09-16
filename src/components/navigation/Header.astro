@@ -1,0 +1,68 @@
+---
+import { profile } from "../../content/profile";
+
+import Action from "../ui/Action.astro";
+
+import { projects } from "../../content/projects";
+import "./header.css";
+interface Props {
+  initialTheme?: "dark" | "light";
+}
+const { initialTheme = "dark" } = Astro.props;
+---
+
+<header class="site-header" data-theme={initialTheme}>
+  <div class="header-left">
+    <a class="monogram" href="/" aria-label="Hassan Mushtaq home">
+      <img src="/assets/hm-logo.svg" alt="" width="65" height="32" />
+    </a>
+    <Action
+      class="menu-toggle"
+      appearance="icon"
+      label="☰"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="menu"
+    />
+  </div>
+  <div class="location">
+    <span>{profile.location}</span>
+    <div>
+      <time id="local-time" aria-label="Local time in Lahore">
+        <span class="clock-unit" data-hours aria-hidden="true">
+          00
+        </span>
+        <span class="clock-unit" data-minutes aria-hidden="true">
+          00
+        </span>
+      </time>
+      <span class="timezone"> (GMT+5)</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <Action href="/contact/" label="Contact me" size="responsive" />
+    <a href="/#about" aria-label="About Hassan">
+      <img
+        class="header-photo"
+        src={profile.portrait}
+        alt={profile.name}
+        width="44"
+        height="44"
+      />
+    </a>
+  </div>
+</header>
+<dialog id="menu" class="menu-dialog" aria-label="Navigation">
+  <Action class="menu-close" label="Close ×" aria-label="Close navigation" />
+  <nav>
+    <Action
+      appearance="navigation"
+      href="/#work"
+      label={`Selected work (${String(projects.length).padStart(2, "0")})`}
+    />
+    <Action appearance="navigation" href="/#about" label="A little about me" />
+    <Action appearance="navigation" href="/#experience" label="Experience" />
+    <Action appearance="navigation" href="/contact/" label="Let's talk ↗" />
+  </nav>
+  <div class="menu-bottom mono">{profile.location} · Working worldwide</div>
+</dialog>

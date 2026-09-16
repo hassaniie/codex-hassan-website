@@ -1,0 +1,24 @@
+---
+import "./principle-card.css";
+import type { Principle } from "../../content/principles";
+import Barcode from "../ui/Barcode.astro";
+interface Props {
+  principle: Principle;
+  variant?: number;
+}
+const { principle, variant = 0 } = Astro.props;
+---
+
+<article class="principle reveal">
+  <span class="number-square">{principle.number}</span>
+  <h3>
+    {principle.title.map((line, i) => (
+      <>
+        {i > 0 && <br />}
+        {line}
+      </>
+    ))}
+  </h3>
+  <p>{principle.description}</p>
+  <Barcode variant={variant} />
+</article>

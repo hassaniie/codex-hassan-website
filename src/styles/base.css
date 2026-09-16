@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  border: 0;
+  background: none;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: var(--leading-display);
+  text-wrap: balance;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+.mono,
+.roll,
+.socials,
+.email-link,
+footer,
+.identity-copy,
+.tags,
+.experience-title,
+.number-square {
+  font-family: var(--mono);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: var(--text-meta);
+  line-height: var(--leading-body);
+}
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: var(--layer-skip-link);
+  background: white;
+  padding: 12px;
+  transform: translateY(-150%);
+}
+.skip-link:focus {
+  transform: none;
+}
+.section-pad {
+  padding-inline: var(--gutter);
+}
+
+@media (max-width: 600px) {
+  :root {
+    --gutter: var(--space-4);
+  }
+}
