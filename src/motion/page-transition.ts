@@ -21,7 +21,7 @@ export function initPageTransition({
     if (leaving) return;
     leaving = true;
     lockScroll(true);
-    intro.classList.remove("playing");
+    intro.classList.remove("playing", "lift");
     void intro.offsetWidth;
     intro.classList.add("covering");
     // Navigate when the wipe lands, with a timer in case the event is dropped.

@@ -13,7 +13,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
   function play() {
     if (reducedMotion || !intro || !count) return;
     cancelAnimationFrame(frame);
-    intro.classList.remove("playing");
+    intro.classList.remove("playing", "lift");
     void intro.offsetWidth;
     intro.classList.add("playing");
     // Hold the page still behind the curtain so it opens onto the hero.
@@ -30,8 +30,14 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
     const start = performance.now();
     function tick(time: number) {
       const progress = Math.min((time - start) / introDuration, 1);
-      count!.textContent = `(${String(Math.round(100 * (1 - Math.pow(1 - progress, 3)))).padStart(2, "0")})`;
+      // A gentle ease keeps the count moving for the whole duration: a
+      // steeper one reaches 100 early and then sits there, which reads as a
+      // stall rather than as loading.
+      const eased = 1 - Math.pow(1 - progress, 1.3);
+      count!.textContent = `(${String(Math.round(100 * eased)).padStart(2, "0")})`;
       if (progress < 1) frame = requestAnimationFrame(tick);
+      // Reaching 100 is what raises the curtain.
+      else intro!.classList.add("lift");
     }
     frame = requestAnimationFrame(tick);
   }
@@ -39,7 +45,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
     "animationend",
     (event) => {
       if (event.animationName === "intro-exit") {
-        intro.classList.remove("playing");
+        intro.classList.remove("playing", "lift");
         document.documentElement.classList.remove("intro-armed");
         clearTimeout(release);
         lockScroll(false);
@@ -62,7 +68,7 @@ export function initIntro({ signal, reducedMotion }: BehaviorContext): Cleanup {
   return () => {
     cancelAnimationFrame(frame);
     clearTimeout(release);
-    intro.classList.remove("playing");
+    intro.classList.remove("playing", "lift");
     document.documentElement.classList.remove("intro-armed");
     lockScroll(false);
   };

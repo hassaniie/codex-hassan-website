@@ -20,8 +20,15 @@
 }
 .intro.playing {
   display: flex;
+}
+/*
+ * The counter owns the timing. It adds .lift on the frame it reads 100, so
+ * the curtain rises off the count itself rather than off a parallel delay
+ * that can drift away from it on a slow first paint.
+ */
+.intro.lift {
   animation: intro-exit calc(var(--motion-intro-exit-ms) * 1ms)
-    var(--ease-curtain) calc(var(--motion-intro-ms) * 1ms + 40ms) forwards;
+    var(--ease-curtain) forwards;
 }
 /* Leaving for another route: the curtain closes back over the page. */
 .intro.covering {

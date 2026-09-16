@@ -83,14 +83,14 @@
   /* Numeric millisecond tokens are consumed by the motion modules. */
   --motion-text-ms: 900;
   --motion-stagger-ms: 20;
-  --motion-hero-delay-ms: 520;
+  --motion-hero-delay-ms: 4180;
   /*
    * The opening curtain. --motion-intro-ms is how long it holds before it
    * starts lifting; the hero entrance is timed to begin as it lifts, not
    * behind it, so the headline reveal is actually seen. --motion-intro-enter-ms
    * is the wipe that covers the page when leaving for another route.
    */
-  --motion-intro-ms: 340;
+  --motion-intro-ms: 4000;
   --motion-intro-exit-ms: 360;
   --motion-intro-enter-ms: 380;
   --motion-reveal-ms: 1200;
