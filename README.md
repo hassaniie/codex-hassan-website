@@ -50,7 +50,7 @@ choreography carried by a delay ladder:
 - `--motion-appear-rise` / `--motion-appear-drop` — how far content rises and the header drops
 - `--motion-appear-hold-ms` — on a first load, when content starts arriving
 
-A page change within the same session has no curtain: the ladder alone carries it.
+A page change within the same session is covered by a short curtain with no count, and the ladder then carries the content in.
 
 The cursor dot has its own values:
 
