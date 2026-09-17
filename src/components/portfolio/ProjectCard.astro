@@ -10,7 +10,7 @@ interface Props {
 const { project, variant = 0 } = Astro.props;
 ---
 
-<article class="project reveal">
+<article class="project reveal" data-categories={project.categories.join("|")}>
   <Action
     appearance="media"
     label="Explore project ↗"

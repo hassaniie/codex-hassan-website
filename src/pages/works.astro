@@ -1,0 +1,18 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Works from "../components/sections/Works.astro";
+---
+
+<SiteLayout
+  title="Works — Hassan Mushtaq, Product & UX/UI Designer"
+  description="Selected product, UX/UI, app and web design work by Hassan Mushtaq, with case studies on Behance."
+  initialHeaderTheme="light"
+  skipHref="#works"
+  skipLabel="Skip to works"
+>
+  <Works />
+  <script>
+    import { initWorksPage } from "../scripts/works-page";
+    initWorksPage();
+  </script>
+</SiteLayout>

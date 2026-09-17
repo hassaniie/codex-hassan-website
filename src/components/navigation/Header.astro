@@ -16,6 +16,7 @@ const { initialTheme = "dark" } = Astro.props;
     <a class="monogram" href="/" aria-label="Hassan Mushtaq home">
       <img src="/assets/hm-logo.svg" alt="" width="65" height="32" />
     </a>
+    <Action href="/works/" label="Works" class="desktop-work" />
     <Action
       class="menu-toggle"
       appearance="icon"
@@ -60,6 +61,7 @@ const { initialTheme = "dark" } = Astro.props;
       href="/#work"
       label={`Selected work (${String(projects.length).padStart(2, "0")})`}
     />
+    <Action appearance="navigation" href="/works/" label="All works" />
     <Action appearance="navigation" href="/#about" label="A little about me" />
     <Action appearance="navigation" href="/#process" label="How I work" />
     <Action appearance="navigation" href="/#experience" label="Experience" />

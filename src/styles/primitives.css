@@ -110,7 +110,7 @@
   margin: 0 0 100px;
   color: var(--color-label-accent);
 }
-.display-heading h2 {
+.display-heading :is(h1, h2) {
   color: var(--color-heading-accent);
   font-size: clamp(100px, 14vw, 220px);
   letter-spacing: -0.05em;
@@ -144,7 +144,7 @@
   .display-heading > .mono {
     min-width: 100px;
   }
-  .display-heading h2 {
+  .display-heading :is(h1, h2) {
     font-size: 15vw;
   }
   .statement-frame {
@@ -176,7 +176,7 @@
     position: relative;
     gap: var(--space-3);
   }
-  .display-heading h2 {
+  .display-heading :is(h1, h2) {
     order: -1;
     width: 100%;
     font-size: 100px;

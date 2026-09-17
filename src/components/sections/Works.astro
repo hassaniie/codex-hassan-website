@@ -1,0 +1,43 @@
+---
+import { categories, projects } from "../../content/projects";
+import ProjectCard from "../portfolio/ProjectCard.astro";
+import "./Works.css";
+
+// Derived from the work itself, so the range tracks the record rather than
+// needing to be remembered when a project is added.
+const years = projects.map((project) => Number(project.year));
+const span = `${Math.min(...years)} — ${Math.max(...years)}`;
+const total = String(projects.length).padStart(2, "0");
+---
+
+<section class="works section-pad" id="works">
+  <div class="display-heading reveal">
+    <span class="mono">( {span} )</span>
+    <h1>Works</h1>
+    <span class="mono works-count" data-total={total}>
+      ({total})
+    </span>
+  </div>
+  {/*
+    Hidden until the script marks it ready. A filter that cannot filter is
+    worse than no filter, so with no JavaScript this row never appears and
+    every project stays on the page.
+  */}
+  <div
+    class="works-filter"
+    role="group"
+    aria-label="Filter projects by category"
+  >
+    <button type="button" data-category="" aria-pressed="true">
+      All
+    </button>
+    {categories.map((category) => (
+      <button type="button" data-category={category} aria-pressed="false">
+        {category}
+      </button>
+    ))}
+  </div>
+  {projects.map((project, i) => (
+    <ProjectCard project={project} variant={i + 8} />
+  ))}
+</section>
