@@ -1,5 +1,6 @@
 ---
 import { categories, projects } from "../../content/projects";
+import Footer from "../navigation/Footer.astro";
 import ProjectCard from "../portfolio/ProjectCard.astro";
 import "./Works.css";
 
@@ -40,4 +41,12 @@ const total = String(projects.length).padStart(2, "0");
   {projects.map((project, i) => (
     <ProjectCard project={project} variant={i + 8} />
   ))}
+</section>
+{/*
+  The footer carries no surface of its own and is drawn in white, so it needs
+  a dark one under it. This page does not end in the contact gradient, so it
+  takes the same wrapper the privacy page uses.
+*/}
+<section class="works-footer">
+  <Footer />
 </section>
