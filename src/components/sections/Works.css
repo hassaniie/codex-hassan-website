@@ -39,10 +39,6 @@
   background: var(--ink);
   color: var(--color-paper);
 }
-.works-footer {
-  padding-top: 100px;
-  background: var(--color-action-dark-surface);
-}
 /* .project is display: grid, which would otherwise win over the attribute. */
 .project[hidden] {
   display: none;
