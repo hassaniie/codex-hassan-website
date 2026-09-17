@@ -9,7 +9,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--atmosphere-edge-overlay), var(--atmosphere-gradient);
+  background: var(--atmosphere-footer-tail), var(--atmosphere-gradient);
   transform: scaleY(-1);
 }
 .contact-content {

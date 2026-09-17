@@ -27,6 +27,19 @@
     #e3e5fc 75%,
     #fff 94%
   );
+  /*
+   * The closing section's own tail, in place of the edge overlay the hero uses.
+   * That overlay is a broad wash: mirrored, it covers the whole lower half and
+   * the accent can never reach full chroma. This is the short ramp the contact
+   * page gets from its final colour stop, expressed as a layer so both endings
+   * read alike. Consumed by .contact-atmosphere, which is mirrored with
+   * scaleY(-1), so 0% here is the bottom of the section, where the footer sits.
+   */
+  --atmosphere-footer-tail: linear-gradient(
+    180deg,
+    #171b52 0%,
+    rgb(23 27 82 / 0%) 31%
+  );
   --color-ink: #171819;
   --color-paper: #fff;
   --color-accent: #494fed;
