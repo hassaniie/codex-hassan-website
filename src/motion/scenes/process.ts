@@ -31,15 +31,17 @@ export function initProcessScene({ reducedMotion }: BehaviorContext): Cleanup {
    * the track is about to travel.
    */
   viewport.scrollLeft = 0;
+  viewport.removeAttribute("data-lenis-prevent");
   section.classList.add("is-pinned");
+  void viewport.offsetWidth;
 
   const context = gsap.context(() => {
     /*
-     * Measured against the viewport, not the track: the track is laid out at
-     * max-content width, so its own clientWidth is its scrollWidth and would
-     * report no distance to travel at all.
+     * getBoundingClientRect is used instead of scrollWidth because Safari
+     * can report a capped scrollWidth inside an overflow-x:clip container.
      */
-    const travel = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
+    const travel = () =>
+      Math.max(0, track.getBoundingClientRect().width - viewport.clientWidth);
     gsap.to(track, {
       x: () => -travel(),
       ease: "none",
@@ -70,5 +72,6 @@ export function initProcessScene({ reducedMotion }: BehaviorContext): Cleanup {
   return () => {
     context.revert();
     section.classList.remove("is-pinned");
+    viewport.setAttribute("data-lenis-prevent", "");
   };
 }

@@ -14,7 +14,7 @@ import "./Process.css";
   </div>
   {/* The rail is read sideways. Nothing inside it is focusable, so tabbing
       can never pull the page to a panel that is still off screen. */}
-  <div class="process-viewport">
+  <div class="process-viewport" data-lenis-prevent>
     <ol class="process-track">
       {process.map((step) => (
         <li class="process-step">
