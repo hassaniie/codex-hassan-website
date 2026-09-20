@@ -12,6 +12,13 @@
   background: var(--atmosphere-footer-tail), var(--atmosphere-gradient);
   transform: scaleY(-1);
 }
+.contact-atmosphere::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--atmosphere-edge-overlay);
+  mix-blend-mode: overlay;
+}
 .contact-content {
   display: flex;
   flex-direction: column;
