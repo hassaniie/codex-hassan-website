@@ -20,11 +20,17 @@ const { initialTheme = "dark" } = Astro.props;
     <Action
       class="menu-toggle"
       appearance="icon"
-      label="☰"
+      label="Menu"
       aria-label="Open navigation"
       aria-expanded="false"
       aria-controls="menu"
-    />
+    >
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <line x1="3" y1="6" x2="17" y2="6" />
+        <line x1="3" y1="10" x2="17" y2="10" />
+        <line x1="3" y1="14" x2="17" y2="14" />
+      </svg>
+    </Action>
   </div>
   <div class="location">
     <span>{profile.location}</span>
@@ -54,7 +60,12 @@ const { initialTheme = "dark" } = Astro.props;
   </div>
 </header>
 <dialog id="menu" class="menu-dialog" aria-label="Navigation">
-  <Action class="menu-close" label="Close ×" aria-label="Close navigation" />
+  <Action class="menu-close" label="Close" aria-label="Close navigation">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <line x1="4" y1="4" x2="12" y2="12" />
+      <line x1="12" y1="4" x2="4" y2="12" />
+    </svg>
+  </Action>
   <nav>
     <Action
       appearance="navigation"
@@ -67,5 +78,14 @@ const { initialTheme = "dark" } = Astro.props;
     <Action appearance="navigation" href="/#experience" label="Experience" />
     <Action appearance="navigation" href="/contact/" label="Let's talk ↗" />
   </nav>
-  <div class="menu-bottom mono">{profile.location} · Working worldwide</div>
+  <div class="menu-bottom mono">
+    <span>{profile.location} · Working worldwide</span>
+    <div class="menu-clock">
+      <time class="menu-local-time" aria-label="Local time in Lahore">
+        <span class="clock-unit" data-menu-hours aria-hidden="true">00</span>
+        <span class="clock-unit" data-menu-minutes aria-hidden="true">00</span>
+      </time>
+      <span class="timezone">{profile.timeZoneLabel}</span>
+    </div>
+  </div>
 </dialog>

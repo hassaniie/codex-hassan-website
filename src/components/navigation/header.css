@@ -75,6 +75,9 @@
 .menu-toggle {
   display: none;
 }
+.menu-toggle .action-label {
+  display: none;
+}
 
 .menu-dialog {
   border: 0;
@@ -141,8 +144,16 @@
   .menu-toggle {
     display: block;
   }
+  .menu-dialog {
+    display: flex;
+    flex-direction: column;
+    padding: 60px 7vw 30px;
+  }
   .menu-dialog nav {
     font-size: 38px;
+  }
+  .menu-bottom {
+    margin-top: auto;
   }
 }
 .site-header[data-theme="dark"] {
@@ -221,4 +232,17 @@
 .site-header[data-theme="light"] {
   --action-accent: var(--color-accent);
   --action-icon-ink: var(--color-paper);
+}
+
+.menu-clock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.menu-dialog .clock-unit {
+  background: rgb(23 24 25 / 8%);
+}
+.menu-dialog .timezone {
+  color: var(--color-muted);
 }

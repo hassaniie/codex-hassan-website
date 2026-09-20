@@ -195,7 +195,7 @@
 @media (max-width: 600px) {
   .socials,
   .email-link {
-    font-size: var(--text-small);
+    font-size: var(--text-meta);
   }
 }
 

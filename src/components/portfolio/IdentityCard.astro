@@ -3,17 +3,17 @@ import "./identity-card.css";
 import { profile } from "../../content/profile";
 ---
 
-<a class="identity-card" href="/#about">
+<a class="identity-card" href="/#about" aria-label={`${profile.name} — ${profile.availability} — View about section`}>
   <span class="identity-tab tab-left" aria-hidden="true">
     H
   </span>
   <div class="identity-surface">
-    <img src={profile.portrait} alt="" width="80" height="80" />
+    <img src={profile.portrait} alt={`Portrait of ${profile.name}`} width="80" height="80" />
     <div class="identity-copy">
       <span class="availability">
         {profile.availability} <i class="status-dot" aria-hidden="true"></i>
       </span>
-      <h2>{profile.name}</h2>
+      <span class="identity-name">{profile.name}</span>
       <p>{profile.role}</p>
     </div>
   </div>

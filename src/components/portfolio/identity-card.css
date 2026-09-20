@@ -33,10 +33,11 @@
   justify-content: flex-end;
   padding-bottom: 2px;
 }
-.identity-copy h2 {
+.identity-copy .identity-name {
   font: 14px var(--mono);
   text-transform: uppercase;
   margin: 0 0 2px;
+  display: block;
 }
 .identity-copy p {
   font-size: var(--text-small);
@@ -90,10 +91,13 @@
     width: 60px;
     height: 60px;
   }
+  .identity-surface {
+    background: rgb(255 255 255 / 0.3);
+  }
   .availability {
-    font-size: 8px;
-    right: 9px;
-    top: 7px;
+    font-size: 10px;
+    right: 10px;
+    top: 8px;
   }
   .identity-tab {
     font-size: var(--text-meta);
@@ -108,10 +112,10 @@
 }
 
 @media (max-width: 600px) {
-  .identity-copy h2 {
+  .identity-copy .identity-name {
     font-size: var(--text-meta);
   }
   .identity-copy p {
-    font-size: 10px;
+    font-size: var(--text-meta);
   }
 }
