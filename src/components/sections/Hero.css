@@ -12,7 +12,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--atmosphere-edge-overlay), var(--atmosphere-gradient);
+  background: var(--atmosphere-gradient);
   /*
    * The opening settle rides this independent scale property, which composes
    * with the transform the scroll scene owns rather than fighting it over the
@@ -21,13 +21,20 @@
    */
   scale: var(--entrance-scale, 1);
 }
+.hero-atmosphere::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--atmosphere-edge-overlay);
+  mix-blend-mode: overlay;
+}
 .hero-main {
   margin-top: -5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 52px;
+  gap: 42px;
   padding: 0 7vw;
 }
 .hero h1 {
@@ -50,7 +57,7 @@
 }
 @media (min-width: 1600px) {
   .hero-main {
-    gap: 55px;
+    gap: 42px;
   }
   .hero h1 {
     max-width: 900px;

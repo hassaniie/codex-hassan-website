@@ -4,8 +4,8 @@
   --color-action-dark-surface: #171b52;
   --atmosphere-edge-overlay: linear-gradient(
     180deg,
-    #171b52 0%,
-    rgb(23 27 82 / 0%) 31%
+    #2129f4,
+    rgba(255, 255, 255, 0)
   );
   --font-weight-regular: 400;
   --font-weight-light: 300;
@@ -17,15 +17,7 @@
   --action-portrait-padding: 9px 22px 9px 9px;
   --action-portrait-gap: 22px;
   --action-radius-increase: 5px;
-  --atmosphere-gradient: linear-gradient(
-    180deg,
-    #494fed 0%,
-    #494fed 28%,
-    #6269e9 43%,
-    #a6abf3 59%,
-    #e3e5fc 75%,
-    #fff 94%
-  );
+  --atmosphere-gradient: linear-gradient(180deg, #494fed 0%, #fff 90%);
   /*
    * The closing section's own tail, in place of the edge overlay the hero uses.
    * That overlay is a broad wash: mirrored, it covers the whole lower half and
