@@ -34,9 +34,10 @@
   text-align: center;
   max-width: 820px;
   font-size: clamp(38px, 3.6vw, 60px);
+  font-weight: 340;
   color: #fff;
   line-height: 1.06;
-  letter-spacing: -0.025em;
+  letter-spacing: 0.02rem;
 }
 .hero-bottom {
   position: absolute;
@@ -76,7 +77,7 @@
     font-size: 36px;
     line-height: 1.02;
     max-width: 285px;
-    letter-spacing: -0.025em;
+    letter-spacing: 0.02rem;
   }
   .hero-bottom {
     bottom: 20px;
