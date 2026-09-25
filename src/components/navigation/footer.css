@@ -71,6 +71,16 @@ footer {
   .footer-bottom {
     padding-bottom: 24px;
   }
+  /* The contact page lists the socials and email just above, so its footer
+     keeps only what is unique to it. */
+  .contact-directory .footer-top .socials,
+  .contact-directory .footer-top > .action:last-child,
+  .contact-directory .footer-top::after {
+    display: none;
+  }
+  .contact-directory .footer-top {
+    padding-bottom: 32px;
+  }
 }
 
 .footer-barcode .barcode {
