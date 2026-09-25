@@ -1,6 +1,6 @@
 export const profile = {
   name: "Hassan Mushtaq",
-  role: "Product & UX/UI designer",
+  role: "Product Designer & Engineer",
   email: "uxhassan99@gmail.com",
   location: "Lahore, Pakistan",
   timeZone: "Asia/Karachi",
