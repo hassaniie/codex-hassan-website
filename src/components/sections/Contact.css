@@ -9,7 +9,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--atmosphere-footer-tail), var(--atmosphere-gradient);
+  background: var(--atmosphere-gradient);
   transform: scaleY(-1);
 }
 .contact-atmosphere::before {
@@ -18,6 +18,12 @@
   inset: 0;
   background: var(--atmosphere-edge-overlay);
   mix-blend-mode: overlay;
+}
+.contact-atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--atmosphere-edge-shade);
 }
 .contact-content {
   display: flex;

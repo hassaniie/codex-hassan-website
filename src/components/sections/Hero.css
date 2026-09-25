@@ -28,6 +28,12 @@
   background: var(--atmosphere-edge-overlay);
   mix-blend-mode: overlay;
 }
+.hero-atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--atmosphere-edge-shade);
+}
 .hero-main {
   margin-top: -5vh;
   display: flex;
