@@ -15,6 +15,11 @@ export const getSmoothScroll = () => instance;
  */
 export function lockScroll(value: boolean) {
   locked = value;
+  if (!value) {
+    // The lock hides a classic (Windows) scrollbar; once it returns the page
+    // is narrower, and anything measured while locked, like a pin, is stale.
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  }
   if (!instance) return;
   if (value) instance.stop();
   else instance.start();

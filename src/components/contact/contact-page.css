@@ -191,6 +191,16 @@
 .contact-directory footer {
   padding-top: 80px;
 }
+/* Sized by the screen rather than a fixed 1120px, so a laptop doesn't open a
+   long empty gap; the padding keeps a deliberate gap above the email. */
+@media (min-width: 601px) {
+  .contact-directory-content {
+    min-height: max(100svh, 760px);
+  }
+  .contact-directory-email {
+    padding-top: 120px;
+  }
+}
 @media (max-width: 900px) {
   .contact-page-frame .bracket {
     display: none;

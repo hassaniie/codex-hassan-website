@@ -191,12 +191,21 @@
  */
 .process.is-pinned {
   height: 100svh;
-  min-height: 620px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-8);
+  /* Clears the fixed header and its centred clock, so a short screen can't
+     slide the heading up underneath them. */
+  padding-top: 96px;
+  padding-bottom: var(--space-6);
+}
+@media (max-height: 760px) {
+  .process.is-pinned .process-viewport {
+    margin-top: 36px;
+  }
+  .process.is-pinned .process-progress {
+    margin-top: 28px;
+  }
 }
 /*
  * Pinned, the rail is a framed window: inset from the gutter, with both ends
