@@ -31,18 +31,35 @@ footer {
   }
 }
 @media (max-width: 600px) {
+  /* The leading link (Resume, or Privacy policy) joins the social row, as in
+     the hero, and the email takes a line of its own. Unwrapping .socials and
+     reordering keeps the markup, and so the desktop layout, as it is. */
   .footer-top {
-    flex-direction: column;
-    gap: 28px;
-    padding-bottom: 55px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 24px;
+    padding-bottom: 40px;
   }
   .footer-top .socials {
-    gap: 28px;
+    display: contents;
+  }
+  .footer-top > .action:first-child {
+    order: 1;
+  }
+  /* A zero-height line break; with the row gap on each side it spaces the
+     email a full 20px below the links. */
+  .footer-top::after {
+    content: "";
+    order: 2;
+    flex-basis: 100%;
+  }
+  .footer-top > .action:last-child {
+    order: 3;
   }
   .footer-bottom {
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 40px;
+    gap: 32px;
     font-size: 11px;
   }
   .footer-barcode {

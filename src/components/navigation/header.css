@@ -121,20 +121,6 @@
   .location {
     display: none;
   }
-  /* On narrow screens content scrolls straight through the header's text, so
-     light sections get a paper fade behind it. Dark sections keep it clear. */
-  .site-header::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 -16px;
-    z-index: -1;
-    background: linear-gradient(rgb(255 255 255 / 92%) 72%, rgb(255 255 255 / 0%));
-    opacity: 0;
-    transition: opacity var(--duration-fast);
-  }
-  .site-header[data-theme="light"]::before {
-    opacity: 1;
-  }
   /* 44px hit area without moving the logo. */
   .monogram {
     padding-block: 7px;
@@ -142,12 +128,15 @@
   }
 }
 @media (max-width: 600px) {
+  /* One frame: the 44px photo sits a gutter from the top and the side, and
+     everything else centres on it. */
   .site-header {
-    padding-top: 12px;
+    padding: var(--gutter) var(--gutter) 0;
+    align-items: center;
   }
   .header-left {
     gap: 18px;
-    padding-top: 5px;
+    padding-top: 0;
   }
   .monogram {
     font-size: 22px;
@@ -155,16 +144,19 @@
   .header-right {
     gap: 14px;
   }
-  .header-photo {
-    width: 40px;
-    height: 40px;
+  .header-right .action {
+    margin-top: 0;
   }
 
   .menu-toggle {
     display: block;
   }
   .menu-dialog {
-    padding: 60px 7vw 30px;
+    padding: 60px var(--gutter) var(--gutter);
+  }
+  .menu-close {
+    top: var(--gutter);
+    right: var(--gutter);
   }
   /* Scoped to [open]: a bare display value would override the UA rule that
      hides a closed dialog, leaving the menu drawn over the page. */

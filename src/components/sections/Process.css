@@ -229,17 +229,45 @@
 }
 @media (max-width: 600px) {
   .process {
-    /* Narrow enough that the next card shows, so the rail reads as swipeable. */
-    --process-panel: min(72vw, 300px);
-    --process-gap: 24px;
-    /* A phone has no width to spend on a wide dissolve. */
-    --process-fade: 28px;
-    /* The connector follows this down on its own. */
+    --process-gap: var(--space-7);
     --process-title-size: 28px;
+    /* The badge gets a fixed width here so the connector can find its centre. */
+    --process-badge-w: 28px;
+    --process-badge-left: 26px;
     padding-top: 110px;
     padding-bottom: 70px;
   }
+  /* A phone reads the steps top to bottom: no rail, no dissolve, no snap. */
   .process-viewport {
-    margin-top: 45px;
+    margin: 45px 0 0;
+    padding-inline: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .process-track {
+    flex-direction: column;
+    width: auto;
+  }
+  .process-step {
+    flex: none;
+    min-height: 0;
+  }
+  .process-step .number-square {
+    left: var(--process-badge-left);
+    width: var(--process-badge-w);
+    justify-content: center;
+  }
+  /* The connector turns vertical: from each card's bottom edge down to the next
+     card's top edge, where that card's badge sits over its end. Running it
+     under the badge rather than stopping at it leaves no hairline gap. */
+  .process-step:not(:last-child)::after {
+    left: calc(var(--process-badge-left) + var(--process-badge-w) / 2);
+    top: 100%;
+    width: 0;
+    height: calc(var(--process-gap) + 1px);
+    border-top: 0;
+    border-left: 1px solid #494fed55;
   }
 }

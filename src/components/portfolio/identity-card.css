@@ -79,17 +79,18 @@
 }
 
 @media (max-width: 600px) {
+  /* The side tabs need 44px beyond the gutters. */
   .identity-card {
-    width: min(288px, calc(100vw - 84px));
+    width: min(300px, calc(100vw - 2 * var(--gutter) - 44px));
   }
   .identity-surface {
-    gap: var(--space-3);
+    gap: var(--space-4);
     border-radius: 7px;
-    padding: 6px;
+    padding: 9px;
   }
   .identity-surface > img {
-    width: 60px;
-    height: 60px;
+    width: 72px;
+    height: 72px;
   }
   .identity-surface {
     background: rgb(255 255 255 / 0.3);
@@ -100,7 +101,7 @@
     position: static;
     align-self: flex-end;
     margin-bottom: auto;
-    font-size: 11px;
+    font-size: 10px;
   }
   .identity-tab {
     font-size: var(--text-meta);
@@ -116,9 +117,9 @@
 
 @media (max-width: 600px) {
   .identity-copy .identity-name {
-    font-size: var(--text-meta);
+    font-size: 13px;
   }
   .identity-copy p {
-    font-size: var(--text-meta);
+    font-size: var(--text-small);
   }
 }

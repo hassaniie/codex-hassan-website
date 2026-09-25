@@ -62,7 +62,7 @@
     padding-top: 100px;
   }
   .contact-content {
-    padding: 70px 22px 95px;
+    padding: 70px var(--gutter) 64px;
   }
   .contact h2 {
     font-size: 38px;

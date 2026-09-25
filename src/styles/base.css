@@ -96,6 +96,6 @@ footer,
 
 @media (max-width: 600px) {
   :root {
-    --gutter: var(--space-4);
+    --gutter: var(--space-5);
   }
 }

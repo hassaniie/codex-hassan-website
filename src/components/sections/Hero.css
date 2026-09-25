@@ -77,7 +77,7 @@
 
   .hero-main {
     margin-top: 0;
-    padding: 80px 26px 0;
+    padding: 0 var(--gutter);
     gap: 44px;
   }
   .hero h1 {
@@ -95,14 +95,14 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px 12px;
+    gap: 12px 24px;
   }
 }
 /* Too short to pin the links to the bottom edge without landing on the card. */
 @media (max-width: 600px) and (max-height: 620px) {
   .hero {
     height: auto;
-    padding-bottom: 28px;
+    padding: 108px 0 28px;
   }
   .hero-bottom {
     position: static;
