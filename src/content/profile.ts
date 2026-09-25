@@ -6,6 +6,7 @@ export const profile = {
   timeZone: "Asia/Karachi",
   timeZoneLabel: "PKT (GMT+5)",
   portrait: "/assets/hassan.jpg",
+  avatar: "/assets/hassan-avatar.webp",
   resume: "/assets/hassan-mushtaq-resume.pdf",
   availability: "Open to opportunities",
   title: "Hassan Mushtaq — Product & UX/UI Designer",
