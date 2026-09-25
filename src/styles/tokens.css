@@ -145,7 +145,7 @@
    * without touching any other behaviour.
    */
   --scroll-lerp: 0.075;
-  --scroll-wheel-multiplier: 0.9;
+  --scroll-wheel-multiplier: 0.75;
   --scroll-touch-sync: 1;
   --scroll-touch-lerp: 0.075;
   --scroll-touch-multiplier: 1.1;
