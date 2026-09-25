@@ -94,10 +94,13 @@
   .identity-surface {
     background: rgb(255 255 255 / 0.3);
   }
+  /* In flow rather than pinned, so a tagline that wraps grows the card instead
+     of pushing the name up into this label. */
   .availability {
-    font-size: 10px;
-    right: 10px;
-    top: 8px;
+    position: static;
+    align-self: flex-end;
+    margin-bottom: auto;
+    font-size: 11px;
   }
   .identity-tab {
     font-size: var(--text-meta);

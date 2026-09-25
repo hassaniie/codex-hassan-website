@@ -71,6 +71,7 @@
   }
   .works-filter button {
     flex: 0 0 auto;
+    min-height: 44px;
     padding: 10px 15px;
   }
 }

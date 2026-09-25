@@ -140,7 +140,7 @@
    */
   --scroll-lerp: 0.075;
   --scroll-wheel-multiplier: 0.75;
-  --scroll-touch-sync: 1;
+  --scroll-touch-sync: 0;
   --scroll-touch-lerp: 0.075;
   --scroll-touch-multiplier: 1.1;
   /* Exponent, not a multiplier: higher means longer touch glide. */

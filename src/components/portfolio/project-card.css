@@ -167,6 +167,9 @@
     object-fit: cover;
     object-position: center;
   }
+  .tags li {
+    font-size: 11px;
+  }
   .project-top h3 {
     font-size: 36px;
   }

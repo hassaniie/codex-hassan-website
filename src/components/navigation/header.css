@@ -121,6 +121,25 @@
   .location {
     display: none;
   }
+  /* On narrow screens content scrolls straight through the header's text, so
+     light sections get a paper fade behind it. Dark sections keep it clear. */
+  .site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 -16px;
+    z-index: -1;
+    background: linear-gradient(rgb(255 255 255 / 92%) 72%, rgb(255 255 255 / 0%));
+    opacity: 0;
+    transition: opacity var(--duration-fast);
+  }
+  .site-header[data-theme="light"]::before {
+    opacity: 1;
+  }
+  /* 44px hit area without moving the logo. */
+  .monogram {
+    padding-block: 7px;
+    margin-block: -7px;
+  }
 }
 @media (max-width: 600px) {
   .site-header {
@@ -145,9 +164,13 @@
     display: block;
   }
   .menu-dialog {
+    padding: 60px 7vw 30px;
+  }
+  /* Scoped to [open]: a bare display value would override the UA rule that
+     hides a closed dialog, leaving the menu drawn over the page. */
+  .menu-dialog[open] {
     display: flex;
     flex-direction: column;
-    padding: 60px 7vw 30px;
   }
   .menu-dialog nav {
     font-size: 38px;
@@ -239,6 +262,10 @@
   align-items: center;
   gap: 6px;
   margin-top: 8px;
+}
+.menu-local-time {
+  display: inline-flex;
+  gap: 2px;
 }
 .menu-dialog .clock-unit {
   background: rgb(23 24 25 / 8%);

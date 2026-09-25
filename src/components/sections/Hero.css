@@ -98,3 +98,14 @@
     gap: 8px 12px;
   }
 }
+/* Too short to pin the links to the bottom edge without landing on the card. */
+@media (max-width: 600px) and (max-height: 620px) {
+  .hero {
+    height: auto;
+    padding-bottom: 28px;
+  }
+  .hero-bottom {
+    position: static;
+    margin-top: 40px;
+  }
+}

@@ -229,7 +229,9 @@
 }
 @media (max-width: 600px) {
   .process {
-    --process-panel: min(78vw, 320px);
+    /* Narrow enough that the next card shows, so the rail reads as swipeable. */
+    --process-panel: min(72vw, 300px);
+    --process-gap: 24px;
     /* A phone has no width to spend on a wide dissolve. */
     --process-fade: 28px;
     /* The connector follows this down on its own. */
