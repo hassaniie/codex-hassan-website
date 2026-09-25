@@ -155,20 +155,21 @@
   .statement-frame {
     gap: 7px;
   }
+  /* Tall, narrow arcs at the page margin, framing the headline's height. */
   .bracket {
     position: absolute;
-    width: 25px;
-    height: 145px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.7;
+    width: 18px;
+    height: 94%;
+    top: 3%;
+    transform: none;
+    opacity: 1;
   }
   .bracket.left {
-    left: -21px;
-    transform: translateY(-50%) scaleX(-1);
+    left: 0;
+    transform: scaleX(-1);
   }
   .bracket.right {
-    right: -21px;
+    right: 0;
   }
   .display-heading {
     margin-bottom: 45px;

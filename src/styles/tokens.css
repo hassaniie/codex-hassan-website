@@ -116,6 +116,12 @@
   --motion-intro-name-ms: 640;
   --motion-intro-name-delay-ms: 60;
   --motion-reveal-ms: 1200;
+  /* The phone menu: the curtain drops, then each link rises in turn. Closing
+     plays the same timeline backwards, this many times faster. */
+  --motion-menu-drop-ms: 900;
+  --motion-menu-rise-ms: 700;
+  --motion-menu-stagger-ms: 70;
+  --motion-menu-close-rate: 1.4;
   /*
    * Entrance, matched to the reference build: one duration and one curve for
    * every element, with the choreography carried entirely by a delay ladder

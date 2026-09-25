@@ -83,14 +83,14 @@
 .menu-icon {
   position: relative;
   display: block;
-  width: 36px;
-  height: 10px;
+  width: 40px;
+  height: 7px;
 }
 .menu-icon i {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 1.5px;
+  height: 1px;
   border-radius: 1px;
   background: currentColor;
   transition: transform 0.4s var(--ease-out);
@@ -102,16 +102,17 @@
   bottom: 0;
 }
 .menu-toggle[aria-expanded="true"] .menu-icon i:first-child {
-  transform: translateY(4.25px) rotate(45deg);
+  transform: translateY(3px) rotate(45deg);
 }
 .menu-toggle[aria-expanded="true"] .menu-icon i:last-child {
-  transform: translateY(-4.25px) rotate(-45deg);
+  transform: translateY(-3px) rotate(-45deg);
 }
 
 /*
  * Opened with show(), not showModal(): a modal dialog sits in the top layer,
  * above every z-index, and would cover the navbar that closes it. The
- * curtain drops from the top edge and lifts back the same way.
+ * curtain's drop and lift are driven from navigation.ts; this is its resting,
+ * closed state.
  */
 .menu-dialog {
   position: fixed;
@@ -127,11 +128,10 @@
   max-height: none;
   margin: 0;
   clip-path: inset(0 0 100% 0);
-  transition: clip-path calc(var(--motion-intro-exit-ms) * 1ms)
-    var(--ease-curtain);
 }
-.menu-dialog.is-open {
-  clip-path: inset(0 0 0 0);
+/* The links rise on the timeline; their roll transition would fight it. */
+.menu-dialog.is-moving .action-track {
+  transition: none;
 }
 .menu-body {
   height: 100%;

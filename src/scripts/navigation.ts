@@ -1,25 +1,20 @@
 import { query, queryAll, type BehaviorContext } from "../utilities/dom";
 import { lockScroll } from "../motion/smooth-scroll";
-
-/** How far down the screen the curtain's edge is, in px. */
-function curtainEdge(menu: HTMLElement) {
-  const inset = getComputedStyle(menu).clipPath.match(/inset\(([^)]*)\)/);
-  if (!inset) return menu.clientHeight;
-  const sides = inset[1].trim().split(/\s+/);
-  const bottom = sides[2] ?? sides[0];
-  const clipped = bottom.endsWith("%")
-    ? (parseFloat(bottom) / 100) * menu.clientHeight
-    : parseFloat(bottom);
-  return menu.clientHeight - clipped;
-}
+import { gsap } from "../motion/engine";
+import { motionPresets } from "../motion/presets";
 
 /**
  * The phone menu opens with show(), not showModal(), so the navbar stays
  * above it and its toggle doubles as the close control. What a modal would
  * give for free is supplied here: Escape closes it, and the page behind is
  * inert so focus cannot wander under the curtain.
+ *
+ * Opening is one timeline: the curtain drops, then each link rises from
+ * behind its own underline and the location settles in. Closing plays that
+ * timeline backwards, a little faster, so a tap mid-way simply turns it
+ * around.
  */
-export function initNavigation({ signal }: BehaviorContext) {
+export function initNavigation({ signal, reducedMotion }: BehaviorContext) {
   const menu = query<HTMLDialogElement>("#menu");
   const toggle = query<HTMLButtonElement>(".menu-toggle");
   const header = query(".site-header");
@@ -27,7 +22,10 @@ export function initNavigation({ signal }: BehaviorContext) {
   const behind = [query("main"), query(".skip-link")].filter(
     (element): element is HTMLElement => element !== null,
   );
-  let frame = 0;
+  const tracks = queryAll(".action-track", menu);
+  const bottom = query(".menu-bottom", menu);
+  const settling = bottom ? [...tracks, bottom] : tracks;
+  let timeline: gsap.core.Timeline | undefined;
 
   const setExpanded = (expanded: boolean) => {
     toggle.setAttribute("aria-expanded", String(expanded));
@@ -36,20 +34,66 @@ export function initNavigation({ signal }: BehaviorContext) {
       expanded ? "Close navigation" : "Open navigation",
     );
   };
-  // The navbar turns dark as the curtain's edge passes behind it, not before,
-  // so it never shows dark on the hero's blue.
-  const followCurtain = () => {
-    cancelAnimationFrame(frame);
-    const step = () => {
+  // Runs synchronously, so a link's own scroll finds the page unlocked.
+  const finish = () => {
+    timeline?.kill();
+    timeline = undefined;
+    gsap.set(settling, { clearProps: "transform,opacity" });
+    menu.style.removeProperty("clip-path");
+    menu.classList.remove("is-moving");
+    if (menu.open) menu.close();
+    header.classList.remove("is-menu-open");
+    behind.forEach((element) => (element.inert = false));
+    lockScroll(false);
+    setExpanded(false);
+  };
+  const build = () => {
+    const presets = motionPresets();
+    const curtain = { progress: 0 };
+    // The navbar turns dark as the curtain's edge passes behind it, not
+    // before, so it never shows dark on the hero's blue.
+    const render = () => {
+      menu.style.clipPath = `inset(0 0 ${(1 - curtain.progress) * 100}% 0)`;
       const bar = toggle.getBoundingClientRect();
-      const middle = bar.top + bar.height / 2;
       header.classList.toggle(
         "is-menu-open",
-        menu.open && curtainEdge(menu) > middle,
+        curtain.progress * menu.clientHeight > bar.top + bar.height / 2,
       );
-      frame = menu.getAnimations().length ? requestAnimationFrame(step) : 0;
     };
-    step();
+    return gsap
+      .timeline({
+        paused: true,
+        // At rest the links hand their transform back to the CSS roll.
+        onComplete: () => {
+          menu.classList.remove("is-moving");
+          gsap.set(tracks, { clearProps: "transform" });
+        },
+        onReverseComplete: finish,
+      })
+      .to(curtain, {
+        progress: 1,
+        duration: presets.menuDrop / 1000,
+        ease: "power3.inOut",
+        onUpdate: render,
+      })
+      // Explicit y, so a focused link's CSS roll isn't folded into the rise.
+      .fromTo(
+        tracks,
+        { y: 0, yPercent: 105 },
+        {
+          y: 0,
+          yPercent: 0,
+          duration: presets.menuRise / 1000,
+          ease: "power3.out",
+          stagger: presets.menuStagger / 1000,
+        },
+        0.35,
+      )
+      .from(
+        bottom ?? [],
+        { opacity: 0, y: 12, duration: 0.5, ease: "power2.out" },
+        "-=0.5",
+      );
   };
   const open = () => {
     if (!menu.open) {
@@ -60,47 +104,25 @@ export function initNavigation({ signal }: BehaviorContext) {
       behind.forEach((element) => (element.inert = true));
     }
     setExpanded(true);
-    // One frame at the closed inset first, so the curtain has somewhere to
-    // drop from.
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => {
-      frame = requestAnimationFrame(() => {
-        menu.classList.add("is-open");
-        followCurtain();
-      });
-    });
+    if (reducedMotion) {
+      menu.style.clipPath = "none";
+      header.classList.add("is-menu-open");
+      return;
+    }
+    menu.classList.add("is-moving");
+    timeline ??= build();
+    timeline.timeScale(1).play();
   };
-  // Runs synchronously, so a link's own scroll finds the page unlocked.
-  const finish = () => {
-    cancelAnimationFrame(frame);
-    if (menu.open) menu.close();
-    menu.classList.remove("is-open");
-    header.classList.remove("is-menu-open");
-    behind.forEach((element) => (element.inert = false));
-    lockScroll(false);
-    setExpanded(false);
-  };
-  // Lifts the curtain; the dialog itself closes once it has cleared.
   const close = (instant = false) => {
+    if (instant || !timeline) return finish();
     setExpanded(false);
-    menu.classList.remove("is-open");
-    // No lift to wait for when motion is reduced (transitions are off) or the
-    // curtain never started dropping.
-    if (instant || !menu.getAnimations().length) finish();
-    else followCurtain();
+    menu.classList.add("is-moving");
+    timeline.timeScale(motionPresets().menuCloseRate).reverse();
   };
 
   toggle.addEventListener(
     "click",
-    () => (menu.classList.contains("is-open") ? close() : open()),
-    { signal },
-  );
-  menu.addEventListener(
-    "transitionend",
-    (event) => {
-      if (event.target !== menu || event.propertyName !== "clip-path") return;
-      if (!menu.classList.contains("is-open")) finish();
-    },
+    () => (toggle.getAttribute("aria-expanded") === "true" ? close() : open()),
     { signal },
   );
   document.addEventListener(

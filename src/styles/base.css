@@ -98,7 +98,8 @@ footer,
 }
 
 @media (max-width: 600px) {
+  /* 20px on phones, the same above the navbar as at the sides. */
   :root {
-    --gutter: var(--space-5);
+    --gutter: 1.25rem;
   }
 }
