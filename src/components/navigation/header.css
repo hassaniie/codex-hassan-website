@@ -36,7 +36,8 @@
   width: 60px;
   height: 30px;
 }
-.site-header[data-theme="light"] .monogram img {
+.site-header[data-theme="light"] .monogram img,
+.site-header.is-menu-open .monogram img {
   filter: invert(1);
 }
 .header-photo {
@@ -78,24 +79,65 @@
 .menu-toggle .action-label {
   display: none;
 }
+/* Two lines that fold into a cross while the menu is open. */
+.menu-icon {
+  position: relative;
+  display: block;
+  width: 36px;
+  height: 10px;
+}
+.menu-icon i {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  border-radius: 1px;
+  background: currentColor;
+  transition: transform 0.4s var(--ease-out);
+}
+.menu-icon i:first-child {
+  top: 0;
+}
+.menu-icon i:last-child {
+  bottom: 0;
+}
+.menu-toggle[aria-expanded="true"] .menu-icon i:first-child {
+  transform: translateY(4.25px) rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] .menu-icon i:last-child {
+  transform: translateY(-4.25px) rotate(-45deg);
+}
 
+/*
+ * Opened with show(), not showModal(): a modal dialog sits in the top layer,
+ * above every z-index, and would cover the navbar that closes it. The
+ * curtain drops from the top edge and lifts back the same way.
+ */
 .menu-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-menu);
   border: 0;
-  padding: 100px 7vw 40px;
-  background: linear-gradient(#c9cbfa, white 55%);
+  padding: 0;
+  background: var(--menu-gradient), var(--color-paper);
   color: var(--ink);
   width: 100%;
   max-width: none;
   height: 100dvh;
   max-height: none;
   margin: 0;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path calc(var(--motion-intro-exit-ms) * 1ms)
+    var(--ease-curtain);
 }
-.menu-dialog::backdrop {
-  background: #25296b99;
-  backdrop-filter: blur(5px);
+.menu-dialog.is-open {
+  clip-path: inset(0 0 0 0);
 }
-.menu-dialog[open] {
-  animation: menu-in 0.5s ease both;
+.menu-body {
+  height: 100%;
+  padding: 100px 7vw 40px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .menu-dialog nav {
   display: flex;
@@ -108,12 +150,6 @@
   font: 12px var(--mono);
   color: var(--accent);
 }
-.menu-close {
-  position: absolute;
-  top: 22px;
-  right: 24px;
-}
-
 .menu-bottom {
   margin-top: 100px;
 }
@@ -149,14 +185,20 @@
   }
 
   .menu-toggle {
-    display: block;
+    display: inline-flex;
   }
+  /* Only the area below the navbar scrolls, so on a short screen the links
+     fade out at its edge instead of sliding under the logo. */
   .menu-dialog {
-    padding: 60px var(--gutter) var(--gutter);
+    padding-top: calc(var(--gutter) + 44px);
   }
-  .menu-close {
-    top: var(--gutter);
-    right: var(--gutter);
+  .menu-body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 40px var(--gutter) var(--gutter);
+    mask-image: linear-gradient(transparent, #000 24px);
   }
   /* Scoped to [open]: a bare display value would override the UA rule that
      hides a closed dialog, leaving the menu drawn over the page. */
@@ -175,7 +217,9 @@
   color: var(--color-paper);
   --header-inverse: var(--ink);
 }
-.site-header[data-theme="light"] {
+/* The open menu is pale, so the navbar over it reads dark. */
+.site-header[data-theme="light"],
+.site-header.is-menu-open {
   color: var(--ink);
   --header-inverse: var(--color-paper);
 }
@@ -244,7 +288,8 @@
   --action-accent: var(--color-action-on-dark);
   --action-icon-ink: var(--color-action-dark-surface);
 }
-.site-header[data-theme="light"] {
+.site-header[data-theme="light"],
+.site-header.is-menu-open {
   --action-accent: var(--color-accent);
   --action-icon-ink: var(--color-paper);
 }

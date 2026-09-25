@@ -25,6 +25,12 @@
     rgb(16 20 122 / 45%) 0%,
     rgb(16 20 122 / 0%) 35%
   );
+  /* The hero's blue as a soft wash, light enough for ink links and navbar. */
+  --menu-gradient: linear-gradient(
+    180deg,
+    rgb(73 79 237 / 40%) 0%,
+    rgb(73 79 237 / 0%) 55%
+  );
   --color-ink: #171819;
   --color-paper: #fff;
   --color-accent: #494fed;
@@ -69,6 +75,7 @@
   --radius-small: 0.1875rem;
   --radius-control: 0.5rem;
   --radius-card: 0.75rem;
+  --layer-menu: 30;
   --layer-header: 40;
   --layer-intro: 100;
   --layer-overlay: 150;

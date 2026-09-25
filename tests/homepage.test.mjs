@@ -70,7 +70,7 @@ test("project destinations remain the original published case studies", () => {
 
 test("all rendered buttons use the shared Action component", () => {
   const buttons = [...html.matchAll(/<button\b([^>]*)>/g)];
-  assert.equal(buttons.length, 4);
+  assert.equal(buttons.length, 3);
   for (const [, attributes] of buttons) {
     assert.match(attributes, /class="[^"]*\baction\b/);
     assert.match(attributes, /data-appearance="/);
