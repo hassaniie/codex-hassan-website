@@ -154,7 +154,8 @@
   }
   .project-media {
     min-height: 0;
-    aspect-ratio: 1/1;
+    /* A little taller than wide: 4:5, the shape the thumbnails are drawn at. */
+    aspect-ratio: 4/5;
     border-radius: var(--radius-control);
   }
   .survey-media {
