@@ -193,26 +193,9 @@
   line-height: 1.15;
   text-transform: none;
 }
+/* Project thumbnails carry no visible label; the link's aria-label names it. */
 .action[data-appearance="media"] > .action-label {
-  position: absolute;
-  bottom: var(--space-5);
-  left: var(--space-5);
-  padding: var(--space-3) var(--space-4);
-  background: var(--color-paper);
-  color: var(--ink);
-  border-radius: var(--radius-small);
-  border: 0;
-  opacity: 0;
-  transform: translateY(10px);
-  transition:
-    opacity var(--duration-hover),
-    transform var(--duration-hover),
-    color var(--duration-hover);
-}
-.action[data-appearance="media"]:is(:hover, :focus-visible) > .action-label {
-  opacity: 1;
-  transform: none;
-  color: var(--action-accent, var(--color-accent));
+  display: none;
 }
 .action[data-appearance="media"] .action-copy {
   display: none;
@@ -230,13 +213,9 @@
   .action[data-appearance="editorial"] {
     font-size: 1.75rem;
   }
-  .action[data-appearance="media"] > .action-label {
-    display: none;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .action[data-appearance="portrait"],
-  .action[data-appearance="media"] > .action-label {
+  .action[data-appearance="portrait"] {
     transition: none;
   }
 }
