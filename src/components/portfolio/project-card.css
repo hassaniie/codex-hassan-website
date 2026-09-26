@@ -15,16 +15,26 @@
   overflow: hidden;
   min-height: 560px;
   isolation: isolate;
+  background: var(--media-bg, var(--color-tag-surface));
 }
-/* Independent transform properties keep the scrubbed parallax (translate)
-   from inheriting the hover transition that belongs to scale alone. The
-   resting scale gives the drift room to travel without exposing an edge. */
+/*
+ * Each thumbnail sits on a flat colour that the frame repeats, so it is shown
+ * whole (contain, never cover) and any spare room reads as more of the same
+ * background. That also lets the scrubbed drift travel without a resting
+ * zoom: an exposed edge is just more background. Independent transform
+ * properties keep the drift (translate) out of the hover transition, which
+ * belongs to scale alone.
+ */
+/* Out of flow, so the frame keeps the size the layout gives it (a screen
+   tall on desktop) rather than growing to the picture's own height. */
 .project-media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  --media-scale: 1.12;
-  --media-hover: 1.17;
+  object-fit: contain;
+  --media-scale: 1;
+  --media-hover: 1.04;
   translate: 0 var(--parallax-y, 0px);
   scale: var(--media-scale);
   transition: scale 0.9s var(--ease-out);
@@ -32,36 +42,6 @@
 }
 .project-media:hover img {
   --media-scale: var(--media-hover);
-}
-.survey-media {
-  background: linear-gradient(140deg, #b9c7e3, #e3e9f5);
-  padding: 9% 5%;
-}
-/* This one is a framed screenshot rather than a bleed, so it keeps its
-   authored size and drifts within the surrounding padding. */
-.survey-media img {
-  height: auto;
-  box-shadow: 0 25px 45px #10275130;
-  border-radius: var(--radius-control);
-  --media-scale: 1;
-  --media-hover: 1.04;
-}
-.mycah-media {
-  background: #f1f8f5;
-}
-.mycah-media img {
-  position: absolute;
-  inset: 0;
-  object-fit: cover;
-  object-position: top;
-}
-.meows-media {
-  background: #e0b9ce;
-}
-.meows-media img {
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
 }
 .project-info {
   display: flex;
@@ -157,16 +137,6 @@
     /* A little taller than wide: 4:5, the shape the thumbnails are drawn at. */
     aspect-ratio: 4/5;
     border-radius: var(--radius-control);
-  }
-  .survey-media {
-    padding: 6% 3%;
-  }
-  .mycah-media img {
-    object-fit: cover;
-  }
-  .meows-media img {
-    object-fit: cover;
-    object-position: center;
   }
   .tags li {
     font-size: 11px;

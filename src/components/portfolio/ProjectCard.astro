@@ -8,6 +8,7 @@ interface Props {
   variant?: number;
 }
 const { project, variant = 0 } = Astro.props;
+const { background, ...image } = project.image;
 ---
 
 <article class="project reveal" data-categories={project.categories.join("|")}>
@@ -18,8 +19,9 @@ const { project, variant = 0 } = Astro.props;
     href={project.href}
     external
     aria-label={`View ${project.title.join(" ")} on Behance`}
+    style={`--media-bg: ${background}`}
   >
-    <img {...project.image} loading="lazy" />
+    <img {...image} loading="lazy" />
   </Action>
   <div class="project-info">
     <div class="project-story">
