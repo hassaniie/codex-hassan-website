@@ -25,27 +25,13 @@ import { profile } from "../content/profile";
       </div>
     </section>
     <div class="not-found-visual" aria-hidden="true">
-      <div class="not-found-token">
-        <div class="coin">
-          {Array.from({ length: 16 }, (_, i) => (
-            <span class="coin-edge" style={`--i: ${i}`} />
-          ))}
-          <img
-            class="coin-face coin-front"
-            src="/assets/hm-token.webp"
-            alt=""
-            width="1254"
-            height="1254"
-          />
-          <img
-            class="coin-face coin-back"
-            src="/assets/hm-token.webp"
-            alt=""
-            width="1254"
-            height="1254"
-          />
-        </div>
-      </div>
+      <img
+        class="not-found-token"
+        src="/assets/hm-token.webp"
+        alt=""
+        width="1254"
+        height="1254"
+      />
     </div>
   </div>
 </SiteLayout>
@@ -120,70 +106,22 @@ import { profile } from "../content/profile";
   .not-found-visual::after {
     background: var(--atmosphere-edge-shade);
   }
-  /*
-   * A full turn needs a real object, not a flat picture: the token is the
-   * face on both sides (the back turned round so HM reads correctly), with
-   * a stack of dark discs between them for the rim, so the coin keeps its
-   * thickness when it passes edge-on.
-   */
+  /* The same turn the homepage scrubs on scroll, looped: a flat render can
+     swing through its face but not all the way round. */
   .not-found-token {
-    --coin: clamp(280px, 30vw, 520px);
-    --thickness: calc(var(--coin) * 0.05);
-    width: var(--coin);
-    aspect-ratio: 1;
-    perspective: 1400px;
+    width: clamp(280px, 30vw, 520px);
+    height: auto;
     filter: drop-shadow(0 35px 25px #1113);
-    animation: not-found-float 4s ease-in-out infinite alternate;
+    animation: not-found-turn 7s ease-in-out infinite alternate;
   }
-  .coin {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transform: rotateX(8deg) rotateZ(-6deg);
-    animation: not-found-spin 8s linear infinite;
-  }
-  .coin-face {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  .coin-front {
-    transform: translateZ(calc(var(--thickness) / 2));
-  }
-  .coin-back {
-    transform: rotateY(180deg) translateZ(calc(var(--thickness) / 2));
-  }
-  /* Sized to sit just inside the face, so it only shows side-on. */
-  .coin-edge {
-    position: absolute;
-    top: 13%;
-    left: 13%;
-    width: 74%;
-    height: 74%;
-    border-radius: 50%;
-    background: linear-gradient(90deg, #111113, #34343a 50%, #111113);
-    transform: translateZ(
-      calc(var(--thickness) * (var(--i) / 15 - 0.5) * 0.94)
-    );
-  }
-  @keyframes not-found-spin {
+  @keyframes not-found-turn {
     from {
-      transform: rotateX(8deg) rotateZ(-6deg) rotateY(0deg);
+      transform: perspective(1200px) rotateY(-38deg) rotateZ(16deg)
+        translateY(12px);
     }
     to {
-      transform: rotateX(8deg) rotateZ(-6deg) rotateY(360deg);
-    }
-  }
-  @keyframes not-found-float {
-    from {
-      translate: 0 12px;
-    }
-    to {
-      translate: 0 -12px;
+      transform: perspective(1200px) rotateY(38deg) rotateZ(-14deg)
+        translateY(-12px);
     }
   }
 
@@ -212,7 +150,7 @@ import { profile } from "../content/profile";
       min-height: max(420px, 55svh);
     }
     .not-found-token {
-      --coin: min(300px, 70vw);
+      width: min(300px, 70vw);
     }
   }
 </style>
