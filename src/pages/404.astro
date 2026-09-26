@@ -1,6 +1,5 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import Footer from "../components/navigation/Footer.astro";
 import Action from "../components/ui/Action.astro";
 import { profile } from "../content/profile";
 ---
@@ -12,54 +11,146 @@ import { profile } from "../content/profile";
   skipHref="#not-found"
   skipLabel="Skip to page content"
 >
-  <article class="policy section-pad" id="not-found">
-    <p class="mono">Error 404</p>
-    <h1>This page wandered off.</h1>
-    <p>
-      The link may be old, or the address may have a typo. Everything else is
-      right where you left it.
-    </p>
-    <div class="not-found-links">
-      <Action href="/" label="Back to home" arrow />
-      <Action href="/works/" label="See all works" />
+  <div class="not-found">
+    <section class="not-found-copy" id="not-found">
+      <span class="not-found-chip mono">Error</span>
+      <h1>404</h1>
+      <p>
+        This page wandered off. The link may be old, or the address may have a
+        typo. Everything else is right where you left it.
+      </p>
+      <div class="not-found-links">
+        <Action href="/" label="Back to home" arrow />
+        <Action href="/works/" label="See all works" />
+      </div>
+    </section>
+    <div class="not-found-visual" aria-hidden="true">
+      <img
+        class="not-found-token"
+        src="/assets/hm-token.webp"
+        alt=""
+        width="1254"
+        height="1254"
+      />
     </div>
-  </article>
-  <section class="policy-footer">
-    <Footer />
-  </section>
+  </div>
 </SiteLayout>
 
 <style>
-  .policy {
-    min-height: 75svh;
-    padding-top: 170px;
-    padding-bottom: 100px;
+  /* Two halves: the message on the light theme, the HM token turning in the
+     hero's gradient. They stack on smaller screens, message first. */
+  .not-found {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100svh;
   }
-  .policy h1 {
-    max-width: 900px;
-    margin: 28px 0 60px;
+  .not-found-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px var(--gutter) 80px;
+    text-align: center;
+    color: var(--ink);
+    background: var(--color-paper);
+  }
+  .not-found-chip {
+    padding: 3px 7px;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-small);
     color: var(--color-accent);
-    font-size: clamp(4rem, 8vw, 8rem);
-    letter-spacing: -0.045em;
+    font-size: var(--text-small);
+    text-transform: uppercase;
   }
-  .policy > p:not(.mono) {
-    max-width: 680px;
-    margin-top: 24px;
-    font-size: 1.125rem;
+  .not-found-copy h1 {
+    margin-top: 20px;
+    color: var(--color-accent);
+    font-size: clamp(7rem, 11vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+  }
+  .not-found-copy p {
+    max-width: 380px;
+    margin-top: 40px;
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
   }
   .not-found-links {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 16px 32px;
-    margin-top: 48px;
+    margin-top: 28px;
   }
-  .policy-footer {
-    padding-top: 100px;
-    background: var(--color-action-dark-surface);
+
+  /* The hero's atmosphere, layer for layer. */
+  .not-found-visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--atmosphere-gradient);
   }
-  @media (max-width: 600px) {
-    .policy {
-      padding-top: 130px;
+  .not-found-visual::before,
+  .not-found-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .not-found-visual::before {
+    background: var(--atmosphere-edge-overlay);
+    mix-blend-mode: overlay;
+  }
+  .not-found-visual::after {
+    background: var(--atmosphere-edge-shade);
+  }
+  /* The same turn the homepage scrubs on scroll, looped: a flat render can
+     swing through its face but not all the way round. */
+  .not-found-token {
+    width: clamp(280px, 30vw, 520px);
+    height: auto;
+    filter: drop-shadow(0 35px 25px #1113);
+    animation: not-found-turn 7s ease-in-out infinite alternate;
+  }
+  @keyframes not-found-turn {
+    from {
+      transform: perspective(1200px) rotateY(-38deg) rotateZ(16deg)
+        translateY(12px);
+    }
+    to {
+      transform: perspective(1200px) rotateY(38deg) rotateZ(-14deg)
+        translateY(-12px);
+    }
+  }
+
+  /* The navbar spans both halves: over the gradient its right side turns
+     white, and the centred clock moves over the message so it never sits
+     on the seam. */
+  @media (min-width: 901px) {
+    :global(:root:has(.not-found) .site-header .header-right) {
+      color: var(--color-paper);
+      --action-accent: var(--color-action-on-dark);
+      --action-icon-ink: var(--color-action-dark-surface);
+    }
+    :global(:root:has(.not-found) .site-header .location) {
+      left: 25%;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .not-found {
+      grid-template-columns: 1fr;
+    }
+    .not-found-copy {
+      padding: 140px var(--gutter) 72px;
+    }
+    .not-found-visual {
+      min-height: max(420px, 55svh);
+    }
+    .not-found-token {
+      width: min(300px, 70vw);
     }
   }
 </style>
