@@ -41,6 +41,11 @@ import Action from "../ui/Action.astro";
       required
     ></textarea>
   </label>
+  {/* A honeypot: hidden from people and screen readers, filled by bots. */}
+  <label class="contact-trap" aria-hidden="true">
+    Website
+    <input name="website" type="text" tabindex="-1" autocomplete="off" />
+  </label>
   <div class="contact-form-actions">
     <label class="consent">
       <input name="consent" type="checkbox" required />

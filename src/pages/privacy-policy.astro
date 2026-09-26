@@ -15,13 +15,16 @@ import { profile } from "../content/profile";
     <p class="mono">Privacy policy</p>
     <h1>Your message stays between us.</h1>
     <p>
-      The contact form uses the details you enter only to prepare an email to{" "}
-      {profile.email}. The website does not store or submit those details to a
-      separate server.
+      The contact form sends the details you enter (your name, email, company
+      and message) to {profile.email}, and is used only to reply to you.
+      Delivery is handled by FormSubmit (formsubmit.co), an email-forwarding
+      service; this website does not store your details itself. If the form
+      can't send, it opens your own email app with the message written
+      instead.
     </p>
     <p>
-      If you send that email, its handling is governed by your email provider
-      and mine. You can request deletion of our correspondence at any time by
+      Once your message arrives, its handling is governed by my email
+      provider. You can request deletion of our correspondence at any time by
       emailing {profile.email}.
     </p>
   </article>

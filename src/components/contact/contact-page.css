@@ -93,6 +93,13 @@
   min-height: 100px;
   align-items: stretch;
 }
+.contact-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 .contact-form-actions {
   margin-top: 36px;
   display: flex;
