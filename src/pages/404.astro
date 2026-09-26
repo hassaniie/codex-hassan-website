@@ -1,0 +1,65 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Footer from "../components/navigation/Footer.astro";
+import Action from "../components/ui/Action.astro";
+import { profile } from "../content/profile";
+---
+
+<SiteLayout
+  title={`Page not found — ${profile.name}`}
+  description="This page doesn't exist. Head back to Hassan Mushtaq's portfolio."
+  initialHeaderTheme="light"
+  skipHref="#not-found"
+  skipLabel="Skip to page content"
+>
+  <article class="policy section-pad" id="not-found">
+    <p class="mono">Error 404</p>
+    <h1>This page wandered off.</h1>
+    <p>
+      The link may be old, or the address may have a typo. Everything else is
+      right where you left it.
+    </p>
+    <div class="not-found-links">
+      <Action href="/" label="Back to home" arrow />
+      <Action href="/works/" label="See all works" />
+    </div>
+  </article>
+  <section class="policy-footer">
+    <Footer />
+  </section>
+</SiteLayout>
+
+<style>
+  .policy {
+    min-height: 75svh;
+    padding-top: 170px;
+    padding-bottom: 100px;
+  }
+  .policy h1 {
+    max-width: 900px;
+    margin: 28px 0 60px;
+    color: var(--color-accent);
+    font-size: clamp(4rem, 8vw, 8rem);
+    letter-spacing: -0.045em;
+  }
+  .policy > p:not(.mono) {
+    max-width: 680px;
+    margin-top: 24px;
+    font-size: 1.125rem;
+  }
+  .not-found-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    margin-top: 48px;
+  }
+  .policy-footer {
+    padding-top: 100px;
+    background: var(--color-action-dark-surface);
+  }
+  @media (max-width: 600px) {
+    .policy {
+      padding-top: 130px;
+    }
+  }
+</style>
