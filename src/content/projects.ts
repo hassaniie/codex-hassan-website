@@ -22,18 +22,7 @@ export interface Project {
   tags: string[];
   categories: Category[];
   href: string;
-  /*
-   * A 4:5 thumbnail on a flat background. The card shows it whole and fills
-   * any spare room with `background`, the thumbnail's own edge colour, so it
-   * is never cropped whatever shape the frame takes.
-   */
-  image: {
-    src: string;
-    alt: string;
-    width: number;
-    height: number;
-    background: string;
-  };
+  image: { src: string; alt: string; width: number; height: number };
 }
 export const projects = [
   {
@@ -46,11 +35,10 @@ export const projects = [
     categories: ["Product design", "UX/UI design"],
     href: "https://www.behance.net/gallery/249382607/Employee-Engagement-Survey-Platform-Modern-HR-System",
     image: {
-      src: "/assets/survey-thumb.webp",
+      src: "/assets/survey.webp",
       alt: "Hassan's HRMForce survey deployment dashboard design",
-      width: 1600,
-      height: 2000,
-      background: "#21409a",
+      width: 1400,
+      height: 908,
     },
   },
   {
@@ -63,11 +51,10 @@ export const projects = [
     categories: ["App design", "UX/UI design"],
     href: "https://www.behance.net/gallery/247474201/Mycah-Healthcare-Mobile-App-UXUI-Design",
     image: {
-      src: "/assets/mycah-thumb.webp",
+      src: "/assets/mycah.webp",
       alt: "Mycah family health application interface designed by Hassan",
-      width: 1600,
-      height: 2000,
-      background: "#006c55",
+      width: 1400,
+      height: 1601,
     },
   },
   {
@@ -80,11 +67,10 @@ export const projects = [
     categories: ["Web design", "UX/UI design"],
     href: "https://www.behance.net/gallery/221670441/Meows-Untold-Online-Event-Ticket-Booking-Platform",
     image: {
-      src: "/assets/meows-thumb.webp",
+      src: "/assets/meows.webp",
       alt: "Meows Untold event website design with sculptural pink and orange artwork",
-      width: 1600,
-      height: 2000,
-      background: "#e8c4d7",
+      width: 1400,
+      height: 788,
     },
   },
 ] satisfies Project[];
