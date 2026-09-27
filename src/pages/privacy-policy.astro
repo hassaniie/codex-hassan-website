@@ -1,7 +1,9 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import Footer from "../components/navigation/Footer.astro";
+import Contact from "../components/sections/Contact.astro";
 import { profile } from "../content/profile";
+
+const updated = "September 2026";
 ---
 
 <SiteLayout
@@ -11,48 +13,214 @@ import { profile } from "../content/profile";
   skipHref="#privacy"
   skipLabel="Skip to privacy policy"
 >
-  <article class="policy section-pad" id="privacy">
-    <p class="mono">Privacy policy</p>
-    <h1>Your message stays between us.</h1>
-    <p>
-      The contact form sends the details you enter (your name, email, company
-      and message) to {profile.email}, and is used only to reply to you.
-      Delivery is handled by FormSubmit (formsubmit.co), an email-forwarding
-      service; this website does not store your details itself. If the form
-      can't send, it opens your own email app with the message written
-      instead.
-    </p>
-    <p>
-      Once your message arrives, its handling is governed by my email
-      provider. You can request deletion of our correspondence at any time by
-      emailing {profile.email}.
-    </p>
+  <article class="policy" id="privacy">
+    <header class="policy-head">
+      <h1>Privacy policy</h1>
+      <p class="mono policy-updated">( Last updated: {updated} )</p>
+    </header>
+    <div class="policy-body">
+      <p>
+        This policy explains how I, {profile.name}, a product designer and
+        engineer based in {profile.location}, handle the personal information
+        you share when you visit uxhassan.vercel.app (the “website”).
+      </p>
+
+      <section>
+        <h2>1. Who’s responsible</h2>
+        <p>
+          I run this website myself, so I’m the person responsible for your
+          information. You can reach me at {profile.email}.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. What I collect</h2>
+        <p>
+          The only personal information I collect is what you choose to send
+          me through the contact form or by email:
+        </p>
+        <ul>
+          <li>Your name</li>
+          <li>Your email address</li>
+          <li>Your company, if you add it</li>
+          <li>The details of your project or message</li>
+        </ul>
+        <p>There are no accounts or sign-ups on this website.</p>
+      </section>
+
+      <section>
+        <h2>3. How I use it</h2>
+        <p>I use your information only to:</p>
+        <ul>
+          <li>Read and reply to your message</li>
+          <li>
+            Talk with you about the project, role or collaboration you raised
+          </li>
+          <li>Keep a record of our conversation while it’s ongoing</li>
+        </ul>
+        <p>
+          I never sell, rent or trade your information, and I won’t add you to
+          a mailing list.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Legal basis (GDPR)</h2>
+        <p>
+          If you’re in the European Economic Area or the UK, I process your
+          information based on:
+        </p>
+        <ul>
+          <li>Your consent, which you give by ticking the box and sending the form</li>
+          <li>My legitimate interest in replying to enquiries and discussing work with you</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5. Services involved</h2>
+        <p>A few trusted services help run this website and deliver your message:</p>
+        <ul>
+          <li>FormSubmit (formsubmit.co) forwards the contact form to my inbox</li>
+          <li>Google (Gmail) hosts my email</li>
+          <li>
+            Vercel hosts the website and, like any web host, may keep brief
+            technical logs such as your IP address and browser type to keep the
+            site secure
+          </li>
+        </ul>
+        <p>
+          Each handles data under its own privacy policy. If the form can’t
+          send, it opens your own email app instead, and your message goes
+          through your email provider.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. How long I keep it</h2>
+        <p>
+          I keep your messages only for as long as they’re useful for our
+          conversation or any work that follows. You can ask me to delete them
+          at any time.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Your rights</h2>
+        <p>Depending on where you live, you can:</p>
+        <ul>
+          <li>Ask what information I hold about you</li>
+          <li>Ask me to correct or delete it</li>
+          <li>Withdraw your consent at any time</li>
+          <li>Object to or restrict how I use it</li>
+        </ul>
+        <p>To do any of this, just email me.</p>
+      </section>
+
+      <section>
+        <h2>8. Cookies</h2>
+        <p>
+          This website doesn’t set any cookies and doesn’t use advertising or
+          tracking tools.
+        </p>
+      </section>
+
+      <section>
+        <h2>9. Links to other websites</h2>
+        <p>
+          My case studies and profiles live on Behance, LinkedIn and Dribbble.
+          When you follow those links, their own privacy policies apply.
+        </p>
+      </section>
+
+      <section>
+        <h2>10. Changes to this policy</h2>
+        <p>
+          If anything here changes, I’ll update this page and the date at the
+          top.
+        </p>
+      </section>
+
+      <section>
+        <h2>11. Contact</h2>
+        <p>
+          Questions about this policy or your information? Get in touch:
+        </p>
+        <p class="policy-signature">
+          {profile.name}
+          <br />
+          {profile.location}
+          <br />
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        </p>
+      </section>
+    </div>
   </article>
-  <section class="policy-footer">
-    <Footer />
-  </section>
+  <Contact />
+  <script>
+    import { initPrivacyPage } from "../scripts/privacy-page";
+    initPrivacyPage();
+  </script>
 </SiteLayout>
 
 <style>
+  /* One narrow column, as a document: the title in the accent serif, the
+     body small and plain, with numbered sections at body size. */
   .policy {
-    min-height: 75svh;
-    padding-top: 170px;
-    padding-bottom: 100px;
+    width: min(600px, calc(100% - 2 * var(--gutter)));
+    margin-inline: auto;
+    padding: 170px 0 160px;
   }
-  .policy h1 {
-    max-width: 900px;
-    margin: 28px 0 60px;
+  .policy-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .policy-head h1 {
     color: var(--color-accent);
-    font-size: clamp(4rem, 8vw, 8rem);
-    letter-spacing: -0.045em;
+    font-size: clamp(2.5rem, 3.4vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
   }
-  .policy > p:not(.mono) {
-    max-width: 680px;
+  .policy-updated {
+    flex: none;
+    margin-top: 6px;
+    color: var(--color-accent);
+    font-size: var(--text-meta);
+    text-transform: uppercase;
+  }
+  .policy-body {
+    margin-top: 56px;
+    font-size: var(--text-body-small);
+    line-height: 1.55;
+  }
+  .policy-body section {
     margin-top: 24px;
-    font-size: 1.125rem;
   }
-  .policy-footer {
-    padding-top: 100px;
-    background: var(--color-action-dark-surface);
+  .policy-body h2 {
+    font: inherit;
+  }
+  .policy-body ul {
+    margin: 0;
+    padding-left: 16px;
+  }
+  .policy-body a {
+    border-bottom: 1px solid rgb(23 24 25 / 35%);
+  }
+  @media (max-width: 600px) {
+    .policy {
+      padding: 130px 0 110px;
+    }
+    .policy-head {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .policy-updated {
+      margin-top: 0;
+      order: 2;
+    }
+    .policy-body {
+      margin-top: 40px;
+    }
   }
 </style>
