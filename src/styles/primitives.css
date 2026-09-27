@@ -125,6 +125,10 @@
   position: fixed;
   bottom: 25px;
   left: 50%;
+  /* Sized to its message, up to the screen minus the margins; left: 50%
+     alone would cap it at half the screen and wrap longer messages. */
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--gutter));
   transform: translate(-50%, 20px);
   opacity: 0;
   background: var(--ink);

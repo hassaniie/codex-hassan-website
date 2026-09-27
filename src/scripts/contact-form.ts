@@ -4,8 +4,9 @@ import { query, type BehaviorContext } from "../utilities/dom";
 /**
  * Sends the form to FormSubmit, which emails it to the address in profile.
  * If that fails (offline, the service is down, or the address hasn't been
- * activated yet) the message isn't lost: the visitor's email app opens with
- * it already written, which is what the form used to do on its own.
+ * activated with FormSubmit yet) nothing is lost: the form keeps what the
+ * visitor typed, says so, and offers the email address. The service's own
+ * reason goes to the console.
  */
 export function initContactForm({ signal }: BehaviorContext) {
   const form = query<HTMLFormElement>("#contact-form");
@@ -73,17 +74,11 @@ export function initContactForm({ signal }: BehaviorContext) {
         say("Thanks, your message is on its way.", 5000);
       } catch (error) {
         if (signal.aborted) return;
-        say("Couldn't send it here. Opening your email app instead…", 5000);
-        const body = [
-          `Name: ${name}`,
-          `Email: ${email}`,
-          company && `Company: ${company}`,
-          "",
-          details,
-        ]
-          .filter((line, index) => line || index === 3)
-          .join("\n");
-        window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        console.warn("Contact form not sent:", error);
+        say(
+          `Couldn't send your message. Please try again in a moment, or email me at ${profile.email}.`,
+          6000,
+        );
       } finally {
         if (button) button.disabled = false;
       }
