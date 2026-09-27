@@ -32,13 +32,37 @@
   font-size: 24px;
   line-height: 1;
 }
-.monogram img {
+/* Drawn inline so it can take a colour: white with a black H on the blue,
+   black with a white H on light pages, accent blue on hover. */
+.monogram {
+  --logo-ink: #fff;
+  --logo-knockout: #000;
+  color: var(--logo-ink);
+  transition: color 0.45s var(--ease-out);
+}
+.monogram svg {
+  display: block;
   width: 60px;
   height: 30px;
 }
-.site-header[data-theme="light"] .monogram img,
-.site-header.is-menu-open .monogram img {
-  filter: invert(1);
+.monogram .logo-knockout {
+  fill: var(--logo-knockout);
+  transition: fill 0.45s var(--ease-out);
+}
+.site-header[data-theme="light"] .monogram,
+.site-header.is-menu-open .monogram {
+  --logo-ink: #000;
+  --logo-knockout: #fff;
+}
+@media (hover: hover) {
+  .site-header .monogram:hover {
+    --logo-ink: var(--color-accent);
+    --logo-knockout: #fff;
+  }
+}
+.site-header .monogram:focus-visible {
+  --logo-ink: var(--color-accent);
+  --logo-knockout: #fff;
 }
 .header-photo {
   object-fit: cover;
