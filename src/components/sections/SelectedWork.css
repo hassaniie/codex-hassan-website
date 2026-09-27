@@ -1,10 +1,12 @@
 .work {
   padding-top: 60px;
 }
+/* The line on the left, the link in the exact centre of the row. */
 .all-work {
   padding: 24px 0;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
   border-top: 1px solid var(--line);
 }
 .all-work > .mono {
@@ -14,12 +16,14 @@
   .work {
     padding-top: 35px;
   }
+  /* Too narrow for both on one line: stacked and centred. */
   .all-work {
-    align-items: flex-start;
-    gap: 25px;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 16px;
+    text-align: center;
   }
   .all-work > .mono {
     font-size: 11px;
-    max-width: 135px;
   }
 }

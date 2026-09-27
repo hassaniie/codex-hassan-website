@@ -1,6 +1,4 @@
 ---
-import { behance } from "../../content/profile";
-
 import Action from "../ui/Action.astro";
 
 import { projects } from "../../content/projects";
@@ -24,12 +22,6 @@ import "./SelectedWork.css";
 
   <div class="all-work">
     <span class="mono">A few things I've put into the world.</span>
-    <Action
-      href={behance}
-      label="More on Behance"
-      size="responsive"
-      arrow
-      external
-    />
+    <Action href="/works/" label="View All Works" size="responsive" arrow />
   </div>
 </section>
