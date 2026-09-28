@@ -108,7 +108,7 @@
   background: var(--color-tag-surface);
   padding: 4px 6px;
   border-radius: 2px;
-  color: var(--color-tag-text);
+  color: var(--color-tag-ink);
 }
 .project-bottom {
   display: flex;
@@ -167,9 +167,6 @@
   .meows-media img {
     object-fit: cover;
     object-position: center;
-  }
-  .tags li {
-    font-size: 11px;
   }
   .project-top h3 {
     font-size: 36px;

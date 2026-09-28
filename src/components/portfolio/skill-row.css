@@ -16,10 +16,10 @@
 }
 .skill-tags li {
   background: var(--color-tag-surface);
-  color: #585c5f;
+  color: var(--color-tag-ink);
   padding: 5px 8px;
   border-radius: 2px;
-  font-size: var(--text-small);
+  font-size: 10px;
   text-transform: uppercase;
 }
 .skill-tools li {
@@ -33,6 +33,17 @@
 .skill-tools svg {
   width: 26px;
   height: 26px;
+}
+@media (max-width: 900px) {
+  /* Two rows at most: tags that would wrap onto a third are left out. */
+  .skill-tags {
+    max-height: calc(2 * (14px + 2 * 5px) + 6px); /* two 24px rows + the gap */
+    overflow: hidden;
+  }
+  .skill-tags li {
+    line-height: 14px;
+    white-space: nowrap;
+  }
 }
 @media (max-width: 600px) {
   .skill-tools li {

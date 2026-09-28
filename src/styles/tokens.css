@@ -47,6 +47,7 @@
   --color-label-accent: var(--color-accent);
   --color-muted: #737373;
   --color-tag-surface: #f0f2f3;
+  --color-tag-ink: #171819bf;
   --color-tag-text: #56595b;
   --ink: var(--color-ink);
   --accent: var(--color-accent);
