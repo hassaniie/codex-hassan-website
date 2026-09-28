@@ -4,7 +4,9 @@ import { profile } from "../../content/profile";
 import Action from "../ui/Action.astro";
 
 import { experience } from "../../content/experience";
+import { skills } from "../../content/skills";
 import ExperienceRow from "../portfolio/ExperienceRow.astro";
+import SkillRow from "../portfolio/SkillRow.astro";
 import "./Experience.css";
 ---
 
@@ -35,6 +37,17 @@ import "./Experience.css";
         arrow
         external
       />
+    </div>
+  </div>
+  <div class="experience-layout skills-layout">
+    <h3 class="experience-label">
+      Skills, tools <br />
+      & how I work.
+    </h3>
+    <div class="experience-list">
+      {skills.map((skill, index) => (
+        <SkillRow skill={skill} index={index} />
+      ))}
     </div>
   </div>
 </section>

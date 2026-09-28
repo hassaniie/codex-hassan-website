@@ -32,6 +32,9 @@
 .resume-link {
   margin-top: 20px;
 }
+.skills-layout {
+  margin-top: 140px;
+}
 @media (max-width: 900px) {
   .experience-layout {
     grid-template-columns: 1fr 2fr;
@@ -58,5 +61,8 @@
   }
   .experience-label br {
     display: none;
+  }
+  .skills-layout {
+    margin-top: 90px;
   }
 }
