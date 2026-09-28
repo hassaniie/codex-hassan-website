@@ -1,5 +1,5 @@
 /* Chips match the experience rows' job-title tag; tools sit in small tiles
-   on the same grey. */
+   on the same grey, each logo in its own colours. */
 .skill-tags,
 .skill-tools {
   list-style: none;
@@ -30,7 +30,7 @@
   border-radius: var(--radius-control);
   background: var(--color-tag-surface);
 }
-.skill-tools svg {
+.skill-tools img {
   width: 26px;
   height: 26px;
 }
@@ -50,7 +50,7 @@
     width: 48px;
     height: 48px;
   }
-  .skill-tools svg {
+  .skill-tools img {
     width: 22px;
     height: 22px;
   }

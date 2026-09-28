@@ -7,8 +7,6 @@ interface Props {
   index: number;
 }
 const { skill, index } = Astro.props;
-// Black marks read as ink, like the rest of the page's type.
-const ink = (hex: string) => (hex === "#000000" ? "var(--ink)" : hex);
 ---
 
 <article class="experience-row skill-row reveal">
@@ -28,14 +26,14 @@ const ink = (hex: string) => (hex === "#000000" ? "var(--ink)" : hex);
     <ul class="skill-tools">
       {skill.tools.map((tool) => (
         <li title={tool.name}>
-          <svg
-            viewBox="0 0 24 24"
-            role="img"
-            aria-label={tool.name}
-            fill={ink(tool.hex)}
-          >
-            <path d={tool.path} />
-          </svg>
+          <img
+            src={tool.logo}
+            alt={tool.name}
+            width="26"
+            height="26"
+            loading="lazy"
+            decoding="async"
+          />
         </li>
       ))}
     </ul>
