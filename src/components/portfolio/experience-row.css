@@ -24,6 +24,7 @@
   background: var(--color-tag-surface);
   color: #585c5f;
   padding: 5px 8px;
+  border-radius: 2px;
   font-size: var(--text-small);
 }
 @media (max-width: 600px) {
