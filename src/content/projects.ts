@@ -24,7 +24,15 @@ export interface Project {
   categories: Category[];
   /** The published case study. Left out, the card reads "Case study coming soon". */
   href?: string;
-  image: { src: string; alt: string; width: number; height: number };
+  image: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    /** Pre-shrunk sizes, so the browser never scales a large file down itself. */
+    srcset?: string;
+    sizes?: string;
+  };
 }
 export const projects = [
   {
@@ -42,6 +50,13 @@ export const projects = [
       alt: "Clean energy analytics dashboard floating over a family home, showing solar output, consumption and plant status",
       width: 3200,
       height: 4000,
+      srcset: [800, 1000, 1200, 1600, 2000, 2400]
+        .map((w) => `/assets/energy-${w}.webp ${w}w`)
+        .concat("/assets/energy.webp 3200w")
+        .join(", "),
+      // The card is half the page on desktop and full width on phones, and
+      // the cover is drawn at 112% for its parallax.
+      sizes: "(min-width: 901px) 56vw, (min-width: 601px) 50vw, 100vw",
     },
   },
   {
