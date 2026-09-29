@@ -34,6 +34,26 @@ export interface Project {
     sizes?: string;
   };
 }
+
+/*
+ * Every cover is a 3:4 image, the shape of its card on every screen, made at
+ * 3000 x 4000 and saved in /assets/projects at each width below. The browser
+ * loads the one closest to the card's drawn width: half the page less the
+ * gutter on desktop and tablet, the full width less the margins on phones.
+ */
+const coverWidths = [800, 1200, 1600, 2000, 2400, 3000];
+const cover = (id: string, alt: string): Project["image"] => ({
+  src: `/assets/projects/${id}-1600.webp`,
+  alt,
+  width: 3000,
+  height: 4000,
+  srcset: coverWidths
+    .map((w) => `/assets/projects/${id}-${w}.webp ${w}w`)
+    .join(", "),
+  sizes:
+    "(min-width: 901px) calc(50vw - 24px), (min-width: 601px) calc(50vw - 35px), calc(100vw - 40px)",
+});
+
 export const projects = [
   {
     id: "energy",
@@ -45,19 +65,10 @@ export const projects = [
     ],
     tags: ["Dashboard design", "Data visualisation", "Clean energy"],
     categories: ["Product design", "UX/UI design"],
-    image: {
-      src: "/assets/energy.webp",
-      alt: "Clean energy analytics dashboard floating over a family home, showing solar output, consumption and plant status",
-      width: 3200,
-      height: 4000,
-      srcset: [800, 1000, 1200, 1600, 2000, 2400]
-        .map((w) => `/assets/energy-${w}.webp ${w}w`)
-        .concat("/assets/energy.webp 3200w")
-        .join(", "),
-      // The card is half the page on desktop and full width on phones; a
-      // 4:5 cover filling the 3:4 box is drawn about 7% wider than it.
-      sizes: "(min-width: 901px) 52vw, (min-width: 601px) 49vw, 96vw",
-    },
+    image: cover(
+      "energy",
+      "Clean energy analytics dashboard floating over a family home, showing solar output, consumption and plant status",
+    ),
   },
   {
     id: "survey",
@@ -68,12 +79,10 @@ export const projects = [
     tags: ["Product design", "UX/UI", "Enterprise SaaS"],
     categories: ["Product design", "UX/UI design"],
     href: "https://www.behance.net/gallery/249382607/Employee-Engagement-Survey-Platform-Modern-HR-System",
-    image: {
-      src: "/assets/survey.webp",
-      alt: "Hassan's HRMForce survey deployment dashboard design",
-      width: 1400,
-      height: 908,
-    },
+    image: cover(
+      "survey",
+      "Hassan's HRMForce survey deployment dashboard design",
+    ),
   },
   {
     id: "mycah",
@@ -84,12 +93,10 @@ export const projects = [
     tags: ["Healthcare", "Mobile app", "UX/UI design"],
     categories: ["App design", "UX/UI design"],
     href: "https://www.behance.net/gallery/247474201/Mycah-Healthcare-Mobile-App-UXUI-Design",
-    image: {
-      src: "/assets/mycah.webp",
-      alt: "Mycah family health application interface designed by Hassan",
-      width: 1400,
-      height: 1601,
-    },
+    image: cover(
+      "mycah",
+      "Mycah family health application interface designed by Hassan",
+    ),
   },
   {
     id: "meows",
@@ -100,11 +107,9 @@ export const projects = [
     tags: ["Web design", "Interaction", "Event platform"],
     categories: ["Web design", "UX/UI design"],
     href: "https://www.behance.net/gallery/221670441/Meows-Untold-Online-Event-Ticket-Booking-Platform",
-    image: {
-      src: "/assets/meows.webp",
-      alt: "Meows Untold event website design with sculptural pink and orange artwork",
-      width: 1400,
-      height: 788,
-    },
+    image: cover(
+      "meows",
+      "Meows Untold event website design with sculptural pink and orange artwork",
+    ),
   },
 ] satisfies Project[];

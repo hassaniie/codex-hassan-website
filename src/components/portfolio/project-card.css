@@ -9,8 +9,8 @@
 /*
  * The cover is one 3:4 image, as wide as its column on every screen, with
  * its height set by that shape rather than by the screen or the image. The
- * image fills the box exactly and is never scaled or moved at rest, which is
- * what keeps it sharp. Covers are best made at 3:4 (1536 x 2048, say).
+ * image, itself 3:4 (see the cover sets in projects.ts), fills the box
+ * exactly and is never scaled or moved at rest, which is what keeps it sharp.
  */
 .project-media {
   display: flex;
@@ -34,26 +34,6 @@
 /* Only a cover that opens a case study zooms on hover. */
 a.project-media:hover img {
   scale: 1.04;
-}
-.survey-media {
-  background: linear-gradient(140deg, #b9c7e3, #e3e9f5);
-  padding: 9% 5%;
-}
-/* This one is a framed screenshot rather than a bleed, so it keeps its
-   authored size, centred in the surrounding padding. */
-.survey-media img {
-  height: auto;
-  box-shadow: 0 25px 45px #10275130;
-  border-radius: var(--radius-control);
-}
-.mycah-media {
-  background: #f1f8f5;
-}
-.mycah-media img {
-  object-position: top;
-}
-.meows-media {
-  background: #e0b9ce;
 }
 .project-info {
   display: flex;
@@ -153,9 +133,6 @@ a.project-media:hover img {
   }
   .project-media {
     border-radius: var(--radius-control);
-  }
-  .survey-media {
-    padding: 6% 3%;
   }
   .project-top h3 {
     font-size: 36px;
