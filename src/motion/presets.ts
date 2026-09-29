@@ -40,7 +40,7 @@ export function motionPresets() {
     scrollTouchInertia: number("--scroll-touch-inertia", 1.9),
     anchorDuration: number("--scroll-anchor-ms", 1500),
     headerOffset: number("--scroll-anchor-offset", 90),
-    velocitySkew: number("--scroll-velocity-skew", 4),
+    velocitySkew: number("--scroll-velocity-skew", 1),
     cursorLerp: number("--cursor-lerp", 0.16),
     cursorMagnetRadius: number("--cursor-magnet-radius", 70),
     cursorMagnetPull: number("--cursor-magnet-pull", 14),

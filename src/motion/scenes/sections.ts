@@ -45,7 +45,7 @@ export function initSectionScenes({ reducedMotion }: BehaviorContext): Cleanup {
     if (cards.length)
       gsap.fromTo(
         cards,
-        { y: 88, rotateX: -12, transformPerspective: 900 },
+        { y: 66, rotateX: -12, transformPerspective: 900 },
         {
           y: 0,
           rotateX: 0,

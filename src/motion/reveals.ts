@@ -107,7 +107,7 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
     tweens.push(
       gsap.fromTo(
         element,
-        { opacity: 0, y: 64 },
+        { opacity: 0, y: 48 },
         {
           opacity: 1,
           y: 0,
