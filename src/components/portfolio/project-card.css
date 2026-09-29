@@ -4,13 +4,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-6);
-  min-height: 620px;
 }
 /*
  * The cover is one 3:4 image, as wide as its column on every screen, with
  * its height set by that shape rather than by the screen or the image. The
  * image, itself 3:4 (see the cover sets in projects.ts), fills the box
  * exactly and is never scaled or moved at rest, which is what keeps it sharp.
+ * The row has no height of its own: it is as tall as the image, and the
+ * details column stretches to match, whatever the shape of the window.
  */
 .project-media {
   display: flex;
@@ -39,6 +40,11 @@ a.project-media:hover img {
   display: flex;
   flex-direction: column;
   padding: 0 0 0 0;
+}
+/* Fills the column, so the case study link and barcode sit level with the
+   bottom of the image. */
+.project-story {
+  flex: 1;
 }
 .project-top {
   display: flex;
@@ -113,7 +119,6 @@ a.project-media:hover img {
 @media (max-width: 900px) {
   .project {
     gap: 22px;
-    min-height: 480px;
   }
   .project-description {
     width: 100%;
@@ -129,7 +134,6 @@ a.project-media:hover img {
     grid-template-columns: 1fr;
     gap: var(--space-5);
     padding: 22px 0 35px;
-    min-height: 0;
   }
   .project-media {
     border-radius: var(--radius-control);
@@ -159,7 +163,6 @@ a.project-media:hover img {
   .project {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 0;
-    min-height: 100svh;
   }
   .project-info {
     display: flex;
@@ -173,9 +176,6 @@ a.project-media:hover img {
     width: 80%;
     margin: clamp(72px, 10svh, 128px) auto 0;
     padding: 0;
-  }
-  .project-story {
-    flex: 1;
   }
   .project-bottom {
     width: 100%;
