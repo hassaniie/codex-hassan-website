@@ -56,6 +56,11 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
           filter: "blur(0px)",
           ease: "none",
           stagger,
+          // A resting blur(0px) still routes the element through a filter
+          // pass, which Safari draws at reduced resolution: images and text
+          // in it stay soft. Drop the filter once it has resolved; scrolling
+          // back re-renders the tween and brings the blur back as needed.
+          onComplete: () => gsap.set(targets, { filter: "none" }),
           scrollTrigger: {
             trigger,
             start: "top 99%",
