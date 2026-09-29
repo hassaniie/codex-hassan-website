@@ -16,23 +16,32 @@
   min-height: 560px;
   isolation: isolate;
 }
-/* Independent transform properties keep the scrubbed parallax (translate)
-   from inheriting the hover transition that belongs to scale alone. The
-   resting scale gives the drift room to travel without exposing an edge. */
-.project-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  --media-scale: 1.12;
-  --media-hover: 1.17;
+/*
+ * The frame carries all of the cover's motion: the scrubbed parallax (its
+ * transform) and the hover zoom (its scale). It is 12% larger than the box,
+ * so the drift has room without exposing an edge, and the image inside is
+ * drawn at exactly the frame's size, never scaled or shifted itself, which is
+ * what keeps it sharp. The box, not the image, decides the cover's size.
+ */
+.project-media-frame {
+  position: absolute;
+  inset: -6%;
+  display: block;
   translate: 0 var(--parallax-y, 0px);
-  scale: var(--media-scale);
   transition: scale 0.9s var(--ease-out);
   will-change: translate, scale;
 }
+.project-media-frame img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 /* Only a cover that opens a case study zooms on hover. */
-a.project-media:hover img {
-  --media-scale: var(--media-hover);
+a.project-media:hover .project-media-frame {
+  scale: 1.045;
 }
 .survey-media {
   background: linear-gradient(140deg, #b9c7e3, #e3e9f5);
@@ -40,29 +49,27 @@ a.project-media:hover img {
 }
 /* This one is a framed screenshot rather than a bleed, so it keeps its
    authored size and drifts within the surrounding padding. */
-.survey-media img {
+.survey-media .project-media-frame {
+  position: static;
+  width: 100%;
+}
+a.survey-media:hover .project-media-frame {
+  scale: 1.04;
+}
+.survey-media .project-media-frame img {
+  position: static;
   height: auto;
   box-shadow: 0 25px 45px #10275130;
   border-radius: var(--radius-control);
-  --media-scale: 1;
-  --media-hover: 1.04;
 }
 .mycah-media {
   background: #f1f8f5;
 }
-.mycah-media img {
-  position: absolute;
-  inset: 0;
-  object-fit: cover;
+.mycah-media .project-media-frame img {
   object-position: top;
 }
 .meows-media {
   background: #e0b9ce;
-}
-.meows-media img {
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
 }
 .project-info {
   display: flex;
@@ -174,13 +181,6 @@ a.project-media:hover img {
   }
   .survey-media {
     padding: 6% 3%;
-  }
-  .mycah-media img {
-    object-fit: cover;
-  }
-  .meows-media img {
-    object-fit: cover;
-    object-position: center;
   }
   .project-top h3 {
     font-size: 36px;

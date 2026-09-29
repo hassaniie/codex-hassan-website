@@ -24,13 +24,16 @@ export function initWorkScene({ reducedMotion }: BehaviorContext): Cleanup {
         end: "bottom top",
         scrub: 1.15,
       };
-      const media = query(".project-media img", project);
-      if (media)
-        gsap.fromTo(
-          media,
-          { "--parallax-y": "-58px" },
-          { "--parallax-y": "58px", ease: "none", scrollTrigger },
-        );
+      // The frame drifts, not the image, and on whole pixels only: a
+      // fractional offset makes the browser resample the cover every frame.
+      const frame = query(".project-media-frame", project);
+      if (frame) {
+        const drift = { y: -58 };
+        const write = () =>
+          frame.style.setProperty("--parallax-y", `${Math.round(drift.y)}px`);
+        gsap.to(drift, { y: 58, ease: "none", onUpdate: write, scrollTrigger });
+        write();
+      }
       // A gentle counter-drift on the story, kept small because this column
       // carries the sticky description and the title must stay clear of the
       // header at reading position.
@@ -42,5 +45,10 @@ export function initWorkScene({ reducedMotion }: BehaviorContext): Cleanup {
         gsap.fromTo(bottom, { y: 44 }, { y: -18, ease: "none", scrollTrigger });
     });
   });
-  return () => context.revert();
+  return () => {
+    context.revert();
+    queryAll(".project-media-frame").forEach((frame) =>
+      frame.style.removeProperty("--parallax-y"),
+    );
+  };
 }
