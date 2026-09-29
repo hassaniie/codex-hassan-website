@@ -1,5 +1,7 @@
 .cursor-dot {
   position: fixed;
+  display: grid;
+  place-items: center;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -16,8 +18,41 @@
   top: 0;
   left: 0;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition:
+    opacity 0.2s,
+    width 0.45s var(--ease-out),
+    height 0.45s var(--ease-out),
+    background-color 0.25s;
   will-change: transform;
+}
+/* Over a cover whose case study is still to come, the dot opens into an ink
+   circle. Blending is switched off so it stays ink and the label reads. */
+.cursor-dot.is-soon {
+  width: 96px;
+  height: 96px;
+  background: var(--ink);
+  mix-blend-mode: normal;
+}
+.cursor-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.cursor-dot.is-soon .cursor-label {
+  opacity: 1;
+  transition: opacity 0.3s 0.15s;
+}
+/* The circle stands in for the system arrow there, wherever the dot runs. */
+@media (min-width: 901px) {
+  .cursor-live [data-cursor="soon"] {
+    cursor: none;
+  }
 }
 .statement-frame {
   width: 100%;

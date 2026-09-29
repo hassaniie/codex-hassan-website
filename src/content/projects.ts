@@ -71,6 +71,19 @@ export const projects = [
     ),
   },
   {
+    id: "visitor",
+    title: ["CerevraX.", "Every visitor, expected."],
+    year: "2026",
+    description:
+      "Onboarding for a visitor management system in a busy corporate hub. One calendar connection turns existing meetings into ready-to-go visitor records, so reception is prepared before anyone arrives.",
+    tags: ["Onboarding", "Enterprise SaaS", "Visitor management"],
+    categories: ["Product design", "UX/UI design"],
+    image: cover(
+      "visitor",
+      "CerevraX onboarding screen inviting teams to connect Google or Microsoft calendars so visitor records are created automatically",
+    ),
+  },
+  {
     id: "survey",
     title: ["Making space", "for employee voices."],
     year: "2026",

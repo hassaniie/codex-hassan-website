@@ -24,7 +24,7 @@ const paragraphs = [project.description].flat();
       <img {...project.image} loading="lazy" decoding="async" />
     </Action>
   ) : (
-    <div class={`project-media ${project.id}-media`}>
+    <div class={`project-media ${project.id}-media`} data-cursor="soon">
       <img {...project.image} loading="lazy" decoding="async" />
     </div>
   )}

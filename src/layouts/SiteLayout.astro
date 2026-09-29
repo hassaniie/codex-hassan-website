@@ -97,7 +97,9 @@ const shareImage = new URL("/og-image.jpg", Astro.site);
       {skipLabel}
     </a>
     <Intro />
-    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true">
+      <span class="cursor-label">Coming<br />soon</span>
+    </div>
     <Header initialTheme={initialHeaderTheme} />
     <main>
       <slot />

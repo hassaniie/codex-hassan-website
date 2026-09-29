@@ -3,6 +3,8 @@ import { gsap, setupEngine } from "./engine";
 import { motionPresets } from "./presets";
 
 const INTERACTIVE = "a[href], button:not([disabled])";
+/** Covers whose case study is still to come. */
+const SOON = '[data-cursor="soon"]';
 /** Probe count per ring; more points detect controls sooner. */
 const PROBES = 8;
 /**
@@ -54,6 +56,16 @@ export function initCursor({
   });
 
   const magnet = () => {
+    const under = document.elementFromPoint(pointerX, pointerY);
+    // Over a cover whose case study is still to come, the dot opens into a
+    // "Coming soon" circle and settles under the pointer without any pull.
+    const soon = Boolean(under?.closest(SOON));
+    dot.classList.toggle("is-soon", soon);
+    if (soon) {
+      pullX = 0;
+      pullY = 0;
+      return;
+    }
     let closest: DOMRect | undefined;
     let closestDistance = Infinity;
     const consider = (node: Element | null) => {
@@ -70,7 +82,7 @@ export function initCursor({
         closest = rect;
       }
     };
-    consider(document.elementFromPoint(pointerX, pointerY));
+    consider(under);
     for (const [dx, dy] of ring)
       consider(document.elementFromPoint(pointerX + dx, pointerY + dy));
 
@@ -112,6 +124,8 @@ export function initCursor({
       if (!live) {
         // Start under the pointer so the dot never flies in from the corner.
         live = true;
+        // Lets CSS hide the system arrow where the dot takes its place.
+        document.documentElement.classList.add("cursor-live");
         currentX = pointerX;
         currentY = pointerY;
         setX(currentX);
@@ -138,6 +152,8 @@ export function initCursor({
 
   return () => {
     gsap.ticker.remove(tick);
+    dot.classList.remove("is-soon");
+    document.documentElement.classList.remove("cursor-live");
     dot.style.opacity = "0";
     gsap.set(dot, { clearProps: "all" });
   };
