@@ -30,7 +30,8 @@
   transition: scale 0.9s var(--ease-out);
   will-change: translate, scale;
 }
-.project-media:hover img {
+/* Only a cover that opens a case study zooms on hover. */
+a.project-media:hover img {
   --media-scale: var(--media-hover);
 }
 .survey-media {
@@ -95,6 +96,9 @@
   font-weight: 400;
   line-height: var(--leading-body);
 }
+.project-description p + p {
+  margin-top: 12px;
+}
 .tags {
   list-style: none;
   padding: 0;
@@ -119,6 +123,16 @@
 .project-bottom .barcode {
   width: 110px;
   height: 52px;
+}
+/* Stands where "View case study" goes until one is published: the same
+   type, quieter, and nothing to click. */
+.project-soon {
+  font-family: var(--mono);
+  font-size: var(--text-meta);
+  font-weight: var(--font-weight-light);
+  line-height: var(--leading-body);
+  text-transform: uppercase;
+  color: var(--color-muted);
 }
 @media (min-width: 1600px) {
   .project-description {

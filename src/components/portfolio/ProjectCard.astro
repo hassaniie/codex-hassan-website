@@ -8,19 +8,26 @@ interface Props {
   variant?: number;
 }
 const { project, variant = 0 } = Astro.props;
+const paragraphs = [project.description].flat();
 ---
 
 <article class="project reveal" data-categories={project.categories.join("|")}>
-  <Action
-    appearance="media"
-    label="Explore project ↗"
-    class={`project-media ${project.id}-media`}
-    href={project.href}
-    external
-    aria-label={`View ${project.title.join(" ")} on Behance`}
-  >
-    <img {...project.image} loading="lazy" />
-  </Action>
+  {project.href ? (
+    <Action
+      appearance="media"
+      label="Explore project ↗"
+      class={`project-media ${project.id}-media`}
+      href={project.href}
+      external
+      aria-label={`View ${project.title.join(" ")} on Behance`}
+    >
+      <img {...project.image} loading="lazy" />
+    </Action>
+  ) : (
+    <div class={`project-media ${project.id}-media`}>
+      <img {...project.image} loading="lazy" />
+    </div>
+  )}
   <div class="project-info">
     <div class="project-story">
       <div class="project-top">
@@ -35,7 +42,9 @@ const { project, variant = 0 } = Astro.props;
         <span class="mono">({project.year})</span>
       </div>
       <div class="project-description">
-        <p>{project.description}</p>
+        {paragraphs.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
         <ul class="tags">
           {project.tags.map((tag) => (
             <li>{tag}</li>
@@ -44,13 +53,17 @@ const { project, variant = 0 } = Astro.props;
       </div>
     </div>
     <div class="project-bottom">
-      <Action
-        href={project.href}
-        label="View case study"
-        weight="light"
-        arrow
-        external
-      />
+      {project.href ? (
+        <Action
+          href={project.href}
+          label="View case study"
+          weight="light"
+          arrow
+          external
+        />
+      ) : (
+        <span class="project-soon">Case study coming soon</span>
+      )}
       <Barcode variant={variant} />
     </div>
   </div>

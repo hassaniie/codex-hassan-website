@@ -18,13 +18,32 @@ export interface Project {
   id: string;
   title: string[];
   year: string;
-  description: string;
+  /** One paragraph, or several. */
+  description: string | string[];
   tags: string[];
   categories: Category[];
-  href: string;
+  /** The published case study. Left out, the card reads "Case study coming soon". */
+  href?: string;
   image: { src: string; alt: string; width: number; height: number };
 }
 export const projects = [
+  {
+    id: "energy",
+    title: ["Clean Energy Analytics", "Dashboard Design"],
+    year: "2026",
+    description: [
+      "Energy data is loud - kilowatts, sources, costs, thousands of readings a day. But the first question is always simple: are we making more than we’re using?",
+      "So I built the whole dashboard around two numbers - Production and Consumption - and let everything else answer what comes next. Frosted white panels, calm blues and greens, charts that breathe, nothing louder than it needs to be.",
+    ],
+    tags: ["Dashboard design", "Data visualisation", "Clean energy"],
+    categories: ["Product design", "UX/UI design"],
+    image: {
+      src: "/assets/energy.webp",
+      alt: "Clean energy analytics dashboard floating over a family home, showing solar output, consumption and plant status",
+      width: 1600,
+      height: 2000,
+    },
+  },
   {
     id: "survey",
     title: ["Making space", "for employee voices."],

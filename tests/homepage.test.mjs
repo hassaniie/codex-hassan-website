@@ -11,6 +11,7 @@ const root = new URL("../dist/", import.meta.url);
 test("homepage content is delivered as HTML, including all migrated projects and roles", () => {
   for (const content of [
     "Hassan Mushtaq",
+    "Clean Energy Analytics",
     "Making space",
     "Mycah.",
     "Meows Untold.",
@@ -22,7 +23,7 @@ test("homepage content is delivered as HTML, including all migrated projects and
     assert.ok(html.includes(content), `Missing rendered content: ${content}`);
   }
   assert.equal((html.match(/<h1\b/g) || []).length, 1);
-  assert.equal((html.match(/class="project reveal"/g) || []).length, 3);
+  assert.equal((html.match(/class="project reveal"/g) || []).length, 4);
   assert.equal((html.match(/class="experience-row reveal"/g) || []).length, 4);
 });
 
