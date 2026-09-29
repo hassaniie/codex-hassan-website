@@ -98,6 +98,17 @@ const shareImage = new URL("/og-image.jpg", Astro.site);
     </a>
     <Intro />
     <div class="cursor-dot" aria-hidden="true">
+      <svg class="cursor-ring" viewBox="0 0 96 96" width="96" height="96">
+        <path
+          id="cursor-ring-path"
+          fill="none"
+          d="M 12,48 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"></path>
+        <text textLength="226" lengthAdjust="spacing">
+          <textPath href="#cursor-ring-path"
+            >COMING SOON • COMING SOON •&nbsp;</textPath
+          >
+        </text>
+      </svg>
       <span class="cursor-label">Coming<br />soon</span>
     </div>
     <Header initialTheme={initialHeaderTheme} />

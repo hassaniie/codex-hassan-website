@@ -32,6 +32,37 @@
   height: 96px;
   background: var(--ink);
   mix-blend-mode: normal;
+  /* Opening springs past its size and settles; closing uses the dot's own
+     smooth transition, so there is no bounce on the way out. */
+  transition:
+    opacity 0.2s,
+    width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.25s;
+}
+/* A ring of small type turning slowly round the edge, only while open. */
+.cursor-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  overflow: visible;
+  fill: #fff;
+  font-family: var(--mono);
+  font-size: 7px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  animation: cursor-ring-spin 12s linear infinite paused;
+}
+.cursor-dot.is-soon .cursor-ring {
+  opacity: 0.75;
+  transition: opacity 0.3s 0.15s;
+  animation-play-state: running;
+}
+@keyframes cursor-ring-spin {
+  to {
+    rotate: 360deg;
+  }
 }
 .cursor-label {
   font-family: var(--mono);
