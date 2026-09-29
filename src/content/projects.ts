@@ -54,9 +54,9 @@ export const projects = [
         .map((w) => `/assets/energy-${w}.webp ${w}w`)
         .concat("/assets/energy.webp 3200w")
         .join(", "),
-      // The card is half the page on desktop and full width on phones, and
-      // the cover is drawn at 112% for its parallax.
-      sizes: "(min-width: 901px) 56vw, (min-width: 601px) 50vw, 100vw",
+      // The card is half the page on desktop and full width on phones; a
+      // 4:5 cover filling the 3:4 box is drawn about 7% wider than it.
+      sizes: "(min-width: 901px) 52vw, (min-width: 601px) 49vw, 96vw",
     },
   },
   {

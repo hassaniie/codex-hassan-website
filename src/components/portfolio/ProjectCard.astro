@@ -21,15 +21,11 @@ const paragraphs = [project.description].flat();
       external
       aria-label={`View ${project.title.join(" ")} on Behance`}
     >
-      <span class="project-media-frame">
-        <img {...project.image} loading="lazy" decoding="async" />
-      </span>
+      <img {...project.image} loading="lazy" decoding="async" />
     </Action>
   ) : (
     <div class={`project-media ${project.id}-media`}>
-      <span class="project-media-frame">
-        <img {...project.image} loading="lazy" decoding="async" />
-      </span>
+      <img {...project.image} loading="lazy" decoding="async" />
     </div>
   )}
   <div class="project-info">

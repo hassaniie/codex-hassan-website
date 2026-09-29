@@ -6,58 +6,42 @@
   gap: var(--space-6);
   min-height: 620px;
 }
+/*
+ * The cover is one 3:4 image, as wide as its column on every screen, with
+ * its height set by that shape rather than by the screen or the image. The
+ * image fills the box exactly and is never scaled or moved at rest, which is
+ * what keeps it sharp. Covers are best made at 3:4 (1536 x 2048, say).
+ */
 .project-media {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  align-self: start;
   border-radius: var(--radius-card);
   overflow: hidden;
-  min-height: 560px;
   isolation: isolate;
 }
-/*
- * The frame carries all of the cover's motion: the scrubbed parallax (its
- * transform) and the hover zoom (its scale). It is 12% larger than the box,
- * so the drift has room without exposing an edge, and the image inside is
- * drawn at exactly the frame's size, never scaled or shifted itself, which is
- * what keeps it sharp. The box, not the image, decides the cover's size.
- */
-.project-media-frame {
-  position: absolute;
-  inset: -6%;
-  display: block;
-  translate: 0 var(--parallax-y, 0px);
-  transition: scale 0.9s var(--ease-out);
-  will-change: translate, scale;
-}
-.project-media-frame img {
-  position: absolute;
-  inset: 0;
+.project-media img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: scale 0.9s var(--ease-out);
 }
 /* Only a cover that opens a case study zooms on hover. */
-a.project-media:hover .project-media-frame {
-  scale: 1.045;
+a.project-media:hover img {
+  scale: 1.04;
 }
 .survey-media {
   background: linear-gradient(140deg, #b9c7e3, #e3e9f5);
   padding: 9% 5%;
 }
 /* This one is a framed screenshot rather than a bleed, so it keeps its
-   authored size and drifts within the surrounding padding. */
-.survey-media .project-media-frame {
-  position: static;
-  width: 100%;
-}
-a.survey-media:hover .project-media-frame {
-  scale: 1.04;
-}
-.survey-media .project-media-frame img {
-  position: static;
+   authored size, centred in the surrounding padding. */
+.survey-media img {
   height: auto;
   box-shadow: 0 25px 45px #10275130;
   border-radius: var(--radius-control);
@@ -65,7 +49,7 @@ a.survey-media:hover .project-media-frame {
 .mycah-media {
   background: #f1f8f5;
 }
-.mycah-media .project-media-frame img {
+.mycah-media img {
   object-position: top;
 }
 .meows-media {
@@ -145,17 +129,11 @@ a.survey-media:hover .project-media-frame {
   .project-description {
     max-width: 370px;
   }
-  .project-media {
-    min-height: 660px;
-  }
 }
 @media (max-width: 900px) {
   .project {
     gap: 22px;
     min-height: 480px;
-  }
-  .project-media {
-    min-height: 440px;
   }
   .project-description {
     width: 100%;
@@ -174,9 +152,6 @@ a.survey-media:hover .project-media-frame {
     min-height: 0;
   }
   .project-media {
-    min-height: 0;
-    /* A little taller than wide: 4:5, the shape the thumbnails are drawn at. */
-    aspect-ratio: 4/5;
     border-radius: var(--radius-control);
   }
   .survey-media {
@@ -208,9 +183,6 @@ a.survey-media:hover .project-media-frame {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 0;
     min-height: 100svh;
-  }
-  .project-media {
-    min-height: 0;
   }
   .project-info {
     display: flex;
