@@ -40,8 +40,8 @@ export const projects = [
     image: {
       src: "/assets/energy.webp",
       alt: "Clean energy analytics dashboard floating over a family home, showing solar output, consumption and plant status",
-      width: 1600,
-      height: 2000,
+      width: 3200,
+      height: 4000,
     },
   },
   {
