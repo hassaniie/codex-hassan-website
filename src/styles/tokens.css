@@ -38,6 +38,9 @@
   --color-identity-border: rgb(255 255 255 / 72%);
   --color-identity-border-hover: rgb(255 255 255 / 84%);
   --text-body-small: 0.875rem;
+  /* Description text: Geist Regular 14 / 19.7, tracked -0.3px. */
+  --leading-body-small: 19.7px;
+  --tracking-body-small: -0.3px;
   --color-border: #e7e7e7;
   --color-border-strong: #d7d9e2;
   --color-field-placeholder: #777b86;

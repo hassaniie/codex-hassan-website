@@ -230,6 +230,8 @@
   .contact-page-heading p {
     margin-top: 24px;
     font-size: var(--text-body-small);
+    line-height: var(--leading-body-small);
+    letter-spacing: var(--tracking-body-small);
   }
   .contact-form {
     margin-top: 56px;

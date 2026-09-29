@@ -69,9 +69,10 @@ a.project-media:hover img {
   padding: 55px 0;
 }
 .project-description p {
-  font-size: 14px;
+  font-size: var(--text-body-small);
   font-weight: 400;
-  line-height: var(--leading-body);
+  line-height: var(--leading-body-small);
+  letter-spacing: var(--tracking-body-small);
 }
 .project-description p + p {
   margin-top: 12px;

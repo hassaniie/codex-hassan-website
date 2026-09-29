@@ -17,7 +17,8 @@
   font-size: var(--text-body-small);
   max-width: 520px;
   margin: 30px 0 20px;
-  line-height: 1.5;
+  line-height: var(--leading-body-small);
+  letter-spacing: var(--tracking-body-small);
 }
 .job-title {
   display: inline-block;

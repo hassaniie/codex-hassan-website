@@ -147,7 +147,8 @@
 }
 .process-step p {
   font-size: var(--text-body-small);
-  line-height: 1.55;
+  line-height: var(--leading-body-small);
+  letter-spacing: var(--tracking-body-small);
   margin: 0;
 }
 /* A rule turns the space above the meta line from a dead gap into a footer. */
