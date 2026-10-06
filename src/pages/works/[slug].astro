@@ -1,0 +1,33 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import CaseStudy from "../../components/case-study/CaseStudy.astro";
+import Contact from "../../components/sections/Contact.astro";
+import { caseStudies } from "../../content/case-studies";
+import { projects } from "../../content/projects";
+import { profile } from "../../content/profile";
+
+export function getStaticPaths() {
+  return caseStudies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study },
+  }));
+}
+const { study } = Astro.props;
+const project = projects.find(({ id }) => id === study.projectId)!;
+---
+
+<SiteLayout
+  title={`${project.title.join(" ")} — Case study — ${profile.name}`}
+  description={study.summary}
+  initialHeaderTheme="light"
+  skipHref="#case"
+  skipLabel="Skip to case study"
+>
+  <CaseStudy study={study} />
+  {/* The same closing section every page ends on. */}
+  <Contact />
+  <script>
+    import { initCaseStudyPage } from "../../scripts/case-study-page";
+    initCaseStudyPage();
+  </script>
+</SiteLayout>

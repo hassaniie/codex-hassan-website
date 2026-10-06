@@ -9,6 +9,9 @@ interface Props {
 }
 const { project, variant = 0 } = Astro.props;
 const paragraphs = [project.description].flat();
+// A case study on this site opens in place; Behance opens in a new tab.
+const external = Boolean(project.href?.startsWith("http"));
+const name = project.title.join(" ");
 ---
 
 <article class="project reveal" data-categories={project.categories.join("|")}>
@@ -18,8 +21,10 @@ const paragraphs = [project.description].flat();
       label="Explore project ↗"
       class={`project-media ${project.id}-media`}
       href={project.href}
-      external
-      aria-label={`View ${project.title.join(" ")} on Behance`}
+      external={external}
+      aria-label={
+        external ? `View ${name} on Behance` : `Read the ${name} case study`
+      }
     >
       <img {...project.image} loading="lazy" decoding="async" />
     </Action>
@@ -59,7 +64,7 @@ const paragraphs = [project.description].flat();
           label="View case study"
           weight="light"
           arrow
-          external
+          external={external}
         />
       ) : (
         <span class="project-soon">Case study coming soon</span>

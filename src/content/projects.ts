@@ -22,7 +22,10 @@ export interface Project {
   description: string | string[];
   tags: string[];
   categories: Category[];
-  /** The published case study. Left out, the card reads "Case study coming soon". */
+  /**
+   * The published case study: a page on this site, or Behance. Left out, the
+   * card reads "Case study coming soon".
+   */
   href?: string;
   image: {
     src: string;
@@ -65,6 +68,7 @@ export const projects = [
     ],
     tags: ["Dashboard design", "Data visualisation", "Clean energy"],
     categories: ["Product design", "UX/UI design"],
+    href: "/works/clean-energy-analytics/",
     image: cover(
       "energy-meadow",
       "Clean energy analytics dashboard over a meadow at sunset, showing solar output, consumption and plant status",
