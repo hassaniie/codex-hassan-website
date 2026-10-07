@@ -1,8 +1,8 @@
 /*
  * A case study is the project row at page scale: the title and section heads
  * in the serif, labels in mono, the story in the 14px description style, and
- * each screen set on the tag grey like an object on a table. The facts and
- * the section index sit in a column that stays in view beside the story.
+ * each screen straight on the page with only a hairline round it. The facts
+ * and the section index sit in a column that stays in view beside the story.
  */
 .case {
   padding-bottom: 60px;
@@ -56,33 +56,21 @@
   margin: 0;
 }
 .case-stage {
-  border-radius: var(--radius-card);
-  background: var(--color-tag-surface);
-  padding: clamp(12px, 2.6vw, 44px);
   overflow: hidden;
-}
-.case-figure[data-tone="dark"] .case-stage {
-  background: var(--ink);
 }
 .case-stage img {
   width: 100%;
   height: auto;
-  border-radius: var(--radius-control);
-  box-shadow:
-    0 1px 2px rgb(23 24 25 / 6%),
-    0 24px 48px -28px rgb(23 24 25 / 30%);
+  border-radius: var(--radius-card);
 }
-.case-figure[data-tone="dark"] .case-stage img {
-  box-shadow: 0 0 0 1px rgb(255 255 255 / 8%);
+/* A light screen needs a hairline to keep it off the white page; a dark one,
+   or one that brings its own window, stands on its own. */
+.case-figure[data-tone="light"] .case-stage img {
+  border: 1px solid var(--line);
 }
 /* The lead is already a composed scene: it fills its frame edge to edge. */
-.case-lead .case-stage {
-  padding: 0;
-  background: none;
-}
-.case-lead .case-stage img {
-  border-radius: var(--radius-card);
-  box-shadow: none;
+.case-figure.case-lead .case-stage img {
+  border: 0;
 }
 .case-figure figcaption {
   display: flex;
@@ -197,7 +185,7 @@
 }
 .case-statement {
   max-width: 22ch;
-  color: var(--color-accent);
+  color: var(--ink);
   font-family: var(--serif);
   font-size: clamp(28px, 2.8vw, 44px);
   line-height: var(--leading-display);
@@ -220,7 +208,7 @@
   border-top: 1px solid var(--line);
 }
 .case-stats strong {
-  color: var(--color-accent);
+  color: var(--ink);
   font-family: var(--serif);
   font-size: clamp(56px, 6vw, 96px);
   font-weight: 400;

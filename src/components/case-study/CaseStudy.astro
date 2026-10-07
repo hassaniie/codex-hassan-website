@@ -26,7 +26,7 @@ for (const section of study.sections)
   for (const block of section.blocks)
     if (block.type === "point")
       for (const figure of block.figures) numbers.set(figure, numbers.size + 1);
-for (const figure of study.gallery) numbers.set(figure, numbers.size + 1);
+for (const figure of study.gallery ?? []) numbers.set(figure, numbers.size + 1);
 
 // Drawn widths: the story column on desktop, the page less its margins below.
 const storySizes = "(min-width: 901px) 60vw, calc(100vw - 40px)";
@@ -150,7 +150,7 @@ const gallerySizes = "(min-width: 901px) 48vw, calc(100vw - 40px)";
     </div>
   </div>
 
-  {study.gallery.length > 0 && (
+  {study.gallery && study.gallery.length > 0 && (
     <section class="case-gallery section-pad" aria-labelledby="gallery-title">
       <header class="case-section-head reveal">
         <span class="mono">

@@ -15,8 +15,11 @@ export interface CaseImage {
 export interface CaseFigure {
   image: CaseImage;
   caption: string;
-  /** The surface the screen sits on: the light tag grey, or ink for dark UI. */
-  tone?: "light" | "dark";
+  /**
+   * How the screen meets the page: a light one gets a hairline, a dark one
+   * stands alone, and a framed one brings its own window chrome.
+   */
+  tone?: "light" | "dark" | "framed";
 }
 
 export type CaseBlock =
@@ -46,7 +49,8 @@ export interface CaseStudy {
   facts: { label: string; value: string }[];
   lead: CaseFigure;
   sections: CaseSection[];
-  gallery: CaseFigure[];
+  /** Extra screens shown together after the story. */
+  gallery?: CaseFigure[];
 }
 
 /*
@@ -160,15 +164,6 @@ export const caseStudies: CaseStudy[] = [
                 ),
                 caption: "CerevraX, Solar Energy Management System",
               },
-              {
-                image: energy(
-                  "solar-analysis",
-                  2748,
-                  1026,
-                  "Solar energy analysis card: current PV power gauge between daily solar power and performance, above daily solar, consumption, self-use rate and imported energy",
-                ),
-                caption: "Production and consumption, read in one line",
-              },
             ],
           },
           {
@@ -211,6 +206,7 @@ export const caseStudies: CaseStudy[] = [
                   "GHG emissions dashboard with emissions by source, scope 1, 2 and 3 breakdown, cumulative emissions and emissions against baseline",
                 ),
                 caption: "GHG Emissions, scope 1, 2 and 3 against baseline",
+                tone: "framed",
               },
             ],
           },
@@ -251,26 +247,6 @@ export const caseStudies: CaseStudy[] = [
             text: "On a data-heavy screen, most of the design work is deciding what not to say first.",
           },
         ],
-      },
-    ],
-    gallery: [
-      {
-        image: energy(
-          "analytics",
-          3456,
-          2234,
-          "Analytics view with a predictive energy forecast, generated insights, a load profile heatmap and anomaly detection",
-        ),
-        caption: "Analytics, forecasting, insights and anomalies",
-      },
-      {
-        image: energy(
-          "reports",
-          3456,
-          2234,
-          "Reports view with report templates, generated reports and scheduled reports",
-        ),
-        caption: "Reports, templates and scheduling",
       },
     ],
   },
