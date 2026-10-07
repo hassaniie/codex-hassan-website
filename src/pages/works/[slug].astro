@@ -18,7 +18,7 @@ const project = projects.find(({ id }) => id === study.projectId)!;
 
 <SiteLayout
   title={`${project.title.join(" ")} — Case study — ${profile.name}`}
-  description={study.summary}
+  description={study.intro}
   initialHeaderTheme="light"
   skipHref="#case"
   skipLabel="Skip to case study"

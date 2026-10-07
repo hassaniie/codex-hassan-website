@@ -1,32 +1,53 @@
 ---
-import type { CaseFigure } from "../../content/case-studies";
+import type { CaseView } from "../../content/case-studies";
+import type { Project } from "../../content/projects";
+import Action from "../ui/Action.astro";
 interface Props {
-  figure: CaseFigure;
-  number: number;
-  /** The width the image is drawn at, so the browser picks the right file. */
-  sizes: string;
+  image: Project["image"];
+  view: CaseView;
+  caption: string;
+  number: string;
+  fullSrc: string;
   eager?: boolean;
-  class?: string;
 }
-const { figure, number, sizes, eager = false, class: className } = Astro.props;
-const { image, caption, tone = "light" } = figure;
+const { image, view, caption, number, fullSrc, eager = false } = Astro.props;
+// The whole piece sits beside the brief; a band of it fills the story column.
+const sizes =
+  view === "landscape"
+    ? "(min-width: 901px) 50vw, calc(100vw - 40px)"
+    : "(min-width: 841px) 800px, calc(100vw - 40px)";
 ---
 
-<figure class:list={["case-figure", className]} data-tone={tone}>
-  <div class="case-stage">
+<figure class="case-figure">
+  <a
+    class={`case-art case-art--${view}`}
+    href={fullSrc}
+    target="_blank"
+    rel="noopener"
+    aria-label={`View full artwork: ${caption}`}
+  >
     <img
       src={image.src}
       srcset={image.srcset}
       sizes={sizes}
       width={image.width}
       height={image.height}
-      alt={image.alt}
+      alt={view === "landscape" ? image.alt : caption}
       loading={eager ? "eager" : "lazy"}
       fetchpriority={eager ? "high" : undefined}
       decoding="async"
     />
-  </div>
+  </a>
   <figcaption class="mono">
-    <span>(Fig. {String(number).padStart(2, "0")})</span> {caption}
+    <span>
+      <span class="case-caption-number">({number})</span> {caption}
+    </span>
+    <Action
+      href={fullSrc}
+      external
+      label="View full artwork"
+      size="small"
+      arrow
+    />
   </figcaption>
 </figure>
