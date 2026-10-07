@@ -2,6 +2,7 @@ import { initCursor } from "../motion/cursor";
 import { initReveals } from "../motion/reveals";
 import { initSectionScenes } from "../motion/scenes/sections";
 import { lockScroll } from "../motion/smooth-scroll";
+import { caseStudyReturn } from "../utilities/case-study-navigation";
 import {
   query,
   queryAll,
@@ -129,6 +130,18 @@ function initArtworkViewer({ signal }: BehaviorContext): Cleanup {
 let dispose: Cleanup | undefined;
 export function initCaseStudyPage() {
   dispose?.();
+  const returnLink = query<HTMLAnchorElement>("[data-case-return]");
+  if (returnLink) {
+    const destination = caseStudyReturn(
+      location.search,
+      document.referrer,
+      location.origin,
+    );
+    returnLink.setAttribute("href", destination.href);
+    queryAll(".action-track > span", returnLink).forEach((label) => {
+      label.textContent = destination.label;
+    });
+  }
   const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
   let controller: AbortController;
   let cleanups: Cleanup[] = [];

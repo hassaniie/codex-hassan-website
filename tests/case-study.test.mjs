@@ -7,13 +7,24 @@ const path = "/works/clean-energy/";
 const html = await readFile(new URL(`.${path}index.html`, root), "utf8");
 
 test("energy case study is reachable from both project listings in the same tab", async () => {
-  for (const page of ["index.html", "works/index.html"]) {
+  for (const [page, entry] of [
+    ["index.html", "home"],
+    ["works/index.html", "works"],
+  ]) {
     const listing = await readFile(new URL(page, root), "utf8");
     const links = [
-      ...listing.matchAll(/<a\b[^>]*href="\/works\/clean-energy\/"[^>]*>/g),
+      ...listing.matchAll(
+        /<a\b[^>]*href="\/works\/clean-energy\/\?from=(?:home|works)"[^>]*>/g,
+      ),
     ];
     assert.equal(links.length, 2, `Missing cover or CTA link in ${page}`);
-    for (const [link] of links) assert.ok(!link.includes('target="_blank"'));
+    for (const [link] of links) {
+      assert.ok(!link.includes('target="_blank"'));
+      assert.ok(
+        link.includes(`?from=${entry}"`),
+        `Wrong return context in ${page}`,
+      );
+    }
   }
   const sitemap = await readFile(new URL("sitemap.xml", root), "utf8");
   assert.ok(sitemap.includes(path));

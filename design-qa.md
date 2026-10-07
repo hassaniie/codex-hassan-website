@@ -249,3 +249,32 @@ Follow-up evidence: `research/energy-case-study/reader-layout/transparent-navbar
 visually consistent with the preceding review. No new P0/P1/P2 finding.
 
 final result: passed
+
+### Return navigation and entrance follow-up — 2026-10-07
+
+Homepage and Works covers and CTAs now carry explicit entry context. The top
+shared Action reads “Back home” and points to `/` for Home entries, or “All
+works” and points to `/works/` for Works entries and direct visits. Both rollover
+labels update together. Browser clicks verified both complete return journeys;
+reload retained Home context. Direct entry had an empty referrer and the Works
+fallback. Unit coverage checks legacy Home referrers, reloads, conflicting
+referrers and invalid contexts without allowing arbitrary return destinations.
+
+The chapter guide, story and closing actions now follow the existing entrance
+ladder. They reuse the site's motion tokens and enter once, with no scroll-driven
+fading of reading copy. Browser sampling immediately after reload reported
+opacity 0.001 and a 32px rise for the heading, guide, body and closing actions;
+after the sequence, all four had opacity 1 and zero translation. Reduced-motion
+emulation reported body opacity 1, no transform and no armed curtain. Temporary
+emulation was reset. Browser warning/error logs were empty.
+
+Compared `transparent-navbar.jpg` and `return-home.jpg` together at 1280 × 720,
+density 1. The accepted opening layout, typography, authentic artwork, palette
+and transparent navbar remain consistent; only the contextual return label
+changes. No breakpoint or layout-token changes were required. Source ownership
+and behavior are documented in `docs/case-studies.md`.
+
+Astro check: 77 files, zero errors, warnings or hints. Production build succeeds;
+all 13 tests pass. No new P0/P1/P2 visual finding.
+
+final result: passed

@@ -14,8 +14,8 @@ import { entranceDelay, motionPresets } from "../presets";
  * travels a single axis: content rises, the header drops. Nothing scales,
  * rotates or blurs, which is what keeps it quiet.
  *
- * A first load waits for the curtain; an in-session arrival starts at once,
- * so the same ladder doubles as the page-change animation.
+ * Every arrival waits for the shared curtain, so the same ladder also
+ * supplies the page-change animation.
  */
 export function initEntrance({ reducedMotion }: BehaviorContext): Cleanup {
   setupEngine();
@@ -44,6 +44,9 @@ export function initEntrance({ reducedMotion }: BehaviorContext): Cleanup {
     [".case-hero .case-intro", 1, { y: presets.appearRise }],
     [".case-hero .case-brief", 1, { y: presets.appearRise }],
     [".case-hero .case-figure", 1, { y: presets.appearRise }],
+    [".case-reading-guide", 2, { y: presets.appearRise }],
+    [".case-body", 3, { y: presets.appearRise }],
+    [".case-end", 4, { y: presets.appearRise }],
   ];
 
   const context = gsap.context(() => {

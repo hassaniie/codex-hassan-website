@@ -10,6 +10,12 @@ interface Props {
 const { project, variant = 0 } = Astro.props;
 const paragraphs = [project.description].flat();
 const external = Boolean(project.href?.startsWith("https://"));
+// Carry explicit entry context through reloads and new-tab openings. External
+// case studies retain their original published destinations.
+const entry = Astro.url.pathname === "/" ? "home" : "works";
+const href = project.href?.startsWith("/works/")
+  ? `${project.href}?from=${entry}`
+  : project.href;
 ---
 
 <article class="project reveal" data-categories={project.categories.join("|")}>
@@ -18,7 +24,7 @@ const external = Boolean(project.href?.startsWith("https://"));
       appearance="media"
       label="Explore project ↗"
       class={`project-media ${project.id}-media`}
-      href={project.href}
+      href={href}
       external={external}
       aria-label={`View ${project.title.join(" ")}${external ? " on Behance" : " case study"}`}
     >
@@ -56,7 +62,7 @@ const external = Boolean(project.href?.startsWith("https://"));
     <div class="project-bottom">
       {project.href ? (
         <Action
-          href={project.href}
+          href={href}
           label="View case study"
           weight="light"
           arrow
