@@ -58,7 +58,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     fullArtwork: "/assets/projects/energy-meadow-3000.webp",
-    heroCaption: "The complete dashboard.",
+    heroCaption: "The complete dashboard",
     chapters: [
       {
         id: "problem",
@@ -97,7 +97,7 @@ export const caseStudies: CaseStudy[] = [
         ],
         figure: {
           view: "performance",
-          caption: "A closer look at the performance hierarchy.",
+          caption: "A closer look at the performance hierarchy",
         },
       },
       {
@@ -111,7 +111,7 @@ export const caseStudies: CaseStudy[] = [
         ],
         figure: {
           view: "impact",
-          caption: "Environmental benefits, given their own space.",
+          caption: "Environmental benefits, given their own space",
         },
       },
       {

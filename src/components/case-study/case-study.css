@@ -14,12 +14,12 @@
   display: flex;
   flex-direction: column;
   min-height: 100svh;
-  padding-top: var(--case-hero-top);
+  padding-block: var(--case-hero-top) var(--case-hero-bottom);
 }
 .case-eyebrow {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   gap: var(--space-5);
   color: var(--accent);
   font-size: var(--text-small);
@@ -81,7 +81,7 @@
 /* The way in: chapter links along the bottom of the first screen. */
 .case-guide {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   flex-wrap: wrap;
   gap: var(--space-4) var(--space-6);
   padding-block: var(--space-4);
@@ -98,6 +98,10 @@
   list-style: none;
   margin: 0;
   padding: 0;
+}
+/* Lets each link's baseline reach the row, so the label sits on it. */
+.case-guide li {
+  display: flex;
 }
 .case-guide .action[aria-current="location"] {
   color: var(--accent);
@@ -207,13 +211,20 @@
 }
 .case-decisions {
   list-style: none;
-  margin: var(--space-6) 0 var(--space-7);
+  margin: var(--space-6) 0 0;
   padding: 0;
 }
+/* Rules run the full column, like the chapter rules and figures; the text
+   inside keeps the reading measure. */
 .case-decision {
-  max-width: var(--case-copy-width);
   padding-block: var(--space-5);
   border-top: 1px solid var(--line);
+}
+.case-decision:last-child {
+  padding-bottom: 0;
+}
+.case-decision > * {
+  max-width: var(--case-copy-width);
 }
 .case-decision h3 {
   font-size: 1.75rem;
@@ -223,10 +234,9 @@
   margin-top: var(--space-3);
 }
 .case-chapter .case-figure {
-  margin-top: var(--space-6);
+  margin-top: var(--space-7);
 }
 .case-note {
-  max-width: var(--case-copy-width);
   margin-top: var(--space-5);
   padding-top: var(--space-4);
   border-top: 1px solid var(--line);
@@ -245,6 +255,7 @@
   /* Stacked, the first view is as tall as its content needs. */
   .case-hero {
     min-height: 0;
+    padding-bottom: 0;
   }
   .case-hero-layout {
     grid-template-columns: 1fr;
@@ -259,9 +270,6 @@
   }
 }
 @media (max-width: 600px) {
-  .case-eyebrow {
-    align-items: start;
-  }
   .case-eyebrow > span {
     max-width: 14rem;
     text-align: right;

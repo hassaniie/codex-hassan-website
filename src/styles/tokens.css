@@ -84,9 +84,11 @@
   --case-story-width: 50rem;
   --case-copy-width: 40rem;
   --case-hero-top: 7.5rem;
+  /* Air between the chapter guide and the bottom of the screen. */
+  --case-hero-bottom: 3rem;
   /* Height in the first view that is not the artwork: header clearance,
      eyebrow, caption, guide and spacing. */
-  --case-hero-reserve: 22rem;
+  --case-hero-reserve: 25rem;
   --radius-small: 0.1875rem;
   --radius-control: 0.5rem;
   --radius-card: 0.75rem;
