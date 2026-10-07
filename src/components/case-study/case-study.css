@@ -133,16 +133,7 @@
   display: block;
   border-radius: var(--radius-card);
   overflow: hidden;
-  isolation: isolate;
   background: var(--color-tag-surface);
-}
-.case-art img {
-  transition: scale 0.9s var(--ease-out);
-}
-@media (hover: hover) {
-  .case-art:hover img {
-    scale: 1.03;
-  }
 }
 .case-art--landscape {
   aspect-ratio: 3 / 2;
