@@ -30,9 +30,20 @@ Every scroll value lives in `src/styles/tokens.css`, not in JavaScript:
 - `--scroll-touch-sync` — set to `0` to hand phones back their native momentum
 - `--scroll-anchor-ms` — how long an in-page anchor takes to travel
 
-Entry blur is tuned separately, and deliberately stays near the viewport edge:
+Scroll headings and statements use masked line reveals. Each rendered line rises
+once when the text enters the viewport; GSAP SplitText remeasures after fonts
+load or the element width changes. Screen readers receive the complete text,
+and reduced motion restores the unsplit markup.
 
-- `--motion-blur-reveal-px` / `--motion-blur-text-px` — how soft content is as it enters (`0` turns blur off)
+- `--motion-text-ms` — duration per line (650ms)
+- `--motion-stagger-ms` — gap between lines (80ms)
+- `--motion-line-bleed` — mask clearance for serif ascenders and descenders
+- `--ease-appear` — the shared entrance curve, parsed by CustomEase
+
+Entry blur is tuned separately for other content and stays near the viewport edge:
+
+- `--motion-blur-reveal-px` — block entry softening (`0` turns it off); wrappers containing line headings stay sharp
+- `--motion-blur-text-px` — softening within the sculptural HM scene, separate from line reveals
 - `--motion-blur-band` — how far into the screen, in viewport percent, blur may persist before it must be fully resolved
 - `--motion-blur-exit-px` — the softening on the hero as it leaves
 

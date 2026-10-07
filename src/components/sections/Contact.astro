@@ -22,8 +22,12 @@ import "./Contact.css";
         height="165"
       />
       <h2 class="split-reveal">
-        A product to rethink, a team to join,
-        <br /> or an idea you can't leave alone.
+        <span class="contact-heading-line">
+          A product to rethink, a team to join,
+        </span>{" "}
+        <span class="contact-heading-line">
+          or an idea you can't leave alone.
+        </span>
       </h2>
       <img
         class="bracket right"
@@ -41,13 +45,7 @@ import "./Contact.css";
       aria-label="Email Hassan — let’s talk"
       arrow
     >
-      <img
-        slot="leading"
-        src={profile.avatar}
-        alt=""
-        width="56"
-        height="56"
-      />
+      <img slot="leading" src={profile.avatar} alt="" width="56" height="56" />
     </Action>
     <Action
       class="copy-email"

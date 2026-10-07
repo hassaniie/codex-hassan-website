@@ -1,32 +1,17 @@
 import { queryAll, type BehaviorContext, type Cleanup } from "../utilities/dom";
-import { gsap, ScrollTrigger, setupEngine } from "./engine";
+import {
+  gsap,
+  ScrollTrigger,
+  SplitText,
+  CustomEase,
+  setupEngine,
+} from "./engine";
 import { motionPresets } from "./presets";
-
-/** Split a heading into per-character spans, preserving its accessible text. */
-function split(element: HTMLElement) {
-  const text = element.innerText.replace(/\s+/g, " ").trim();
-  element.setAttribute("aria-label", text);
-  element.replaceChildren();
-  text.split(/\s+/).forEach((word, index) => {
-    if (index) element.append(document.createTextNode(" "));
-    const span = document.createElement("span");
-    span.className = "word";
-    span.setAttribute("aria-hidden", "true");
-    for (const character of word) {
-      const char = document.createElement("span");
-      char.className = "char";
-      char.textContent = character;
-      span.append(char);
-    }
-    element.append(span);
-  });
-  return queryAll(".char", element);
-}
 
 export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
   setupEngine();
   const presets = motionPresets();
-  const originals = new Map<HTMLElement, string>();
+  const splits: SplitText[] = [];
   const tweens: gsap.core.Tween[] = [];
 
   if (reducedMotion) {
@@ -34,6 +19,10 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
     return () => {};
   }
   document.body.classList.add("motion-ready");
+  const lineEase = CustomEase.create(
+    "line-reveal",
+    presets.easeAppear.replace(/cubic-bezier\(|\)/g, ""),
+  );
 
   /**
    * Blur runs on its own short trigger rather than alongside the travel, so
@@ -76,31 +65,33 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
     // The hero headline belongs to the entrance now: it arrives as one
     // element on the shared curve rather than character by character.
     if (element.tagName === "H1") return;
-    originals.set(element, element.innerHTML);
-    const chars = split(element);
-    if (!chars.length) return;
-    const from = {
-      opacity: 0.04,
-      yPercent: 60,
-      rotateX: -55,
-      transformPerspective: 600,
-      transformOrigin: "50% 100%",
-    };
-    const to = { opacity: 1, yPercent: 0, rotateX: 0, ease: "none" as const };
-    // Scroll drives the reveal, but it finishes well before the text exits.
-    tweens.push(
-      gsap.fromTo(chars, from, {
-        ...to,
-        stagger: presets.stagger / 1000,
-        scrollTrigger: {
-          trigger: element,
-          start: "top 88%",
-          end: "top 50%",
-          scrub: 1.1,
+    splits.push(
+      SplitText.create(element, {
+        type: "lines",
+        linesClass: "reveal-line",
+        mask: "lines",
+        autoSplit: true,
+        // Re-measure actual rendered lines after font loading and width changes.
+        // Returning the tween lets SplitText clean it up and retain progress.
+        onSplit(self) {
+          return gsap.fromTo(
+            self.lines,
+            { yPercent: 110 },
+            {
+              yPercent: 0,
+              duration: presets.textDuration / 1000,
+              stagger: presets.stagger / 1000,
+              ease: lineEase,
+              scrollTrigger: {
+                trigger: element,
+                start: "top 88%",
+                once: true,
+              },
+            },
+          );
         },
       }),
     );
-    edgeBlur(chars, element, presets.blurText, presets.stagger / 2000);
   });
 
   queryAll(".reveal").forEach((element) => {
@@ -121,7 +112,9 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
         },
       ),
     );
-    edgeBlur([element], element, presets.blurReveal, 0);
+    // A line heading must remain sharp even inside an animated section wrapper.
+    if (!element.querySelector(".split-reveal"))
+      edgeBlur([element], element, presets.blurReveal, 0);
   });
 
   ScrollTrigger.refresh();
@@ -131,11 +124,7 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
       tween.scrollTrigger?.kill();
       tween.kill();
     });
-    originals.forEach((markup, element) => {
-      gsap.set(element, { clearProps: "all" });
-      element.innerHTML = markup;
-      element.removeAttribute("aria-label");
-    });
+    splits.forEach((split) => split.revert());
     queryAll(".reveal").forEach((element) =>
       gsap.set(element, { clearProps: "all" }),
     );

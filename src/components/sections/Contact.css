@@ -46,6 +46,9 @@
   max-width: 900px;
   letter-spacing: -0.025em;
 }
+.contact-heading-line {
+  display: block;
+}
 .contact-button {
   margin-top: 52px;
 }
@@ -67,8 +70,8 @@
   .contact h2 {
     font-size: 38px;
   }
-  .contact h2 br {
-    display: none;
+  .contact-heading-line {
+    display: inline;
   }
   .contact-button {
     margin-top: 40px;

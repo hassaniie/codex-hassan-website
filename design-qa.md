@@ -137,6 +137,42 @@ provided screen can be expanded when additional project material is supplied.
 
 final result: passed
 
+### Shared line reveal — 2026-10-07
+
+Replaced the shared character-by-character scroll effect with masked whole-line
+reveals for the About statement, Projects and Experience headings, and Contact
+heading on every route using that component. Each line rises from 110% to zero
+once at viewport entry, using the 650ms text duration, 80ms stagger and shared
+entrance curve. Blur and rotation are absent from these text targets; section
+wrappers containing them also skip edge blur. The hero retains its page-load
+entrance and the case-study reading copy remains static during scrolling.
+
+SplitText owns responsive/font remeasurement and preserves animation progress.
+Observed About reflow: three desktop lines at 1280px, four phone lines at 390px,
+then three again after resizing; completed lines retained zero translation.
+Scrolling back out of view did not hide completed lines. The full text is
+exposed through one accessible label; no character spans remain. Reduced-motion
+emulation removed every mask, restored original text and ARIA state, and left
+the text sharp. Temporary viewport and media overrides were reset.
+
+Two layout adjustments support measuring actual lines: the About paragraph
+keeps its original available flex width after splitting, and Contact's explicit
+desktop line groups become inline at the existing 600px breakpoint. This
+preserves two desktop Contact lines and three phone lines without a hidden
+break forcing an artificial fourth line. Mask padding has compensating negative
+margins, so serif clearance does not add paragraph line spacing.
+
+Evidence: `research/motion/line-reveal/about-desktop.jpg` (1280 × 720),
+`about-phone.jpg` (390 × 844) and `case-study-contact.jpg` (1280 × 720).
+Settled headings have zero translation and no filter, complete readable glyphs,
+and no horizontal overflow. The case footer also uses two completed line masks;
+case story has none. Fresh post-fix browser warning/error logs were empty.
+
+Astro check: 77 files, zero errors, warnings or hints. Build and all 13 existing
+tests pass. No new P0/P1/P2 visual finding.
+
+final result: passed
+
 ## Reader-focused case-study revision — 2026-10-07
 
 This review supersedes the earlier hero scale, sticky guide, offset paragraphs,
