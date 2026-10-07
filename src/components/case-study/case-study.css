@@ -1,8 +1,8 @@
 /*
- * A case study is a quiet gallery: the homepage's project row, read slowly.
- * One accent (the title), short copy in the right half where a project's
- * description sits, and each screen on its own across the page, straight on
- * white with nothing around it but space.
+ * A case study is the project row at page scale: the title and section heads
+ * in the serif, labels in mono, the story in the 14px description style, and
+ * each screen set on the tag grey like an object on a table. The facts and
+ * the section index sit in a column that stays in view beside the story.
  */
 .case {
   padding-bottom: 60px;
@@ -27,94 +27,300 @@
 }
 .case-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   column-gap: var(--space-6);
   margin-top: 56px;
   padding-top: 24px;
   border-top: 1px solid var(--line);
 }
-/* The copy column: the right half, as in a project row. */
-.case-copy {
-  grid-column: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.case-intro-label {
+  color: var(--color-muted);
+}
+.case-summary {
   max-width: 420px;
 }
-.case-copy p {
+.case-summary p,
+.case-text p,
+.case-point-copy p,
+.case-facts dd {
   font-size: var(--text-body-small);
   line-height: var(--leading-body-small);
   letter-spacing: var(--tracking-body-small);
-}
-.case-copy .case-facts {
-  margin-top: 8px;
-  color: var(--color-muted);
-  font-size: var(--text-meta);
-  letter-spacing: normal;
-}
-
-/* Screens */
-.case-image {
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-card);
-}
-/* A light dashboard needs a hairline to keep it off the white page. */
-.case-image[data-tone="light"] {
-  border: 1px solid var(--line);
 }
 .case-lead {
   margin-top: 56px;
 }
 
-/* Chapters */
-.case-chapter {
-  margin-top: 160px;
+/* Figures */
+.case-figure {
+  margin: 0;
 }
-.case-chapter-copy {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  column-gap: var(--space-6);
+.case-stage {
+  border-radius: var(--radius-card);
+  background: var(--color-tag-surface);
+  padding: clamp(12px, 2.6vw, 44px);
+  overflow: hidden;
 }
-.case-chapter h2 {
-  font-size: clamp(32px, 3vw, 44px);
-  letter-spacing: -0.035em;
+.case-figure[data-tone="dark"] .case-stage {
+  background: var(--ink);
 }
-.case-chapter .case-image {
-  margin-top: 48px;
+.case-stage img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-control);
+  box-shadow:
+    0 1px 2px rgb(23 24 25 / 6%),
+    0 24px 48px -28px rgb(23 24 25 / 30%);
+}
+.case-figure[data-tone="dark"] .case-stage img {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 8%);
+}
+/* The lead is already a composed scene: it fills its frame edge to edge. */
+.case-lead .case-stage {
+  padding: 0;
+  background: none;
+}
+.case-lead .case-stage img {
+  border-radius: var(--radius-card);
+  box-shadow: none;
+}
+.case-figure figcaption {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--color-muted);
+  font-size: var(--text-small);
+}
+.case-figure figcaption span {
+  flex: none;
+  color: var(--color-label-accent);
 }
 
-/* Next project, then the way back to all works */
+/* Body: the facts column beside the story */
+.case-body {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  column-gap: var(--space-6);
+  margin-top: 120px;
+  padding-top: 32px;
+}
+.case-body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  border-top: 1px solid var(--line);
+}
+.case-panel {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.case-facts {
+  margin: 0;
+}
+.case-facts div {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.case-facts div:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.case-facts dt {
+  color: var(--color-muted);
+}
+.case-facts dd {
+  margin: 0;
+  max-width: 260px;
+}
+.case-index ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.case-index a {
+  display: inline-flex;
+  gap: 8px;
+  color: var(--color-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.case-index a:hover,
+.case-index a[aria-current] {
+  color: var(--color-accent);
+}
+.case-panel .barcode {
+  width: 110px;
+  height: 52px;
+}
+
+/* Story */
+.case-story {
+  display: flex;
+  flex-direction: column;
+  gap: 140px;
+}
+.case-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.case-section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.case-section-head .mono {
+  color: var(--color-label-accent);
+}
+.case-section-head h2 {
+  max-width: 16ch;
+  font-size: clamp(36px, 3.8vw, 60px);
+  letter-spacing: -0.035em;
+}
+.case-text,
+.case-point-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 520px;
+}
+.case-statement {
+  max-width: 22ch;
+  color: var(--color-accent);
+  font-family: var(--serif);
+  font-size: clamp(28px, 2.8vw, 44px);
+  line-height: var(--leading-display);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.case-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+.case-stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.case-stats strong {
+  color: var(--color-accent);
+  font-family: var(--serif);
+  font-size: clamp(56px, 6vw, 96px);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+.case-stats .mono {
+  max-width: 18ch;
+  color: var(--color-muted);
+}
+.case-point {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.case-point + .case-point {
+  margin-top: 56px;
+}
+.case-point-copy h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: clamp(26px, 2.2vw, 34px);
+  letter-spacing: -0.03em;
+}
+.case-point-copy h3 .mono {
+  flex: none;
+  color: var(--color-label-accent);
+}
+
+/* Gallery */
+.case-gallery {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 140px;
+  padding-top: 32px;
+}
+.case-gallery::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  border-top: 1px solid var(--line);
+}
+.case-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+/* Next project and the way back to all works */
 .case-next {
-  margin-top: 160px;
+  margin-top: 140px;
 }
 .case-next-link {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  column-gap: var(--space-6);
-  align-items: start;
-  padding: 32px 0 48px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--space-6);
+  padding: 32px 0;
   border-top: 1px solid var(--line);
 }
-.case-next-label {
-  color: var(--color-muted);
+.case-next-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.case-next-label,
+.case-next-cta {
+  color: var(--color-label-accent);
 }
 .case-next-title {
   font-family: var(--serif);
-  font-size: clamp(36px, 4vw, 64px);
-  line-height: 0.98;
+  font-size: clamp(40px, 5.4vw, 88px);
+  line-height: 0.95;
   letter-spacing: -0.04em;
   transition: color var(--duration-hover) var(--ease-out);
 }
-.case-next-title b {
-  font-family: var(--sans);
-  font-size: 0.5em;
-  font-weight: 400;
-  vertical-align: top;
+.case-next-media {
+  display: block;
+  width: clamp(140px, 16vw, 240px);
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.case-next-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale 0.9s var(--ease-out);
 }
 @media (hover: hover) {
   .case-next-link:hover .case-next-title {
     color: var(--color-accent);
+  }
+  .case-next-link:hover img {
+    scale: 1.04;
   }
 }
 .case-all {
@@ -132,23 +338,45 @@
   .case-hero {
     padding-top: 140px;
   }
-  .case-intro,
-  .case-chapter-copy,
-  .case-next-link {
+  .case-intro {
     grid-template-columns: 1fr;
+    row-gap: 16px;
   }
-  .case-copy {
-    grid-column: 1;
+  .case-body {
+    grid-template-columns: 1fr;
+    margin-top: 80px;
   }
-  .case-chapter,
+  /* No room for a side column: the facts lead the story instead. */
+  .case-panel {
+    position: static;
+    gap: 28px;
+    margin-bottom: 80px;
+  }
+  .case-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-5);
+  }
+  .case-facts div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .case-facts div:nth-child(2) {
+    padding-top: 0;
+    border-top: 0;
+  }
+  .case-index {
+    display: none;
+  }
+  .case-story {
+    gap: 100px;
+  }
+  .case-gallery,
   .case-next {
     margin-top: 100px;
   }
-  .case-chapter .case-image {
-    margin-top: 32px;
-  }
-  .case-next-link {
-    row-gap: 16px;
+  .case-gallery-grid {
+    grid-template-columns: 1fr;
   }
 }
 @media (max-width: 600px) {
@@ -162,8 +390,28 @@
   .case-lead {
     margin-top: 36px;
   }
-  .case-image {
-    border-radius: var(--radius-control);
+  .case-facts {
+    grid-template-columns: 1fr;
+  }
+  .case-facts div:nth-child(2) {
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .case-stats {
+    gap: var(--space-4);
+  }
+  .case-stats strong {
+    font-size: 44px;
+  }
+  .case-stats .mono {
+    font-size: var(--text-small);
+  }
+  .case-next-link {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .case-next-media {
+    width: 50%;
   }
   .case-all {
     grid-template-columns: 1fr;

@@ -125,7 +125,8 @@ test("case study pages are built, linked from their project, and resolve their a
   );
   assert.ok(html.includes('href="/works/clean-energy-analytics/"'));
   assert.equal((page.match(/<h1\b/g) || []).length, 1);
-  assert.equal((page.match(/class="case-image\b/g) || []).length, 5);
+  for (const id of ["overview", "challenge", "decisions", "outcome"])
+    assert.ok(page.includes(`id="${id}"`), `Missing section: ${id}`);
   const assets = new Set(
     [...page.matchAll(/(?:src|href)="(\/[^"#]+)"/g)].map((match) => match[1]),
   );

@@ -1,8 +1,11 @@
 ---
+import "../portfolio/project-card.css";
 import "./case-study.css";
-import type { CaseImage, CaseStudy } from "../../content/case-studies";
+import type { CaseFigure, CaseStudy } from "../../content/case-studies";
 import { projects } from "../../content/projects";
 import Action from "../ui/Action.astro";
+import Barcode from "../ui/Barcode.astro";
+import Figure from "./CaseFigure.astro";
 
 interface Props {
   study: CaseStudy;
@@ -15,16 +18,19 @@ const next = [...projects.slice(at + 1), ...projects.slice(0, at)].find(
   (candidate) => candidate.href && candidate.href !== project.href,
 );
 const nextExternal = Boolean(next?.href?.startsWith("http"));
-// Every screen runs the width of the page, less its margins.
-const sizes = "calc(100vw - 48px)";
-const picture = (image: CaseImage) => ({
-  src: image.src,
-  srcset: image.srcset,
-  sizes,
-  width: image.width,
-  height: image.height,
-  alt: image.alt,
-});
+
+const pad = (n: number) => String(n).padStart(2, "0");
+// Figures are numbered in reading order: the lead, the story, the gallery.
+const numbers = new Map<CaseFigure, number>([[study.lead, 1]]);
+for (const section of study.sections)
+  for (const block of section.blocks)
+    if (block.type === "point")
+      for (const figure of block.figures) numbers.set(figure, numbers.size + 1);
+for (const figure of study.gallery) numbers.set(figure, numbers.size + 1);
+
+// Drawn widths: the story column on desktop, the page less its margins below.
+const storySizes = "(min-width: 901px) 60vw, calc(100vw - 40px)";
+const gallerySizes = "(min-width: 901px) 48vw, calc(100vw - 40px)";
 ---
 
 <article class="case" id="case">
@@ -42,39 +48,128 @@ const picture = (image: CaseImage) => ({
       ))}
     </h1>
     <div class="case-intro">
-      <div class="case-copy">
-        <p>{study.intro}</p>
-        <p class="mono case-facts">{study.facts.join(" · ")}</p>
+      <p class="mono case-intro-label">( {project.categories.join(", ")} )</p>
+      <div class="case-summary">
+        <p>{study.summary}</p>
+        <ul class="tags">
+          {project.tags.map((tag) => (
+            <li>{tag}</li>
+          ))}
+        </ul>
       </div>
     </div>
-    <img
-      class="case-image case-lead"
-      {...picture(study.lead)}
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
+    <Figure
+      figure={study.lead}
+      number={1}
+      sizes="calc(100vw - 48px)"
+      eager
+      class="case-lead"
     />
   </header>
 
-  {study.chapters.map((chapter) => (
-    <section class="case-chapter section-pad">
-      <div class="case-chapter-copy reveal">
-        <div class="case-copy">
-          <h2>{chapter.title}</h2>
-          <p>{chapter.text}</p>
-        </div>
+  <div class="case-body section-pad">
+    <aside class="case-panel" aria-label="Project facts">
+      <dl class="case-facts">
+        {study.facts.map((fact) => (
+          <div>
+            <dt class="mono">{fact.label}</dt>
+            <dd>{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <nav class="case-index" aria-label="Case study sections">
+        <ol>
+          {study.sections.map((section, i) => (
+            <li>
+              <a class="mono" href={`#${section.id}`}>
+                <span>({pad(i + 1)})</span> {section.label}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <Barcode variant={4} />
+    </aside>
+
+    <div class="case-story">
+      {study.sections.map((section, i) => (
+        <section
+          class="case-section"
+          id={section.id}
+          aria-labelledby={`${section.id}-title`}
+        >
+          <header class="case-section-head reveal">
+            <span class="mono">
+              ({pad(i + 1)}) {section.label}
+            </span>
+            <h2 id={`${section.id}-title`}>{section.title}</h2>
+          </header>
+          {section.blocks.map((block) => {
+            if (block.type === "text")
+              return (
+                <div class="case-text reveal">
+                  {block.paragraphs.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                </div>
+              );
+            if (block.type === "statement")
+              return <p class="case-statement reveal">{block.text}</p>;
+            if (block.type === "stats")
+              return (
+                <ul class="case-stats reveal">
+                  {block.items.map((item) => (
+                    <li>
+                      <strong>{item.value}</strong>
+                      <span class="mono">{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              );
+            return (
+              <div class="case-point">
+                <div class="case-point-copy reveal">
+                  <h3>
+                    <span class="mono">{block.number}</span> {block.title}
+                  </h3>
+                  <p>{block.text}</p>
+                </div>
+                {block.figures.map((figure) => (
+                  <Figure
+                    figure={figure}
+                    number={numbers.get(figure) ?? 0}
+                    sizes={storySizes}
+                    class="reveal"
+                  />
+                ))}
+              </div>
+            );
+          })}
+        </section>
+      ))}
+    </div>
+  </div>
+
+  {study.gallery.length > 0 && (
+    <section class="case-gallery section-pad" aria-labelledby="gallery-title">
+      <header class="case-section-head reveal">
+        <span class="mono">
+          ({pad(study.sections.length + 1)}) More screens
+        </span>
+        <h2 id="gallery-title">A closer look</h2>
+      </header>
+      <div class="case-gallery-grid">
+        {study.gallery.map((figure) => (
+          <Figure
+            figure={figure}
+            number={numbers.get(figure) ?? 0}
+            sizes={gallerySizes}
+            class="reveal"
+          />
+        ))}
       </div>
-      {chapter.image && (
-        <img
-          class="case-image reveal"
-          data-tone={chapter.tone ?? "light"}
-          {...picture(chapter.image)}
-          loading="lazy"
-          decoding="async"
-        />
-      )}
     </section>
-  ))}
+  )}
 
   <nav class="case-next section-pad" aria-label="More work">
     {next && (
@@ -84,15 +179,31 @@ const picture = (image: CaseImage) => ({
         target={nextExternal ? "_blank" : undefined}
         rel={nextExternal ? "noopener" : undefined}
       >
-        <span class="mono case-next-label">Next project</span>
-        <span class="case-next-title">
-          {next.title.map((line, i) => (
-            <>
-              {i > 0 && <br />}
-              {line}
-            </>
-          ))}{" "}
-          <b aria-hidden="true">↗</b>
+        <span class="case-next-copy">
+          <span class="mono case-next-label">( Next project )</span>
+          <span class="case-next-title">
+            {next.title.map((line, i) => (
+              <>
+                {i > 0 && <br />}
+                {line}
+              </>
+            ))}
+          </span>
+          <span class="mono case-next-cta">
+            View case study <b aria-hidden="true">↗</b>
+          </span>
+        </span>
+        <span class="case-next-media">
+          <img
+            src={next.image.src}
+            srcset={next.image.srcset}
+            sizes="(min-width: 601px) 16vw, 40vw"
+            width={next.image.width}
+            height={next.image.height}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
         </span>
       </a>
     )}
