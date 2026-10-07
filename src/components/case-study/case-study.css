@@ -24,11 +24,13 @@
   color: var(--accent);
   font-size: var(--text-small);
 }
-/* Takes the room between the eyebrow and the guide, centred within it. */
+/* Takes the room between the eyebrow and the guide, centred within it. The
+   brief takes whatever width the artwork does not use. */
 .case-hero-layout {
+  container-type: inline-size;
   flex: 1;
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--space-7);
   padding-block: var(--space-6);
@@ -72,10 +74,24 @@
 .case-brief dd {
   margin: var(--space-1) 0 0;
 }
-/* The artwork is as large as the screen allows and never taller. */
+/* The artwork is as wide as its column and as tall as the screen has room
+   for: the 3:2 view of the dashboard on a short screen, revealing more of
+   the meadow on a taller one, up to the whole 3:4 piece. Its column is at
+   most three fifths of the row. */
 .case-hero .case-figure {
-  justify-self: end;
-  width: min(100%, (100svh - var(--case-hero-reserve)) * 1.5);
+  width: min(
+    (100cqi - var(--space-7)) * 0.6,
+    (100svh - var(--case-hero-reserve)) * 1.5
+  );
+  container-type: inline-size;
+}
+.case-hero .case-art--landscape {
+  aspect-ratio: auto;
+  height: clamp(
+    100cqi * 2 / 3,
+    100svh - var(--case-hero-reserve),
+    100cqi * 4 / 3
+  );
 }
 
 /* The way in: chapter links along the bottom of the first screen. */
@@ -262,8 +278,11 @@
     gap: var(--space-6);
   }
   .case-hero .case-figure {
-    justify-self: stretch;
     width: 100%;
+  }
+  .case-hero .case-art--landscape {
+    aspect-ratio: 3 / 2;
+    height: auto;
   }
   .case-hero h1 {
     font-size: clamp(3rem, 7vw, 4.5rem);
