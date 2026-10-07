@@ -95,7 +95,7 @@
 }
 .split-reveal .char {
   display: inline-block;
-  will-change: transform, filter, opacity;
+  will-change: transform, opacity;
 }
 /* Without JavaScript every section stays visible; the scrubbed reveal is
    additive. GSAP owns the in-between state, so no CSS transition competes
@@ -104,7 +104,7 @@
   opacity: 1;
 }
 .motion-ready .reveal {
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 /*
  * The from-state is required. Without it the implicit start is the element's

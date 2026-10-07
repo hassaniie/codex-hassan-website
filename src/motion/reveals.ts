@@ -35,43 +35,6 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
   }
   document.body.classList.add("motion-ready");
 
-  /**
-   * Blur runs on its own short trigger rather than alongside the travel, so
-   * it is a softening as content clears the edge of the viewport instead of a
-   * veil that follows it well into the page. It resolves within
-   * --motion-blur-band percent of the viewport and is skipped at zero.
-   */
-  const edgeBlur = (
-    targets: HTMLElement[],
-    trigger: HTMLElement,
-    amount: number,
-    stagger: number,
-  ) => {
-    if (amount <= 0 || !targets.length) return;
-    tweens.push(
-      gsap.fromTo(
-        targets,
-        { filter: `blur(${amount}px)` },
-        {
-          filter: "blur(0px)",
-          ease: "none",
-          stagger,
-          // A resting blur(0px) still routes the element through a filter
-          // pass, which Safari draws at reduced resolution: images and text
-          // in it stay soft. Drop the filter once it has resolved; scrolling
-          // back re-renders the tween and brings the blur back as needed.
-          onComplete: () => gsap.set(targets, { filter: "none" }),
-          scrollTrigger: {
-            trigger,
-            start: "top 99%",
-            end: `top ${Math.max(40, 99 - presets.blurBand)}%`,
-            scrub: 0.6,
-          },
-        },
-      ),
-    );
-  };
-
   queryAll(".split-reveal").forEach((element) => {
     // The hero headline belongs to the entrance now: it arrives as one
     // element on the shared curve rather than character by character.
@@ -100,7 +63,6 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
         },
       }),
     );
-    edgeBlur(chars, element, presets.blurText, presets.stagger / 2000);
   });
 
   queryAll(".reveal").forEach((element) => {
@@ -121,7 +83,6 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
         },
       ),
     );
-    edgeBlur([element], element, presets.blurReveal, 0);
   });
 
   ScrollTrigger.refresh();

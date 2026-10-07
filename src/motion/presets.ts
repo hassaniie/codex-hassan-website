@@ -31,7 +31,6 @@ export function motionPresets() {
     blurReveal: number("--motion-blur-reveal-px", 2.5),
     blurText: number("--motion-blur-text-px", 2.5),
     blurExit: number("--motion-blur-exit-px", 3),
-    blurBand: number("--motion-blur-band", 13),
     scrollLerp: number("--scroll-lerp", 0.075),
     scrollWheel: number("--scroll-wheel-multiplier", 0.9),
     scrollTouchSync: number("--scroll-touch-sync", 1) === 1,
