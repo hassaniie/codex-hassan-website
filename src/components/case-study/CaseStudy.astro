@@ -34,26 +34,23 @@ const gallerySizes = "(min-width: 901px) 48vw, calc(100vw - 40px)";
 
 <article class="case" id="case">
   <header class="case-hero section-pad">
-    <div class="case-hero-top mono">
-      <nav class="case-breadcrumb" aria-label="Breadcrumb">
-        <a href="/works/">Works</a>
-        <span aria-hidden="true">/</span>
-        <span aria-current="page">{project.title[0]}</span>
-      </nav>
-      <span class="case-year">( {project.year} )</span>
-    </div>
-    <h1 class="case-title">
-      {project.title.map((line, i) => (
-        <>
-          {i > 0 && <br />}
-          {line}
-        </>
-      ))}
-    </h1>
-    <div class="case-intro">
+    <nav class="case-breadcrumb mono" aria-label="Breadcrumb">
+      <a href="/works/">Works</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{project.title[0]}</span>
+    </nav>
+    <div class="case-heading">
+      <h1 class="case-title">
+        {project.title.map((line, i) => (
+          <>
+            {i > 0 && <br />}
+            {line}
+          </>
+        ))}
+      </h1>
       <p class="case-summary">{study.summary}</p>
     </div>
-    <dl class="case-meta">
+    <dl class="case-facts">
       {study.facts.map((fact) => (
         <div>
           <dt class="mono">{fact.label}</dt>
@@ -61,10 +58,18 @@ const gallerySizes = "(min-width: 901px) 48vw, calc(100vw - 40px)";
         </div>
       ))}
     </dl>
+    <dl class="case-brief">
+      {study.brief.map((item) => (
+        <div>
+          <dt class="mono">{item.label}</dt>
+          <dd>{item.text}</dd>
+        </div>
+      ))}
+    </dl>
     <Figure
       figure={study.lead}
       number={1}
-      sizes="calc(100vw - 48px)"
+      sizes={storySizes}
       eager
       class="case-lead"
     />
@@ -110,17 +115,6 @@ const gallerySizes = "(min-width: 901px) 48vw, calc(100vw - 40px)";
               );
             if (block.type === "statement")
               return <p class="case-statement reveal">{block.text}</p>;
-            if (block.type === "stats")
-              return (
-                <ul class="case-stats reveal">
-                  {block.items.map((item) => (
-                    <li>
-                      <strong>{item.value}</strong>
-                      <span class="mono">{item.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              );
             return (
               <div class="case-point">
                 <div class="case-point-copy reveal">

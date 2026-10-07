@@ -1,28 +1,30 @@
 /*
- * A case study is the project row at page scale: the title and section heads
- * in the serif, labels in mono, the story in the 14px description style, and
- * each screen straight on the page with only a hairline round it. The header
- * says what the work is and who did what; the section index then stays in
- * view beside the story.
+ * A case study reads down one edge. The page is two tracks, 1fr and 2fr: the
+ * left holds the way back, the facts and the section index; the right holds
+ * everything to read or look at, all starting on the same line, text at one
+ * measure and every screen short enough to see whole. The first view answers
+ * what it is, what the problem was and who did what before any scrolling.
  */
 .case {
   padding-bottom: 60px;
 }
 
-/* Hero */
+/* Hero: the first view */
 .case-hero {
-  padding-top: 170px;
-}
-.case-hero-top {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-5);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  column-gap: var(--space-6);
+  padding-top: 150px;
 }
 /* Where this page sits, with a way back to the rest of the work. */
 .case-breadcrumb {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  padding-top: 0.6em;
   color: var(--color-muted);
 }
 .case-breadcrumb a {
@@ -35,55 +37,70 @@
 .case-breadcrumb a:hover {
   text-decoration-color: currentColor;
 }
-.case-year {
-  flex: none;
-  color: var(--color-label-accent);
+.case-heading {
+  grid-column: 2;
+  grid-row: 1;
 }
 .case-title {
-  margin-top: 28px;
   color: var(--color-heading-accent);
-  font-size: clamp(56px, 8.6vw, 148px);
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  font-size: clamp(44px, 5.4vw, 88px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
 }
-.case-intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  column-gap: var(--space-6);
-  margin-top: 48px;
-}
-/* Starts on the same line as the story column below. */
 .case-summary {
-  grid-column: 2;
-  max-width: 460px;
+  max-width: 560px;
+  margin-top: 24px;
 }
-/* What was done, by whom, for what: one row between two hairlines. */
-.case-meta {
+/* Who, what, where and when, level with the brief. */
+.case-facts {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px var(--space-6);
-  margin: 40px 0 0;
-  padding: 20px 0 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px var(--space-5);
+  margin: 48px 0 0;
+  padding-top: 20px;
   border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
 }
-.case-meta dt {
+.case-facts dt,
+.case-brief dt {
   color: var(--color-muted);
 }
-.case-meta dd {
-  margin: 8px 0 0;
-  max-width: 240px;
+.case-facts dd {
+  margin: 6px 0 0;
+}
+/* The quick answers: one label, one sentence, between hairlines. */
+.case-brief {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 48px 0 0;
+  border-top: 1px solid var(--line);
+}
+.case-brief div {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+.case-brief dd {
+  margin: 0;
+  max-width: 560px;
 }
 .case-summary,
+.case-facts dd,
+.case-brief dd,
 .case-text p,
-.case-point-copy p,
-.case-meta dd {
+.case-point-copy p {
   font-size: var(--text-body-small);
   line-height: var(--leading-body-small);
   letter-spacing: var(--tracking-body-small);
 }
 /* Outranks .case-figure's reset, which would otherwise close the gap. */
 .case-figure.case-lead {
+  grid-column: 2;
+  grid-row: 3;
   margin-top: 56px;
 }
 
@@ -186,6 +203,12 @@
 .case-section-head .mono {
   color: var(--color-label-accent);
 }
+/* Beside the sticky index the label would only repeat it. */
+@media (min-width: 901px) {
+  .case-section-head .mono {
+    display: none;
+  }
+}
 .case-section-head h2 {
   max-width: 16ch;
   font-size: clamp(36px, 3.8vw, 60px);
@@ -196,7 +219,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 520px;
+  max-width: 560px;
 }
 .case-statement {
   max-width: 22ch;
@@ -206,33 +229,6 @@
   line-height: var(--leading-display);
   letter-spacing: -0.03em;
   text-wrap: balance;
-}
-.case-stats {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-5);
-}
-.case-stats li {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-}
-.case-stats strong {
-  color: var(--ink);
-  font-family: var(--serif);
-  font-size: clamp(56px, 6vw, 96px);
-  font-weight: 400;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-}
-.case-stats .mono {
-  max-width: 18ch;
-  color: var(--color-muted);
 }
 .case-point {
   display: flex;
@@ -339,16 +335,35 @@
 
 @media (max-width: 900px) {
   .case-hero {
+    grid-template-columns: minmax(0, 1fr);
     padding-top: 140px;
   }
-  .case-intro {
-    grid-template-columns: 1fr;
-  }
-  .case-summary {
+  .case-breadcrumb,
+  .case-heading,
+  .case-facts,
+  .case-brief,
+  .case-figure.case-lead {
     grid-column: 1;
+    grid-row: auto;
   }
-  .case-meta {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .case-breadcrumb {
+    padding-top: 0;
+  }
+  .case-heading {
+    margin-top: 24px;
+  }
+  /* The answers first, then the facts behind them. */
+  .case-brief {
+    order: 1;
+    margin-top: 40px;
+  }
+  .case-facts {
+    order: 2;
+    margin-top: 32px;
+  }
+  .case-figure.case-lead {
+    order: 3;
+    margin-top: 48px;
   }
   .case-body {
     grid-template-columns: 1fr;
@@ -374,26 +389,14 @@
     padding-top: 115px;
   }
   .case-title {
-    font-size: clamp(44px, 12.5vw, 64px);
+    font-size: clamp(40px, 11vw, 56px);
   }
-  .case-intro {
-    margin-top: 32px;
-  }
-  .case-meta {
-    margin-top: 28px;
-    column-gap: var(--space-5);
+  .case-brief div {
+    grid-template-columns: 1fr;
+    gap: 6px;
   }
   .case-figure.case-lead {
     margin-top: 36px;
-  }
-  .case-stats {
-    gap: var(--space-4);
-  }
-  .case-stats strong {
-    font-size: 44px;
-  }
-  .case-stats .mono {
-    font-size: var(--text-small);
   }
   .case-next-link {
     grid-template-columns: 1fr;

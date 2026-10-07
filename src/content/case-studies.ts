@@ -25,7 +25,6 @@ export interface CaseFigure {
 export type CaseBlock =
   | { type: "text"; paragraphs: string[] }
   | { type: "statement"; text: string }
-  | { type: "stats"; items: { value: string; label: string }[] }
   | {
       type: "point";
       number: string;
@@ -46,8 +45,10 @@ export interface CaseStudy {
   /** The project in projects.ts this tells the story of. */
   projectId: string;
   summary: string;
-  /** The strip under the title; the year comes from the project itself. */
+  /** Who, what, where and when, beside the brief in the first view. */
   facts: { label: string; value: string }[];
+  /** The quick answers a reader looks for first, one sentence each. */
+  brief: { label: string; text: string }[];
   lead: CaseFigure;
   sections: CaseSection[];
   /** Extra screens shown together after the story. */
@@ -87,12 +88,23 @@ export const caseStudies: CaseStudy[] = [
       "A clean-energy analytics suite for solar plants and the buildings they power. It turns thousands of daily readings into answers an energy team can act on, starting with the one question that always comes first.",
     facts: [
       { label: "Role", value: "Product designer, UX/UI" },
+      { label: "Team", value: "Sole designer, with the PM and stakeholders" },
       {
         label: "Scope",
         value: "Dashboard design, data visualisation, design system",
       },
       { label: "Platform", value: "Web app, desktop, light and dark themes" },
-      { label: "Products", value: "CerevraX BMS, EnersenX EMS" },
+      { label: "Year", value: "2026" },
+    ],
+    brief: [
+      {
+        label: "Problem",
+        text: "Thousands of energy readings a day, all shown as equally urgent, so the first question gets lost: are we making more than we’re using?",
+      },
+      {
+        label: "What I did",
+        text: "As the sole designer, working with the PM and stakeholders, I designed the CerevraX solar dashboard and the EnersenX energy monitoring system, from information structure to UI and a shared component library.",
+      },
     ],
     lead: {
       image: energy(
@@ -114,15 +126,6 @@ export const caseStudies: CaseStudy[] = [
             type: "text",
             paragraphs: [
               "Solar plants report yield and capacity, batteries charge and discharge, and the grid and generators fill the gaps, each with its own tariff and its own carbon cost. The people running these sites need to see all of it, but they need to read it in the right order.",
-              "I designed two connected products for them: the Solar Energy Management System inside the CerevraX building platform, and an Energy Monitoring System that follows the same power through to cost, savings and emissions, also delivered as EnersenX for a partner.",
-            ],
-          },
-          {
-            type: "stats",
-            items: [
-              { value: "02", label: "Numbers every view starts from" },
-              { value: "12", label: "Modules, from live data to reports" },
-              { value: "02", label: "Themes, light and dark" },
             ],
           },
         ],
@@ -170,18 +173,8 @@ export const caseStudies: CaseStudy[] = [
             type: "point",
             number: "3.2",
             title: "Now first, then why",
-            text: "Every dashboard reads from top to bottom. A strip of live figures comes first: power, today’s energy, cost, demand, power factor and savings. Then come the trends that explain them, then the breakdowns by load, equipment and utility. Each card answers one question, and its title says which.",
-            figures: [
-              {
-                image: energy(
-                  "ems-dashboard",
-                  3456,
-                  2234,
-                  "Energy Monitoring System dashboard: live figures, real-time load curve, cost comparison, saving summary, energy breakdown and power quality",
-                ),
-                caption: "Energy Monitoring System, live overview",
-              },
-            ],
+            text: "As in the overview at the top (Fig. 01), every dashboard reads from top to bottom. A strip of live figures comes first: power, today’s energy, cost, demand, power factor and savings. Then come the trends that explain them, then the breakdowns by load, equipment and utility. Each card answers one question, and its title says which.",
+            figures: [],
           },
           {
             type: "point",
@@ -240,11 +233,8 @@ export const caseStudies: CaseStudy[] = [
             paragraphs: [
               "The design spans twelve modules, from live dashboards and analytics to reports, alarms and user management, in light and dark themes, all built on one shared component library.",
               "Reports can be generated from templates or scheduled, and analytics adds forecasting, insights and anomaly detection on top of the live data.",
+              "On a data-heavy screen, most of the design work is deciding what not to say first.",
             ],
-          },
-          {
-            type: "statement",
-            text: "On a data-heavy screen, most of the design work is deciding what not to say first.",
           },
         ],
       },
