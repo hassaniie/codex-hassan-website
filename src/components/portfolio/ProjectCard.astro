@@ -9,6 +9,7 @@ interface Props {
 }
 const { project, variant = 0 } = Astro.props;
 const paragraphs = [project.description].flat();
+const external = Boolean(project.href?.startsWith("https://"));
 ---
 
 <article class="project reveal" data-categories={project.categories.join("|")}>
@@ -18,8 +19,8 @@ const paragraphs = [project.description].flat();
       label="Explore project ↗"
       class={`project-media ${project.id}-media`}
       href={project.href}
-      external
-      aria-label={`View ${project.title.join(" ")} on Behance`}
+      external={external}
+      aria-label={`View ${project.title.join(" ")}${external ? " on Behance" : " case study"}`}
     >
       <img {...project.image} loading="lazy" decoding="async" />
     </Action>
@@ -59,7 +60,7 @@ const paragraphs = [project.description].flat();
           label="View case study"
           weight="light"
           arrow
-          external
+          external={external}
         />
       ) : (
         <span class="project-soon">Case study coming soon</span>

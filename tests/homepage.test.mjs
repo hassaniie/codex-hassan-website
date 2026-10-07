@@ -77,7 +77,7 @@ test("all rendered buttons use the shared Action component", () => {
     assert.match(attributes, /class="[^"]*\baction\b/);
     assert.match(attributes, /data-appearance="/);
   }
-  assert.equal((html.match(/data-appearance="media"/g) || []).length, 3);
+  assert.equal((html.match(/data-appearance="media"/g) || []).length, 4);
   const interactiveStack = [];
   for (const [, closing, tag] of html.matchAll(/<(\/)?(a|button)\b[^>]*>/g)) {
     if (closing) assert.equal(interactiveStack.pop(), tag);

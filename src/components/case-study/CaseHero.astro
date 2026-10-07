@@ -1,0 +1,35 @@
+---
+import type { CaseStudySummary } from "../../content/case-studies/types";
+import Action from "../ui/Action.astro";
+interface Props {
+  study: CaseStudySummary;
+}
+const { study } = Astro.props;
+---
+
+<header class="case-hero" id="case-top">
+  <div class="case-eyebrow mono">
+    <Action href="/works/" label="← All works" size="small" />
+    <span>
+      {study.project.title[0]} / {study.project.year}
+    </span>
+    <span class="case-index">(01)</span>
+  </div>
+  <h1>
+    {study.headline.map((line) => (
+      <span>{line}</span>
+    ))}
+  </h1>
+  <div class="case-hero-bottom">
+    <span class="mono case-discipline">
+      {study.project.tags.slice(0, 2).map((tag, i) => (
+        <>
+          {i > 0 && <br />}
+          {tag}
+        </>
+      ))}
+    </span>
+    <p>{study.intro}</p>
+    <Action href="#overview" label="Read the story ↓" weight="light" />
+  </div>
+</header>

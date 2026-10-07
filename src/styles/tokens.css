@@ -33,6 +33,7 @@
   );
   --color-ink: #171819;
   --color-paper: #fff;
+  --color-modal-backdrop: rgb(23 24 25 / 80%);
   --color-accent: #494fed;
   --color-deep: #25296b;
   --color-identity-border: rgb(255 255 255 / 72%);
@@ -76,6 +77,13 @@
   --gutter: var(--space-5);
   --content-principles: 68.75rem;
   --content-statement: 70rem;
+  /* Editorial case studies: shared rhythm, independent of card geometry. */
+  --case-display-size: clamp(4.5rem, 10.5vw, 11rem);
+  --case-title-size: clamp(2.5rem, 4.4vw, 5rem);
+  --case-section-space: clamp(5rem, 10vw, 10rem);
+  --case-copy-width: 26rem;
+  --case-sticky-top: 7.5rem;
+  --case-lead-size: clamp(1rem, 1.6vw, 1.25rem);
   --radius-small: 0.1875rem;
   --radius-control: 0.5rem;
   --radius-card: 0.75rem;

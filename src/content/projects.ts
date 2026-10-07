@@ -65,6 +65,7 @@ export const projects = [
     ],
     tags: ["Dashboard design", "Data visualisation", "Clean energy"],
     categories: ["Product design", "UX/UI design"],
+    href: "/works/clean-energy/",
     image: cover(
       "energy-meadow",
       "Clean energy analytics dashboard over a meadow at sunset, showing solar output, consumption and plant status",

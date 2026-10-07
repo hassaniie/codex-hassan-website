@@ -1,0 +1,58 @@
+---
+import type { Project } from "../../content/projects";
+import Action from "../ui/Action.astro";
+interface Props {
+  image: Project["image"];
+  caption: string;
+  number: string;
+  variant?: "landscape" | "performance" | "impact";
+  eager?: boolean;
+  fullSrc: string;
+}
+const {
+  image,
+  caption,
+  number,
+  variant = "landscape",
+  eager = false,
+  fullSrc,
+} = Astro.props;
+---
+
+<figure class:list={["case-figure", !eager && "reveal"]}>
+  <Action
+    appearance="media"
+    href={fullSrc}
+    external
+    label="View full artwork"
+    aria-label={`View full artwork: ${caption}`}
+    class={`case-art case-art--${variant}`}
+    data-open-artwork
+  >
+    <img
+      {...image}
+      alt={variant === "landscape" ? image.alt : caption}
+      sizes={
+        variant === "landscape"
+          ? "calc(100vw - 48px)"
+          : "(min-width: 901px) 75vw, calc(100vw - 40px)"
+      }
+      loading={eager ? "eager" : "lazy"}
+      fetchpriority={eager ? "high" : "auto"}
+      decoding="async"
+    />
+  </Action>
+  <figcaption>
+    <span>
+      <span class="case-caption-number">({number})</span> {caption}
+    </span>
+    <Action
+      href={fullSrc}
+      external
+      label="View full artwork"
+      size="small"
+      arrow
+      data-open-artwork
+    />
+  </figcaption>
+</figure>

@@ -1,0 +1,139 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { energyCaseStudy as study } from "../../content/case-studies/energy";
+import CaseHero from "../../components/case-study/CaseHero.astro";
+import CaseChapter from "../../components/case-study/CaseChapter.astro";
+import CaseFigure from "../../components/case-study/CaseFigure.astro";
+import CaseStudyNavigation from "../../components/case-study/CaseStudyNavigation.astro";
+import ArtworkViewer from "../../components/case-study/ArtworkViewer.astro";
+import Action from "../../components/ui/Action.astro";
+import Contact from "../../components/sections/Contact.astro";
+import "../../components/case-study/case-study.css";
+---
+
+<SiteLayout
+  title="Clean Energy Analytics — A case study by Hassan Mushtaq"
+  description={study.intro}
+  initialHeaderTheme="light"
+  skipHref="#overview"
+  skipLabel="Skip to case study"
+  socialImage={{
+    src: "/assets/projects/energy-meadow-1200.webp",
+    alt: study.project.image.alt,
+    width: 1200,
+    height: 1600,
+  }}
+>
+  <article
+    class="case-study section-pad"
+    aria-label="Clean energy analytics case study"
+  >
+    <CaseHero study={study} />
+    <CaseFigure
+      image={study.project.image}
+      fullSrc={study.fullArtwork}
+      caption="The dashboard, in context."
+      number="01"
+      eager
+    />
+    <dl class="case-facts reveal">
+      {study.facts.map((fact) => (
+        <div>
+          <dt class="mono">{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
+    <div class="case-body">
+      <CaseStudyNavigation chapters={study.chapters} />
+      <div class="case-story">
+        <CaseChapter {...study.chapters[0]} title={study.overview.title}>
+          <div class="case-copy reveal">
+            {study.overview.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+          <blockquote class="case-question reveal">
+            <span class="mono">The question behind the screen</span>
+            <p>
+              Are we making more
+              <br />
+              than we’re using?
+            </p>
+          </blockquote>
+        </CaseChapter>
+        <CaseChapter {...study.chapters[1]} title={study.hierarchy.title}>
+          <p class="case-copy reveal">{study.hierarchy.intro}</p>
+          <ol class="case-decisions">
+            {study.hierarchy.decisions.map((decision) => (
+              <li class="case-decision reveal">
+                <span class="mono case-decision-number">
+                  ({decision.number})
+                </span>
+                <div>
+                  <span class="mono case-decision-question">
+                    {decision.question}
+                  </span>
+                  <h3>{decision.title}</h3>
+                </div>
+                <p>{decision.description}</p>
+              </li>
+            ))}
+          </ol>
+          <CaseFigure
+            image={study.project.image}
+            fullSrc={study.fullArtwork}
+            caption="A closer look at the performance hierarchy."
+            number="02"
+            variant="performance"
+          />
+        </CaseChapter>
+        <CaseChapter {...study.chapters[2]} title={study.visualLanguage.title}>
+          <div class="case-copy reveal">
+            {study.visualLanguage.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+          <dl class="case-principles reveal">
+            {study.visualLanguage.principles.map((principle) => (
+              <div>
+                <dt class="mono">{principle.label}</dt>
+                <dd>{principle.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <CaseFigure
+            image={study.project.image}
+            fullSrc={study.fullArtwork}
+            caption="Environmental benefits, given their own space."
+            number="03"
+            variant="impact"
+          />
+        </CaseChapter>
+        <CaseChapter {...study.chapters[3]} title={study.reflection.title}>
+          <div class="case-copy reveal">
+            {study.reflection.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+          <p class="case-note reveal">{study.reflection.note}</p>
+        </CaseChapter>
+      </div>
+    </div>
+    <section class="case-end reveal" aria-labelledby="case-end-title">
+      <span class="mono">Thanks for reading / (01)</span>
+      <h2 id="case-end-title">There’s more to explore.</h2>
+      <Action href="/works/" label="Back to all works" weight="light" arrow />
+    </section>
+  </article>
+  <Contact />
+  <ArtworkViewer
+    image={study.project.image}
+    fullSrc={study.fullArtwork}
+    title="Clean energy / Full artwork"
+  />
+  <script>
+    import { initCaseStudyPage } from "../../scripts/case-study-page";
+    initCaseStudyPage();
+  </script>
+</SiteLayout>

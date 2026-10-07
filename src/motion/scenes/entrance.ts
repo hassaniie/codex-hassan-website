@@ -39,6 +39,9 @@ export function initEntrance({ reducedMotion }: BehaviorContext): Cleanup {
     [".policy > *", 0, { y: presets.appearRise }],
     [".not-found-copy > *", 0, { y: presets.appearRise }],
     [".works .display-heading > *", 0, { y: presets.appearRise }],
+    [".case-hero h1", 0, { y: presets.appearRise }],
+    [".case-hero .case-eyebrow", 1, { y: presets.appearRise }],
+    [".case-hero .case-hero-bottom", 2, { y: presets.appearRise }],
   ];
 
   const context = gsap.context(() => {

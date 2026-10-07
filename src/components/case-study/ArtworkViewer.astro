@@ -1,0 +1,41 @@
+---
+import type { Project } from "../../content/projects";
+import Action from "../ui/Action.astro";
+interface Props {
+  image: Project["image"];
+  fullSrc: string;
+  title: string;
+}
+const { image, fullSrc, title } = Astro.props;
+---
+
+<dialog
+  class="case-artwork-viewer"
+  aria-labelledby="artwork-title"
+  data-lenis-prevent
+>
+  <div class="case-viewer-toolbar">
+    <h2 class="mono" id="artwork-title">
+      {title}
+    </h2>
+    <div class="case-viewer-actions">
+      <Action
+        label="Zoom 2×"
+        size="small"
+        data-zoom-artwork
+        aria-pressed="false"
+      />
+      <Action label="Close ✕" size="small" data-close-artwork autofocus />
+    </div>
+  </div>
+  <div class="case-viewer-scroll" data-lenis-prevent>
+    <img
+      src={fullSrc}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+</dialog>

@@ -72,7 +72,8 @@ export function initSmoothScroll({
     if (!target) return;
     event.preventDefault();
     lenis.scrollTo(target as HTMLElement, {
-      offset: -presets.headerOffset,
+      // Lenis reads scroll-padding and scroll-margin from CSS. Adding the
+      // header offset again would leave chapter links twice as far down.
       duration: presets.anchorDuration / 1000,
     });
     // Keep the keyboard where the eye lands.
@@ -90,7 +91,7 @@ export function initSmoothScroll({
     if (!(node instanceof HTMLElement)) return;
     const box = node.getBoundingClientRect();
     if (box.top >= presets.headerOffset && box.bottom <= innerHeight) return;
-    lenis.scrollTo(node, { offset: -presets.headerOffset, duration: 0.8 });
+    lenis.scrollTo(node, { duration: 0.8 });
   };
   document.addEventListener("focusin", onFocusIn, { signal });
 

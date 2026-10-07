@@ -1,7 +1,13 @@
 import type { APIRoute } from "astro";
 
 // Every public page. The 404 page stays out on purpose.
-const pages = ["/", "/works/", "/contact/", "/privacy-policy/"];
+const pages = [
+  "/",
+  "/works/",
+  "/works/clean-energy/",
+  "/contact/",
+  "/privacy-policy/",
+];
 
 export const GET: APIRoute = ({ site }) => {
   const urls = pages

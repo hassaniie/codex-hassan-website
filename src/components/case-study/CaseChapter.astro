@@ -1,0 +1,28 @@
+---
+interface Props {
+  id: string;
+  number: string;
+  label: string;
+  title: readonly string[];
+}
+const { id, number, label, title } = Astro.props;
+---
+
+<section
+  class="case-chapter"
+  id={id}
+  aria-labelledby={`${id}-title`}
+  data-case-chapter
+>
+  <div class="case-chapter-heading reveal">
+    <span class="mono case-kicker">
+      ({number}) / {label}
+    </span>
+    <h2 id={`${id}-title`}>
+      {title.map((line) => (
+        <span>{line}</span>
+      ))}
+    </h2>
+  </div>
+  <slot />
+</section>
