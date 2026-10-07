@@ -1,8 +1,9 @@
 /*
  * A case study is the project row at page scale: the title and section heads
  * in the serif, labels in mono, the story in the 14px description style, and
- * each screen straight on the page with only a hairline round it. The facts
- * and the section index sit in a column that stays in view beside the story.
+ * each screen straight on the page with only a hairline round it. The header
+ * says what the work is and who did what; the section index then stays in
+ * view beside the story.
  */
 .case {
   padding-bottom: 60px;
@@ -16,6 +17,26 @@
   display: flex;
   justify-content: space-between;
   gap: var(--space-5);
+}
+/* Where this page sits, with a way back to the rest of the work. */
+.case-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--color-muted);
+}
+.case-breadcrumb a {
+  color: var(--color-label-accent);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--duration-fast) var(--ease-out);
+}
+.case-breadcrumb a:hover {
+  text-decoration-color: currentColor;
+}
+.case-year {
+  flex: none;
   color: var(--color-label-accent);
 }
 .case-title {
@@ -29,25 +50,40 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   column-gap: var(--space-6);
-  margin-top: 56px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
+  margin-top: 48px;
 }
-.case-intro-label {
+/* Starts on the same line as the story column below. */
+.case-summary {
+  grid-column: 2;
+  max-width: 460px;
+}
+/* What was done, by whom, for what: one row between two hairlines. */
+.case-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px var(--space-6);
+  margin: 40px 0 0;
+  padding: 20px 0 24px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.case-meta dt {
   color: var(--color-muted);
 }
-.case-summary {
-  max-width: 420px;
+.case-meta dd {
+  margin: 8px 0 0;
+  max-width: 240px;
 }
-.case-summary p,
+.case-summary,
 .case-text p,
 .case-point-copy p,
-.case-facts dd {
+.case-meta dd {
   font-size: var(--text-body-small);
   line-height: var(--leading-body-small);
   letter-spacing: var(--tracking-body-small);
 }
-.case-lead {
+/* Outranks .case-figure's reset, which would otherwise close the gap. */
+.case-figure.case-lead {
   margin-top: 56px;
 }
 
@@ -108,27 +144,6 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-}
-.case-facts {
-  margin: 0;
-}
-.case-facts div {
-  display: grid;
-  grid-template-columns: 88px minmax(0, 1fr);
-  gap: 16px;
-  padding: 12px 0;
-  border-top: 1px solid var(--line);
-}
-.case-facts div:first-child {
-  padding-top: 0;
-  border-top: 0;
-}
-.case-facts dt {
-  color: var(--color-muted);
-}
-.case-facts dd {
-  margin: 0;
-  max-width: 260px;
 }
 .case-index ol {
   list-style: none;
@@ -328,32 +343,19 @@
   }
   .case-intro {
     grid-template-columns: 1fr;
-    row-gap: 16px;
+  }
+  .case-summary {
+    grid-column: 1;
+  }
+  .case-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .case-body {
     grid-template-columns: 1fr;
     margin-top: 80px;
   }
-  /* No room for a side column: the facts lead the story instead. */
+  /* No room for a side column: the story runs on its own. */
   .case-panel {
-    position: static;
-    gap: 28px;
-    margin-bottom: 80px;
-  }
-  .case-facts {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--space-5);
-  }
-  .case-facts div {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-  .case-facts div:nth-child(2) {
-    padding-top: 0;
-    border-top: 0;
-  }
-  .case-index {
     display: none;
   }
   .case-story {
@@ -374,16 +376,15 @@
   .case-title {
     font-size: clamp(44px, 12.5vw, 64px);
   }
-  .case-intro,
-  .case-lead {
+  .case-intro {
+    margin-top: 32px;
+  }
+  .case-meta {
+    margin-top: 28px;
+    column-gap: var(--space-5);
+  }
+  .case-figure.case-lead {
     margin-top: 36px;
-  }
-  .case-facts {
-    grid-template-columns: 1fr;
-  }
-  .case-facts div:nth-child(2) {
-    padding-top: 12px;
-    border-top: 1px solid var(--line);
   }
   .case-stats {
     gap: var(--space-4);

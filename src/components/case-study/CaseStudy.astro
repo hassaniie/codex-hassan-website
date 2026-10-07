@@ -1,5 +1,4 @@
 ---
-import "../portfolio/project-card.css";
 import "./case-study.css";
 import type { CaseFigure, CaseStudy } from "../../content/case-studies";
 import { projects } from "../../content/projects";
@@ -36,8 +35,12 @@ const gallerySizes = "(min-width: 901px) 48vw, calc(100vw - 40px)";
 <article class="case" id="case">
   <header class="case-hero section-pad">
     <div class="case-hero-top mono">
-      <span>( {project.year} )</span>
-      <span>( Case study )</span>
+      <nav class="case-breadcrumb" aria-label="Breadcrumb">
+        <a href="/works/">Works</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{project.title[0]}</span>
+      </nav>
+      <span class="case-year">( {project.year} )</span>
     </div>
     <h1 class="case-title">
       {project.title.map((line, i) => (
@@ -48,16 +51,16 @@ const gallerySizes = "(min-width: 901px) 48vw, calc(100vw - 40px)";
       ))}
     </h1>
     <div class="case-intro">
-      <p class="mono case-intro-label">( {project.categories.join(", ")} )</p>
-      <div class="case-summary">
-        <p>{study.summary}</p>
-        <ul class="tags">
-          {project.tags.map((tag) => (
-            <li>{tag}</li>
-          ))}
-        </ul>
-      </div>
+      <p class="case-summary">{study.summary}</p>
     </div>
+    <dl class="case-meta">
+      {study.facts.map((fact) => (
+        <div>
+          <dt class="mono">{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
     <Figure
       figure={study.lead}
       number={1}
@@ -68,15 +71,7 @@ const gallerySizes = "(min-width: 901px) 48vw, calc(100vw - 40px)";
   </header>
 
   <div class="case-body section-pad">
-    <aside class="case-panel" aria-label="Project facts">
-      <dl class="case-facts">
-        {study.facts.map((fact) => (
-          <div>
-            <dt class="mono">{fact.label}</dt>
-            <dd>{fact.value}</dd>
-          </div>
-        ))}
-      </dl>
+    <aside class="case-panel">
       <nav class="case-index" aria-label="Case study sections">
         <ol>
           {study.sections.map((section, i) => (

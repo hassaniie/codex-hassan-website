@@ -46,6 +46,7 @@ export interface CaseStudy {
   /** The project in projects.ts this tells the story of. */
   projectId: string;
   summary: string;
+  /** The strip under the title; the year comes from the project itself. */
   facts: { label: string; value: string }[];
   lead: CaseFigure;
   sections: CaseSection[];
@@ -92,7 +93,6 @@ export const caseStudies: CaseStudy[] = [
       },
       { label: "Platform", value: "Web app, desktop, light and dark themes" },
       { label: "Products", value: "CerevraX BMS, EnersenX EMS" },
-      { label: "Year", value: "2026" },
     ],
     lead: {
       image: energy(
