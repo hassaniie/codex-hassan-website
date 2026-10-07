@@ -23,6 +23,7 @@ let figures = 1;
         label="← All works"
         size="small"
         data-case-return
+        data-case-back
       />
       <span>
         {project.title[0]} / {project.year}
@@ -117,7 +118,12 @@ let figures = 1;
   </div>
 
   <nav class="case-end" aria-label="Continue exploring">
-    <Action href="/works/" label="← Back to all works" weight="light" />
+    <Action
+      href="/works/"
+      label="← Back to all works"
+      weight="light"
+      data-case-back
+    />
     <Action href="#case-top" label="Back to top ↑" weight="light" />
   </nav>
 </article>

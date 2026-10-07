@@ -1,4 +1,5 @@
 import { initCursor } from "../motion/cursor";
+import { leavePage } from "../motion/page-transition";
 import { initReveals } from "../motion/reveals";
 import {
   query,
@@ -44,26 +45,71 @@ function initChapterGuide({ signal }: BehaviorContext): Cleanup {
   };
 }
 
-/** A reader who came from the homepage is offered the way back there. */
-function initReturnLink() {
-  const link = query<HTMLAnchorElement>("[data-case-return]");
-  if (!link) return;
-  try {
-    const previous = new URL(document.referrer);
-    if (previous.origin !== location.origin || previous.pathname !== "/")
-      return;
-  } catch {
-    return;
+/** The page this one was opened from in this tab, when it is on this site. */
+function previousPage(): { url: URL; key?: string } | undefined {
+  // History knows for certain; the referrer stands in where it is not exposed.
+  const navigation = window.navigation;
+  if (navigation?.currentEntry) {
+    const entries = navigation.entries();
+    let index = navigation.currentEntry.index;
+    // Skip this page's own chapter jumps.
+    while (index >= 0 && entries[index].sameDocument) index--;
+    const entry = entries[index];
+    if (entry?.url) return { url: new URL(entry.url), key: entry.key };
   }
-  link.setAttribute("href", "/");
-  queryAll(".action-track > span", link).forEach((label) => {
-    label.textContent = "← Back home";
+  try {
+    const url = new URL(document.referrer);
+    if (url.origin === location.origin) return { url };
+  } catch {
+    // No referrer: the page was opened directly.
+  }
+  return undefined;
+}
+
+/**
+ * The way back goes where the reader came from: home from the homepage, all
+ * works otherwise. When that page is the one just behind this one, the link
+ * steps back through history, like the browser's own Back, so the reader
+ * lands where they left off instead of at the top of a fresh page.
+ */
+function initReturnLinks({ signal }: BehaviorContext): Cleanup {
+  const previous = previousPage();
+  const top = query<HTMLAnchorElement>("[data-case-return]");
+  if (top && previous?.url.pathname === "/") {
+    top.setAttribute("href", "/");
+    queryAll(".action-track > span", top).forEach((label) => {
+      label.textContent = "← Back home";
+    });
+  }
+  const key = previous?.key;
+  if (!previous || !key) return () => {};
+  queryAll<HTMLAnchorElement>("[data-case-back]").forEach((link) => {
+    if (new URL(link.href).pathname !== previous.url.pathname) return;
+    link.addEventListener(
+      "click",
+      (event) => {
+        if (event.button !== 0) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+          return;
+        event.preventDefault();
+        leavePage(() => {
+          // A step back that cannot happen still takes the reader there.
+          const fallback = () => {
+            location.href = link.href;
+          };
+          const step = window.navigation?.traverseTo(key).finished;
+          if (step) step.catch(fallback);
+          else fallback();
+        });
+      },
+      { signal },
+    );
   });
+  return () => {};
 }
 
 export function initCaseStudyPage() {
   dispose?.();
-  initReturnLink();
   const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
   let controller: AbortController;
   let cleanups: Cleanup[] = [];
@@ -83,6 +129,7 @@ export function initCaseStudyPage() {
       initReveals(context),
       initCursor(context),
       initChapterGuide(context),
+      initReturnLinks(context),
     ];
   };
   start();
