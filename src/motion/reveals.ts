@@ -19,8 +19,8 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
     return () => {};
   }
   document.body.classList.add("motion-ready");
-  const lineEase = CustomEase.create(
-    "line-reveal",
+  const textEase = CustomEase.create(
+    "word-reveal",
     presets.easeAppear.replace(/cubic-bezier\(|\)/g, ""),
   );
 
@@ -67,21 +67,20 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
     if (element.tagName === "H1") return;
     splits.push(
       SplitText.create(element, {
-        type: "lines",
-        linesClass: "reveal-line",
-        mask: "lines",
-        autoSplit: true,
-        // Re-measure actual rendered lines after font loading and width changes.
-        // Returning the tween lets SplitText clean it up and retain progress.
+        type: "words",
+        wordsClass: "reveal-word",
+        // Inline words reflow naturally with fonts and viewport changes.
+        // Returning the tween lets SplitText own animation cleanup.
         onSplit(self) {
           return gsap.fromTo(
-            self.lines,
-            { yPercent: 110 },
+            self.words,
+            { y: presets.textRise, opacity: 0 },
             {
-              yPercent: 0,
+              y: 0,
+              opacity: 1,
               duration: presets.textDuration / 1000,
               stagger: presets.stagger / 1000,
-              ease: lineEase,
+              ease: textEase,
               scrollTrigger: {
                 trigger: element,
                 start: "top 88%",
@@ -112,7 +111,7 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
         },
       ),
     );
-    // A line heading must remain sharp even inside an animated section wrapper.
+    // Split text must remain sharp even inside an animated section wrapper.
     if (!element.querySelector(".split-reveal"))
       edgeBlur([element], element, presets.blurReveal, 0);
   });

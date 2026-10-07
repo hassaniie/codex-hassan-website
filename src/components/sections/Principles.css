@@ -8,7 +8,7 @@
   gap: 65px;
 }
 .about-statement p {
-  /* Line wrappers must not shrink the reading column's flex basis after split. */
+  /* Keep a stable reading column before and after text splitting. */
   flex: 1;
   min-width: 0;
   font: 48px/1.1 var(--serif);

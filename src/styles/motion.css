@@ -90,18 +90,8 @@
 .intro.covering .intro-name {
   visibility: hidden;
 }
-.split-reveal .reveal-line,
-.split-reveal .reveal-line-mask {
-  display: block;
-}
-.split-reveal .reveal-line {
-  will-change: transform;
-}
-.split-reveal .reveal-line-mask {
-  /* Keep the serif's ascenders/descenders inside the clipping window without
-     changing its line spacing or the surrounding section geometry. */
-  padding-block: var(--motion-line-bleed);
-  margin-block: calc(-1 * var(--motion-line-bleed));
+.split-reveal .reveal-word {
+  will-change: transform, opacity;
 }
 /* Without JavaScript every section stays visible; the scrubbed reveal is
    additive. GSAP owns the in-between state, so no CSS transition competes
@@ -204,7 +194,8 @@
   .identity-token {
     transform: none !important;
   }
-  .split-reveal .reveal-line {
+  .split-reveal .reveal-word {
+    opacity: 1 !important;
     transform: none !important;
   }
 }

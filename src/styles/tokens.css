@@ -102,10 +102,10 @@
      which is what gives the reveal its weight. */
   --ease-curtain: cubic-bezier(0.74, 0.22, 0.4, 0.6);
   /* Numeric millisecond tokens are consumed by the motion modules. */
-  /* Scroll text: whole lines slide through masks once, with a short stagger. */
-  --motion-text-ms: 650;
-  --motion-stagger-ms: 80;
-  --motion-line-bleed: 0.08em;
+  /* Scroll text: whole words rise and fade once, with a short stagger. */
+  --motion-text-ms: 450;
+  --motion-stagger-ms: 50;
+  --motion-text-rise: 14;
   /*
    * The opening sequence, measured off the approved source in
    * research/reference-lock.md. It runs as four consecutive phases, and every

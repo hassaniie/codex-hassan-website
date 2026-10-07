@@ -7,8 +7,9 @@ export function motionPresets() {
     return Number.isFinite(parsed) ? parsed : fallback;
   };
   return {
-    textDuration: number("--motion-text-ms", 900),
-    stagger: number("--motion-stagger-ms", 20),
+    textDuration: number("--motion-text-ms", 450),
+    stagger: number("--motion-stagger-ms", 50),
+    textRise: number("--motion-text-rise", 14),
     introCount: number("--motion-intro-count-ms", 1000),
     introHold: number("--motion-intro-hold-ms", 550),
     introFade: number("--motion-intro-fade-ms", 400),
