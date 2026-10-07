@@ -1,10 +1,5 @@
 /* A concise project brief, followed by one consistent reading column.
    Palette, typography, spacing and interaction states belong to the tokens. */
-/* Detail-route stylesheet only: keep the reading column from showing through
-   the fixed clock and navigation while the header is on a light section. */
-.site-header[data-theme="light"] {
-  background: var(--color-paper);
-}
 .case-study {
   max-width: calc(var(--case-content-width) + 2 * var(--gutter));
   margin-inline: auto;

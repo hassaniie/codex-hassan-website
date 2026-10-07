@@ -235,3 +235,17 @@ alignment, readable content throughout scrolling, viewer fit/zoom, keyboard
 close/focus, responsive checks and existing build checks complete.
 
 final result: passed
+
+### Navbar follow-up — 2026-10-07
+
+The user requested the site's transparent navbar. Removed the detail-route
+paper background override; the shared header styles now own its appearance.
+This supersedes finding 5's paper-surface decision above. Content passing beneath
+the transparent fixed navbar is an accepted, user-requested visual behaviour.
+
+Follow-up evidence: `research/energy-case-study/reader-layout/transparent-navbar.jpg`,
+1280 × 720 CSS/pixels at density 1, opening view. Browser inspection confirms
+`background-color: rgba(0, 0, 0, 0)`. The shared typography and content remain
+visually consistent with the preceding review. No new P0/P1/P2 finding.
+
+final result: passed

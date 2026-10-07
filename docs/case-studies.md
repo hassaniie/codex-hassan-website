@@ -35,8 +35,8 @@ requires scrolling through a portrait cover. Readers can open the original
 artwork for closer inspection.
 
 The chapter guide stays in document flow. It offers four short jump links,
-without a second sticky reading track. The detail-route stylesheet gives the
-light header a paper surface so copy cannot compete with its fixed clock. Repeated questions, principle summaries
+without a second sticky reading track. The navbar retains the site's transparent
+background. Repeated questions, principle summaries
 and a large closing headline were removed. Each chapter follows the same
 heading → explanation → evidence rhythm.
 
