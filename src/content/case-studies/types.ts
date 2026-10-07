@@ -10,5 +10,7 @@ export interface CaseStudySummary {
   project: Project;
   headline: readonly string[];
   intro: string;
+  fullArtwork: string;
+  brief: readonly { label: string; value: string }[];
   chapters: readonly CaseStudyChapter[];
 }

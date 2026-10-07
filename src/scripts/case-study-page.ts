@@ -20,7 +20,9 @@ function initReadingGuide({ signal }: BehaviorContext): Cleanup {
     const current = [...chapters]
       .reverse()
       .find(
-        (chapter) => chapter.getBoundingClientRect().top <= innerHeight * 0.35,
+        (chapter) =>
+          chapter.getBoundingClientRect().top <=
+          Math.min(innerHeight * 0.35, 180),
       );
     const id = current?.id ?? "";
     if (id === active) return;

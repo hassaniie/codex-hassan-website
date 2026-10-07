@@ -29,6 +29,18 @@ test("case study content and every chapter destination exist in static HTML", ()
     assert.ok(ids.includes(id), `Broken local chapter target ${id}`);
   assert.ok(html.includes("Interface exploration"));
   assert.ok(html.includes("energy readings shown are illustrative"));
+  const opening = html.match(/<header class="case-hero"[\s\S]*?<\/header>/)[0];
+  for (const answer of [
+    "The challenge",
+    "My contribution",
+    "Project status",
+    "Not yet validated with users",
+  ])
+    assert.ok(opening.includes(answer), `Missing opening answer: ${answer}`);
+  assert.ok(
+    opening.includes("data-open-artwork"),
+    "The opening needs a dashboard preview",
+  );
 });
 
 test("artwork has a real asset fallback and an accessible viewer", async () => {

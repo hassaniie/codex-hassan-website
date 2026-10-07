@@ -19,7 +19,7 @@ const {
 } = Astro.props;
 ---
 
-<figure class:list={["case-figure", !eager && "reveal"]}>
+<figure class="case-figure">
   <Action
     appearance="media"
     href={fullSrc}
@@ -34,8 +34,8 @@ const {
       alt={variant === "landscape" ? image.alt : caption}
       sizes={
         variant === "landscape"
-          ? "calc(100vw - 48px)"
-          : "(min-width: 901px) 75vw, calc(100vw - 40px)"
+          ? "(min-width: 901px) min(52vw, 640px), (min-width: 601px) 640px, calc(100vw - 40px)"
+          : "(min-width: 841px) 800px, calc(100vw - 40px)"
       }
       loading={eager ? "eager" : "lazy"}
       fetchpriority={eager ? "high" : "auto"}

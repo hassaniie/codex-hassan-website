@@ -7,29 +7,18 @@ interface Props {
 const { chapters } = Astro.props;
 ---
 
-<aside class="case-sidebar">
-  <nav class="case-reading-guide" aria-label="Case study chapters">
-    <span class="mono case-guide-label">In this story</span>
-    <ol>
-      {chapters.map((chapter) => (
-        <li>
-          <span class="mono case-guide-number" aria-hidden="true">
-            {chapter.number}
-          </span>
-          <Action
-            href={`#${chapter.id}`}
-            label={chapter.label}
-            size="small"
-            data-chapter-link
-          />
-        </li>
-      ))}
-    </ol>
-    <Action
-      href="#case-top"
-      label="Back to top ↑"
-      size="small"
-      class="case-back-top"
-    />
-  </nav>
-</aside>
+<nav class="case-reading-guide" aria-label="Case study chapters">
+  <span class="mono case-guide-label">Explore the story</span>
+  <ol>
+    {chapters.map((chapter) => (
+      <li>
+        <Action
+          href={`#${chapter.id}`}
+          label={chapter.label}
+          size="small"
+          data-chapter-link
+        />
+      </li>
+    ))}
+  </ol>
+</nav>

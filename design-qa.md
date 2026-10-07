@@ -136,3 +136,102 @@ No deployment or cross-browser certification is claimed. Content beyond the
 provided screen can be expanded when additional project material is supplied.
 
 final result: passed
+
+## Reader-focused case-study revision — 2026-10-07
+
+This review supersedes the earlier hero scale, sticky guide, offset paragraphs,
+portrait mobile cover and scroll-reveal decisions. The user's new intent is a
+quick, useful first view followed by a calm, consistent reading path.
+
+### Evidence and comparison target
+
+Evidence folder: `research/energy-case-study/reader-layout/`.
+
+- Source visual truth: `source-opening.png` and `source-story.png`, exact copies
+  of the two user-supplied screenshots (2016 × 1246 pixels). Their original CSS
+  viewport and density are unknown; no pixel-exact source-size claims are made.
+- Implementation: `hero-wide.jpg` and `story-wide.jpg`, captured from the local
+  `/works/clean-energy/` route at 2016 × 1246 CSS pixels, devicePixelRatio 1.
+  These are intentional layout revisions, compared at equal raster dimensions.
+- Additional captures: `hero-laptop.jpg` (1280 × 720), `hero-mobile.jpg`
+  (390 × 844), `viewer-laptop.jpg` (1280 × 720), and
+  `visual-language-wide.jpg` (2016 × 1246). All are browser-rendered JPEGs.
+- States: fresh opening; first chapter after its anchor settles; visual-language
+  chapter; fitted full-artwork dialog. Normal motion unless explicitly tested.
+- Full-view evidence: each source and its revised capture were opened together
+  in the same comparison input. The opening now presents the brief and complete
+  dashboard, and the first chapter has one left edge instead of three alignments.
+- Focused evidence: the visual-language capture shows the authentic benefit
+  panels and adjacent explanatory copy; the viewer capture verifies that the
+  complete original fits. Dashboard labels can be enlarged in the viewer.
+  Source art was inspected in the preceding implementation review; no UI was
+  redrawn. This is a layout change, not a redesign of the underlying dashboard.
+
+### Findings and iteration history
+
+1. **[P1, fixed] Opening withheld essential project context.** Source opening
+   devotes most of the view to the headline while artwork and scope require
+   scrolling. Added the challenge, contribution, specific design approach and
+   exploration status beside a reduced heading and complete dashboard preview.
+2. **[P1, fixed] Oversized artwork required scrolling through one preview.**
+   Replaced the page-wide lead image with a bounded landscape preview on every
+   device. Body evidence stays within an 800px column. The full-artwork viewer
+   also fits the original by default; magnification is an explicit choice.
+3. **[P2, fixed] Competing alignments interrupted reading.** Removed the sticky
+   side guide, centred repeated question and duplicated principle summary.
+   Short chapter links stay in flow; headings, copy and decisions share one
+   left edge. At 1280px, all inspected story elements start at x=240px.
+4. **[P2, fixed in iteration 2] Visible story text was faded.** Initial revised
+   captures `hero-wide-iteration1.jpg` and `story-wide-iteration1.jpg` exposed
+   scroll-scrub opacity on already visible paragraphs. Result remained blocked.
+   Removed story reveals; entrance motion remains on the opening only.
+   Post-fix captures `hero-wide.jpg` and `story-wide.jpg` show solid text.
+   DOM checks report opacity 1 for all chapter headings, paragraphs and decisions.
+5. **[P2, fixed in final pass] Copy could pass behind the fixed clock.** The new
+   centred reading column intersects the transparent header while scrolling.
+   A detail-route-only paper surface now separates navigation from content.
+   Anchor verification: overview top 120.23px, heading top 152.18px; current
+   chapter is `#overview`. Final `story-wide.jpg` confirms the separation.
+6. **[P2, fixed during mobile pass] Opening preview reached beyond the fold.**
+   The initial mobile spacing put the artwork bottom at 851.79px in an 844px
+   viewport. Reduced phone heading and brief spacing through the existing
+   600px breakpoint. Final preview including caption ends at 839.79px.
+
+### Required fidelity surfaces
+
+- **Typography:** Instrument Serif headings, Geist regular 14px copy and Geist
+  Mono metadata retained. Modest chapter headings and a 44px phone hero support
+  scanning; no new typeface or arbitrary viewport-only font override.
+- **Spacing/layout:** 1280px maximum hero, 800px story and 640px copy widths are
+  case tokens. The hero stacks at the existing 900px breakpoint; phone spacing
+  tightens at 600px. Whole previews are visible and reading alignment is stable.
+- **Colours/tokens:** existing #494FED, ink, paper, line and radius tokens.
+  Shared Action hover, underline, icon and focus styling remain in use.
+- **Image quality:** authentic responsive WebP assets retained, with the same
+  calibrated performance and benefit crops. No fabricated assets or screenshots.
+  Whole artwork uses object-fit containment; 2× zoom doubles both dimensions.
+- **Copy/content:** short first-view answers replace repeated decorative copy.
+  The page identifies the work as an interface exploration and keeps proposed
+  validation in the future; it claims no measured research or business impact.
+
+### Verification and remaining limits
+
+- Checked desktop, laptop and phone layouts; no horizontal overflow.
+- Chapter links settle below the header; current chapter follows the section
+  nearest the top rather than an oversized viewport's arbitrary midpoint.
+- Viewer opens with native dialog focus, closes with Escape and returns focus
+  to its exact opener. At 1280 × 720, the unzoomed 1200 × 604 pane has no scroll
+  overflow; 2× zoom produces a 2400 × 1208 scroll area.
+- Reduced-motion emulation verified: preference true, story opacity 1 and no
+  horizontal overflow. Temporary emulation and viewport overrides were reset.
+- Browser warning/error logs: empty. Astro check: 75 files, zero errors,
+  warnings or hints. Production build succeeds; all 10 built-output tests pass.
+- The first-view answers and authentic preview are verified in static HTML,
+  alongside existing chapter destinations, assets, semantics and metadata.
+- No cross-browser certification or real recruiter usability study is claimed.
+
+Implementation checklist: brief visible, complete previews, consistent reading
+alignment, readable content throughout scrolling, viewer fit/zoom, keyboard
+close/focus, responsive checks and existing build checks complete.
+
+final result: passed

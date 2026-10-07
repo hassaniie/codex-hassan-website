@@ -1,6 +1,7 @@
 ---
 import type { CaseStudySummary } from "../../content/case-studies/types";
 import Action from "../ui/Action.astro";
+import CaseFigure from "./CaseFigure.astro";
 interface Props {
   study: CaseStudySummary;
 }
@@ -13,23 +14,30 @@ const { study } = Astro.props;
     <span>
       {study.project.title[0]} / {study.project.year}
     </span>
-    <span class="case-index">(01)</span>
   </div>
-  <h1>
-    {study.headline.map((line) => (
-      <span>{line}</span>
-    ))}
-  </h1>
-  <div class="case-hero-bottom">
-    <span class="mono case-discipline">
-      {study.project.tags.slice(0, 2).map((tag, i) => (
-        <>
-          {i > 0 && <br />}
-          {tag}
-        </>
-      ))}
-    </span>
-    <p>{study.intro}</p>
-    <Action href="#overview" label="Read the story ↓" weight="light" />
+  <div class="case-hero-layout">
+    <div class="case-hero-brief">
+      <h1>
+        {study.headline.map((line) => (
+          <span>{line}</span>
+        ))}
+      </h1>
+      <p class="case-intro">{study.intro}</p>
+      <dl class="case-brief">
+        {study.brief.map((item) => (
+          <div>
+            <dt class="mono">{item.label}</dt>
+            <dd>{item.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+    <CaseFigure
+      image={study.project.image}
+      fullSrc={study.fullArtwork}
+      caption="The complete dashboard."
+      number="01"
+      eager
+    />
   </div>
 </header>

@@ -29,54 +29,25 @@ import "../../components/case-study/case-study.css";
     aria-label="Clean energy analytics case study"
   >
     <CaseHero study={study} />
-    <CaseFigure
-      image={study.project.image}
-      fullSrc={study.fullArtwork}
-      caption="The dashboard, in context."
-      number="01"
-      eager
-    />
-    <dl class="case-facts reveal">
-      {study.facts.map((fact) => (
-        <div>
-          <dt class="mono">{fact.label}</dt>
-          <dd>{fact.value}</dd>
-        </div>
-      ))}
-    </dl>
+    <CaseStudyNavigation chapters={study.chapters} />
     <div class="case-body">
-      <CaseStudyNavigation chapters={study.chapters} />
       <div class="case-story">
         <CaseChapter {...study.chapters[0]} title={study.overview.title}>
-          <div class="case-copy reveal">
+          <div class="case-copy">
             {study.overview.paragraphs.map((paragraph) => (
               <p>{paragraph}</p>
             ))}
           </div>
-          <blockquote class="case-question reveal">
-            <span class="mono">The question behind the screen</span>
-            <p>
-              Are we making more
-              <br />
-              than we’re using?
-            </p>
-          </blockquote>
         </CaseChapter>
         <CaseChapter {...study.chapters[1]} title={study.hierarchy.title}>
-          <p class="case-copy reveal">{study.hierarchy.intro}</p>
+          <p class="case-copy">{study.hierarchy.intro}</p>
           <ol class="case-decisions">
             {study.hierarchy.decisions.map((decision) => (
-              <li class="case-decision reveal">
-                <span class="mono case-decision-number">
-                  ({decision.number})
-                </span>
+              <li class="case-decision">
                 <div>
-                  <span class="mono case-decision-question">
-                    {decision.question}
-                  </span>
-                  <h3>{decision.title}</h3>
+                  <h3>{decision.question}</h3>
+                  <p>{decision.description}</p>
                 </div>
-                <p>{decision.description}</p>
               </li>
             ))}
           </ol>
@@ -89,19 +60,11 @@ import "../../components/case-study/case-study.css";
           />
         </CaseChapter>
         <CaseChapter {...study.chapters[2]} title={study.visualLanguage.title}>
-          <div class="case-copy reveal">
+          <div class="case-copy">
             {study.visualLanguage.paragraphs.map((paragraph) => (
               <p>{paragraph}</p>
             ))}
           </div>
-          <dl class="case-principles reveal">
-            {study.visualLanguage.principles.map((principle) => (
-              <div>
-                <dt class="mono">{principle.label}</dt>
-                <dd>{principle.value}</dd>
-              </div>
-            ))}
-          </dl>
           <CaseFigure
             image={study.project.image}
             fullSrc={study.fullArtwork}
@@ -111,20 +74,19 @@ import "../../components/case-study/case-study.css";
           />
         </CaseChapter>
         <CaseChapter {...study.chapters[3]} title={study.reflection.title}>
-          <div class="case-copy reveal">
+          <div class="case-copy">
             {study.reflection.paragraphs.map((paragraph) => (
               <p>{paragraph}</p>
             ))}
           </div>
-          <p class="case-note reveal">{study.reflection.note}</p>
+          <p class="case-note">{study.reflection.note}</p>
         </CaseChapter>
       </div>
     </div>
-    <section class="case-end reveal" aria-labelledby="case-end-title">
-      <span class="mono">Thanks for reading / (01)</span>
-      <h2 id="case-end-title">There’s more to explore.</h2>
+    <nav class="case-end" aria-label="Continue exploring">
       <Action href="/works/" label="Back to all works" weight="light" arrow />
-    </section>
+      <Action href="#case-top" label="Back to top ↑" weight="light" />
+    </nav>
   </article>
   <Contact />
   <ArtworkViewer

@@ -6,7 +6,7 @@ on the homepage and Works page. Existing Behance destinations remain external.
 
 ## Ownership
 
-- `src/content/case-studies/energy.ts`: narrative, chapter order, facts and
+- `src/content/case-studies/energy.ts`: narrative, chapter order, opening brief and
   full-resolution artwork. The project title, year, cover and tags still come
   from `src/content/projects.ts`.
 - `src/pages/works/clean-energy.astro`: composition and route metadata.
@@ -27,22 +27,36 @@ and actions. The page retains the site's white ground, `#494FED` accent,
 thin rules, generous space, shared header, curtain entrance and contact footer.
 All new controls use `Action.astro`, including viewer controls.
 
-Above 900px, the reading guide sticks at the case offset. On smaller screens
-it moves into the document flow. Below 600px, the facts become two columns,
-the narrative is a single column, and the hero shows the original portrait
-cover rather than the desktop landscape crop. These follow existing site
-breakpoints, not an annotation-specific viewport.
+The opening pairs a concise project brief with the entire dashboard: challenge,
+contribution, approach and an honest exploration status are available before the
+long-form story. The hero caps at 1280px; the story caps at 800px, with 640px
+left-aligned copy. Images use landscape windows on every device, so no preview
+requires scrolling through a portrait cover. Readers can open the original
+artwork for closer inspection.
+
+The chapter guide stays in document flow. It offers four short jump links,
+without a second sticky reading track. The detail-route stylesheet gives the
+light header a paper surface so copy cannot compete with its fixed clock. Repeated questions, principle summaries
+and a large closing headline were removed. Each chapter follows the same
+heading → explanation → evidence rhythm.
+
+Above 900px, the hero uses two columns; below that existing site breakpoint it
+stacks. Below 600px, tighter spacing and a 44px heading keep the complete
+preview and brief within the tested 390×844 first view. These are responsive
+component decisions, not a fixed layout for the user's screenshot dimensions.
 
 Chapter links respect CSS scroll padding and margin. Current Lenis already
 reads both, so the additional JS offset was removed to avoid counting the
 navbar twice. Native and damped scrolling now share the same clearance.
 
 The native artwork dialog traps focus, closes with Escape, pauses the shared
-scroller and returns focus to its opener. Zoom preserves the inspected area
+scroller and returns focus to its opener. The full artwork fits inside the viewer
+by default. Zoom preserves the inspected area
 and allows native horizontal and vertical scrolling. Without JavaScript,
 artwork links open the original asset and the full story remains in the HTML.
 Reduced motion disables entrances, reveals, cursor movement and atmosphere
-drift while preserving navigation and the viewer.
+drift while preserving navigation and the viewer. Story copy is always fully
+visible; only the opening uses the shared entrance choreography.
 
 ## Content provenance
 
