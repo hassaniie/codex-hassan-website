@@ -299,15 +299,12 @@
 .location .timezone {
   opacity: 1;
 }
-/* A step smaller than the Figma frame, with the digits on the page's centre
-   line: the time zone hangs to their right instead of pushing them left. */
+/* A step smaller than the Figma frame. The label and the time row are
+   centred on each other, and the whole block on the page. */
 .location {
   gap: 6px;
   font-size: 11px;
   letter-spacing: -0.22px;
-}
-.location > div {
-  position: relative;
 }
 .location .clock-unit {
   width: 22px;
@@ -318,11 +315,6 @@
 .location .timezone {
   font-size: 12px;
   letter-spacing: -0.24px;
-}
-.location .timezone {
-  position: absolute;
-  left: calc(100% + 6px);
-  white-space: nowrap;
 }
 .site-header[data-theme="light"] .clock-unit {
   background: rgb(23 24 25 / 8%);
