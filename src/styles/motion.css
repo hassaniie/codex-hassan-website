@@ -90,12 +90,8 @@
 .intro.covering .intro-name {
   visibility: hidden;
 }
-.split-reveal .word {
+.text-cascade .word {
   display: inline-block;
-}
-.split-reveal .char {
-  display: inline-block;
-  will-change: transform, opacity;
 }
 /* Without JavaScript every section stays visible; the scrubbed reveal is
    additive. GSAP owns the in-between state, so no CSS transition competes
@@ -196,11 +192,6 @@
     display: none;
   }
   .identity-token {
-    transform: none !important;
-  }
-  .split-reveal .char {
-    opacity: 1 !important;
-    filter: none !important;
     transform: none !important;
   }
 }

@@ -31,7 +31,7 @@ let figures = 1;
     </div>
     <div class="case-hero-layout">
       <div class="case-hero-brief">
-        <h1>
+        <h1 class="text-cascade">
           {study.headline.map((line) => (
             <span>{line}</span>
           ))}
@@ -83,7 +83,7 @@ let figures = 1;
         <span class="mono case-kicker reveal">
           ({chapter.number}) / {chapter.label}
         </span>
-        <h2 id={`${chapter.id}-title`} class="reveal">
+        <h2 id={`${chapter.id}-title`} class="text-cascade">
           {chapter.title}
         </h2>
         <div class="case-copy reveal">

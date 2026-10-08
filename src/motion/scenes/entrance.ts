@@ -6,6 +6,7 @@ import {
 } from "../../utilities/dom";
 import { gsap, setupEngine } from "../engine";
 import { entranceDelay, motionPresets } from "../presets";
+import { cascade } from "../text-cascade";
 
 /**
  * The opening, matched to the reference build. Every element shares one
@@ -36,17 +37,28 @@ export function initEntrance({ reducedMotion }: BehaviorContext): Cleanup {
     // Contact and privacy: the first screen arrives on the same ladder.
     [".contact-page-hero h1", 0, { y: presets.appearRise }],
     [".contact-page-hero .down-cue", 2, { y: presets.appearRise }],
-    [".policy > *", 0, { y: presets.appearRise }],
+    [".policy-head > *", 0, { y: presets.appearRise }],
+    [".policy-body", 2, { y: presets.appearRise }],
     [".not-found-copy > *", 0, { y: presets.appearRise }],
     [".works .display-heading > *", 0, { y: presets.appearRise }],
-    [".case-hero > *", 0, { y: presets.appearRise }],
+    [".case-eyebrow", 0, { y: presets.appearRise }],
+    [".case-hero-brief > *", 1, { y: presets.appearRise }],
+    [".case-hero .case-figure", 2, { y: presets.appearRise }],
+    [".case-guide", 4, { y: presets.appearRise }],
   ];
 
+  // Headlines take their rung as a word cascade rather than a rise.
+  const cascades: Cleanup[] = [];
   const context = gsap.context(() => {
     score.forEach(([selector, rung, travel]) => {
       const targets = queryAll(selector);
       if (!targets.length) return;
       targets.forEach((target, index) => {
+        const delay = base + (rung + index) * step;
+        if (target.matches(".text-cascade")) {
+          cascades.push(cascade(target, { delay }));
+          return;
+        }
         gsap.fromTo(
           target,
           { opacity: 0.001, ...travel },
@@ -56,13 +68,16 @@ export function initEntrance({ reducedMotion }: BehaviorContext): Cleanup {
             x: 0,
             duration,
             ease,
-            delay: base + (rung + index) * step,
+            delay,
           },
         );
       });
     });
   });
-  return () => context.revert();
+  return () => {
+    context.revert();
+    cascades.forEach((revert) => revert());
+  };
 }
 
 /** The hero headline is part of the entrance, so reveals leaves it alone. */
