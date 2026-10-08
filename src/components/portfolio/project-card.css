@@ -1,6 +1,6 @@
 .project {
   border-top: 1px solid var(--line);
-  padding: 32px 0;
+  padding: 23px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-6);
@@ -130,7 +130,7 @@
   .project {
     grid-template-columns: 1fr;
     gap: var(--space-5);
-    padding: 22px 0 35px;
+    padding: 20px 0 28px;
   }
   .project-media {
     border-radius: var(--radius-control);
