@@ -8,11 +8,18 @@ const { accent = false, label, variant = 0 } = Astro.props;
 const widths = [1, 2, 1, 5, 2, 1, 1, 4, 2, 3, 1, 1, 5, 2, 1, 2, 4, 1, 3];
 ---
 
-<div class:list={["barcode", { accent }]} aria-hidden="true">
+{/* A name sits inside the foot of the bars, which are cut away around it. */}
+<div
+  class:list={["barcode", { accent, labelled: label }]}
+  style={label ? `--label-length:${label.length}` : undefined}
+  aria-hidden="true"
+>
+  <span class="barcode-bars">
+    {widths.map((_, i) => (
+      <i
+        style={`--bar:${widths[(i + variant * 3) % widths.length]};--i:${i}`}
+      ></i>
+    ))}
+  </span>
   {label && <small>{label}</small>}
-  {widths.map((_, i) => (
-    <i
-      style={`--bar:${widths[(i + variant * 3) % widths.length]};--i:${i}`}
-    ></i>
-  ))}
 </div>
