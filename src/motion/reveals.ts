@@ -17,21 +17,19 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
     .filter((element) => element.tagName !== "H1")
     .map((element) => cascade(element, { scroll: true }));
 
+  // Blocks arrive the way headings do: a short fade and rise that plays
+  // once as they come into view, then stays put.
   queryAll(".reveal").forEach((element) => {
     tweens.push(
       gsap.fromTo(
         element,
-        { opacity: 0, y: 48 },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: element,
-            start: "top 92%",
-            end: "top 62%",
-            scrub: 1.1,
-          },
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: element, start: "top 90%", once: true },
         },
       ),
     );
