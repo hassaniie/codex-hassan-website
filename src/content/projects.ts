@@ -88,6 +88,19 @@ export const projects = [
     ),
   },
   {
+    id: "neurolens",
+    title: ["Neurolens.", "Your mind, read live."],
+    year: "2026",
+    description:
+      "A biometric dashboard that reads the mind like a medical scan. Brain age, eye strain and a neural battery turn live signals into glowing, living visuals that shift colour and form as focus fades and fatigue builds.",
+    tags: ["Biometrics", "Dashboard design", "Health tech"],
+    categories: ["Product design", "UX/UI design"],
+    image: cover(
+      "neurolens",
+      "Neurolens dashboard showing a glowing green neural battery at 86 percent, with fatigue, focus and stress load readings",
+    ),
+  },
+  {
     id: "survey",
     title: ["Making space", "for employee voices."],
     year: "2026",
