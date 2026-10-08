@@ -126,10 +126,10 @@
   bottom: 0;
 }
 .menu-toggle[aria-expanded="true"] .menu-icon i:first-child {
-  transform: translateY(3px) rotate(45deg);
+  transform: translateY(3px) rotate(30deg);
 }
 .menu-toggle[aria-expanded="true"] .menu-icon i:last-child {
-  transform: translateY(-3px) rotate(-45deg);
+  transform: translateY(-3px) rotate(-30deg);
 }
 
 /*
