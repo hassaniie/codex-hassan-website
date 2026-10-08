@@ -96,7 +96,7 @@ export const projects = [
     tags: ["Biometrics", "Dashboard design", "Health tech"],
     categories: ["Product design", "UX/UI design"],
     image: cover(
-      "neurolens",
+      "neurolens-lens",
       "Neurolens dashboard showing a glowing green neural battery at 86 percent, with fatigue, focus and stress load readings",
     ),
   },
