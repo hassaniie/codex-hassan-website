@@ -12,6 +12,12 @@ const paragraphs = [project.description].flat();
 // A case study on this site opens in place; Behance opens in a new tab.
 const external = Boolean(project.href?.startsWith("http"));
 const name = project.title.join(" ");
+// What the cursor circle says over the cover: where it leads, two lines.
+const cursorLabel = !project.href
+  ? "Coming|soon"
+  : external
+    ? "View on|Behance"
+    : "Read|case study";
 ---
 
 <article class="project reveal" data-categories={project.categories.join("|")}>
@@ -22,6 +28,7 @@ const name = project.title.join(" ");
       class={`project-media ${project.id}-media`}
       href={project.href}
       external={external}
+      data-cursor-label={cursorLabel}
       aria-label={
         external ? `View ${name} on Behance` : `Read the ${name} case study`
       }
@@ -29,7 +36,10 @@ const name = project.title.join(" ");
       <img {...project.image} loading="lazy" decoding="async" />
     </Action>
   ) : (
-    <div class={`project-media ${project.id}-media`} data-cursor="soon">
+    <div
+      class={`project-media ${project.id}-media`}
+      data-cursor-label={cursorLabel}
+    >
       <img {...project.image} loading="lazy" decoding="async" />
     </div>
   )}

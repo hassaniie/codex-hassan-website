@@ -25,8 +25,9 @@
     background-color 0.25s;
   will-change: transform;
 }
-/* Over a cover whose case study is still to come, the dot opens into an ink
-   circle. Blending is switched off so it stays ink and the label reads. */
+/* Over a project cover, the dot opens into an ink circle that says where
+   the cover leads, or that it is coming soon. Blending is switched off so it
+   stays ink and the label reads. */
 .cursor-dot.is-soon {
   width: 96px;
   height: 96px;
@@ -81,7 +82,7 @@
 }
 /* The circle stands in for the system arrow there, wherever the dot runs. */
 @media (min-width: 901px) {
-  .cursor-live [data-cursor="soon"] {
+  .cursor-live [data-cursor-label] {
     cursor: none;
   }
 }
