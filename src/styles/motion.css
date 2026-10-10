@@ -68,34 +68,40 @@
 }
 /*
  * The name is stamped into the foot of the barcode and wiped in from the
- * left. Its own ink band is inside the clip, so the bars behind it are cut
- * back as the name passes rather than all at once.
+ * left, and the bars are cut back around it as it passes rather than all at
+ * once.
  */
-.intro-name {
-  position: absolute;
-  bottom: 0;
-  left: 15%;
-  padding: 0 4px 0 3px;
-  background: var(--ink);
-  font: 10px/1.35 var(--mono);
-  white-space: nowrap;
+@property --label-cut {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+.intro .barcode {
+  --label-cut: 0;
+  --label-char: 6px;
+}
+.intro .barcode small,
+.intro .barcode-bars {
+  font-size: 10px;
+}
+.intro .barcode small {
   clip-path: inset(0 100% 0 0);
 }
-.intro.playing .intro-name {
+.intro.playing .barcode {
+  animation: intro-name-cut calc(var(--motion-intro-name-ms) * 1ms) linear
+    calc(var(--motion-intro-name-delay-ms) * 1ms) forwards;
+}
+.intro.playing .barcode small {
   animation: intro-name-wipe calc(var(--motion-intro-name-ms) * 1ms) linear
     calc(var(--motion-intro-name-delay-ms) * 1ms) forwards;
 }
 /* A departing page shows the loader at rest: the count it is about to run
    from, and no name yet. The arriving document plays the sequence. */
-.intro.covering .intro-name {
+.intro.covering .barcode small {
   visibility: hidden;
 }
-.split-reveal .word {
+.text-cascade .word {
   display: inline-block;
-}
-.split-reveal .char {
-  display: inline-block;
-  will-change: transform, filter, opacity;
 }
 /* Without JavaScript every section stays visible; the scrubbed reveal is
    additive. GSAP owns the in-between state, so no CSS transition competes
@@ -104,7 +110,7 @@
   opacity: 1;
 }
 .motion-ready .reveal {
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 /*
  * The from-state is required. Without it the implicit start is the element's
@@ -138,6 +144,11 @@
   }
   to {
     opacity: 0;
+  }
+}
+@keyframes intro-name-cut {
+  to {
+    --label-cut: 1;
   }
 }
 @keyframes intro-name-wipe {
@@ -196,11 +207,6 @@
     display: none;
   }
   .identity-token {
-    transform: none !important;
-  }
-  .split-reveal .char {
-    opacity: 1 !important;
-    filter: none !important;
     transform: none !important;
   }
 }

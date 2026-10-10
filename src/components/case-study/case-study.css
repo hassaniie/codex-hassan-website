@@ -1,0 +1,307 @@
+/*
+ * A case study opens on one full screen that answers the quick questions
+ * (what it is, the challenge, my part, its status) beside the work itself,
+ * with the way into the story along the bottom edge. Below it, the chapters
+ * read down one centred column.
+ */
+.case {
+  max-width: calc(var(--case-content-width) + 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+/* First view */
+.case-hero {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding-block: var(--case-hero-top) var(--case-hero-bottom);
+}
+.case-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-5);
+  color: var(--accent);
+  font-size: var(--text-small);
+}
+/* Takes the room between the eyebrow and the guide, centred within it. The
+   brief takes whatever width the artwork does not use. */
+.case-hero-layout {
+  container-type: inline-size;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-7);
+  padding-block: var(--space-6);
+}
+.case-hero-brief {
+  min-width: 0;
+}
+.case-hero h1 {
+  color: var(--color-heading-accent);
+  font-size: var(--case-display-size);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.case-hero h1 > span {
+  display: block;
+}
+.case-intro,
+.case-brief dd,
+.case-copy,
+.case-decision p {
+  font-size: var(--text-body-small);
+  line-height: var(--leading-body-small);
+  letter-spacing: var(--tracking-body-small);
+}
+.case-intro {
+  max-width: var(--case-copy-width);
+  margin-top: var(--space-5);
+}
+.case-brief {
+  margin: var(--space-5) 0 0;
+}
+.case-brief > div {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+.case-brief dt {
+  color: var(--color-muted);
+  font-size: var(--text-small);
+}
+.case-brief dd {
+  margin: var(--space-1) 0 0;
+}
+/* The artwork is as wide as its column and as tall as the screen has room
+   for: the 3:2 view of the dashboard on a short screen, revealing more of
+   the meadow on a taller one, up to the whole 3:4 piece. Its column is at
+   most three fifths of the row. */
+.case-hero .case-figure {
+  width: min(
+    (100cqi - var(--space-7)) * 0.6,
+    (100svh - var(--case-hero-reserve)) * 1.5
+  );
+  container-type: inline-size;
+}
+.case-hero .case-art--landscape {
+  aspect-ratio: auto;
+  height: clamp(
+    100cqi * 2 / 3,
+    100svh - var(--case-hero-reserve),
+    100cqi * 4 / 3
+  );
+}
+
+/* The way in: chapter links along the bottom of the first screen. */
+.case-guide {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  padding-block: var(--space-4);
+  border-block: 1px solid var(--line);
+}
+.case-guide-label {
+  color: var(--color-muted);
+  font-size: var(--text-small);
+}
+.case-guide ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* Lets each link's baseline reach the row, so the label sits on it. */
+.case-guide li {
+  display: flex;
+}
+.case-guide .action[aria-current="location"] {
+  color: var(--accent);
+}
+
+/* Figures: windows onto the one piece of artwork. */
+.case-figure {
+  min-width: 0;
+  margin: 0;
+}
+.case-art {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--color-tag-surface);
+}
+.case-art--landscape {
+  aspect-ratio: 3 / 2;
+}
+.case-art--landscape img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 54%;
+}
+/* Bands of the dashboard: the performance gauges, the environmental panels. */
+.case-art--performance {
+  aspect-ratio: 2.8;
+}
+.case-art--impact {
+  aspect-ratio: 8.2;
+}
+.case-art--performance img,
+.case-art--impact img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: none;
+  height: auto;
+}
+.case-art--performance img {
+  translate: 0 -36.7%;
+}
+.case-art--impact img {
+  translate: 0 -63.7%;
+}
+.case-figure figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  padding-top: var(--space-3);
+  color: var(--color-muted);
+  font-size: var(--text-small);
+}
+.case-caption-number {
+  margin-right: var(--space-2);
+  color: var(--accent);
+}
+.case-figure figcaption .action {
+  flex-shrink: 0;
+  color: var(--ink);
+}
+
+/* The story: one centred column, text left-aligned within it. */
+.case-story,
+.case-end {
+  max-width: var(--case-story-width);
+  margin-inline: auto;
+}
+.case-chapter {
+  padding-block: var(--case-section-space);
+}
+.case-chapter + .case-chapter {
+  border-top: 1px solid var(--line);
+}
+.case-kicker {
+  display: block;
+  margin-bottom: var(--space-4);
+  color: var(--color-label-accent);
+  font-size: var(--text-small);
+}
+.case-chapter h2 {
+  max-width: var(--case-copy-width);
+  font-size: var(--case-title-size);
+  line-height: var(--leading-display);
+  letter-spacing: -0.025em;
+}
+.case-copy {
+  max-width: var(--case-copy-width);
+  margin-top: var(--space-5);
+}
+.case-copy p + p {
+  margin-top: var(--space-4);
+}
+.case-decisions {
+  list-style: none;
+  margin: var(--space-6) 0 0;
+  padding: 0;
+}
+/* Rules run the full column, like the chapter rules and figures; the text
+   inside keeps the reading measure. */
+.case-decision {
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+.case-decision:last-child {
+  padding-bottom: 0;
+}
+.case-decision > * {
+  max-width: var(--case-copy-width);
+}
+.case-decision h3 {
+  font-size: 1.75rem;
+  line-height: var(--leading-display);
+}
+.case-decision p {
+  margin-top: var(--space-3);
+}
+.case-chapter .case-figure {
+  margin-top: var(--space-7);
+}
+.case-note {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  color: var(--color-muted);
+  font-size: var(--text-small);
+}
+.case-end {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding-block: var(--space-5) var(--space-8);
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 900px) {
+  /* Stacked, the first view is as tall as its content needs. */
+  .case-hero {
+    min-height: 0;
+    padding-bottom: 0;
+  }
+  .case-hero-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .case-hero .case-figure {
+    width: 100%;
+  }
+  .case-hero .case-art--landscape {
+    aspect-ratio: 3 / 2;
+    height: auto;
+  }
+  .case-hero h1 {
+    font-size: clamp(3rem, 7vw, 4.5rem);
+  }
+}
+@media (max-width: 600px) {
+  .case-eyebrow > span {
+    max-width: 14rem;
+    text-align: right;
+  }
+  .case-hero h1 {
+    font-size: 2.75rem;
+  }
+  .case-hero-layout {
+    gap: var(--space-5);
+    padding-block: var(--space-5);
+  }
+  .case-guide {
+    gap: var(--space-2);
+  }
+  .case-guide ol {
+    column-gap: var(--space-5);
+  }
+  .case-guide .action,
+  .case-figure figcaption .action {
+    min-height: var(--action-target-size);
+  }
+  .case-chapter h2 {
+    font-size: 2.25rem;
+  }
+}

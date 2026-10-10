@@ -22,7 +22,10 @@ export interface Project {
   description: string | string[];
   tags: string[];
   categories: Category[];
-  /** The published case study. Left out, the card reads "Case study coming soon". */
+  /**
+   * The published case study: a page on this site, or Behance. Left out, the
+   * card reads "Case study coming soon".
+   */
   href?: string;
   image: {
     src: string;
@@ -65,6 +68,7 @@ export const projects = [
     ],
     tags: ["Dashboard design", "Data visualisation", "Clean energy"],
     categories: ["Product design", "UX/UI design"],
+    href: "/works/clean-energy-analytics/",
     image: cover(
       "energy-meadow",
       "Clean energy analytics dashboard over a meadow at sunset, showing solar output, consumption and plant status",
@@ -81,6 +85,19 @@ export const projects = [
     image: cover(
       "visitor",
       "CerevraX onboarding screen inviting teams to connect Google or Microsoft calendars so visitor records are created automatically",
+    ),
+  },
+  {
+    id: "neurolens",
+    title: ["Neurolens.", "Your mind, read live."],
+    year: "2026",
+    description:
+      "A biometric dashboard that reads the mind like a medical scan. Brain age, eye strain and a neural battery turn live signals into glowing, living visuals that shift colour and form as focus fades and fatigue builds.",
+    tags: ["Biometrics", "Dashboard design", "Health tech"],
+    categories: ["Product design", "UX/UI design"],
+    image: cover(
+      "neurolens-lens",
+      "Neurolens dashboard showing a glowing green neural battery at 86 percent, with fatigue, focus and stress load readings",
     ),
   },
   {

@@ -7,12 +7,13 @@ import { gsap, setupEngine } from "../engine";
 import { motionPresets } from "../presets";
 import { getSmoothScroll } from "../smooth-scroll";
 
-const TARGETS = ".identity-card, .principle";
+const TARGETS = ".identity-card";
 
 /**
  * Scroll speed bends the artwork slightly, then settles. The skew is damped
  * separately from the scroller so it trails the motion instead of tracking it.
- * Project covers are left out: they stay square to the page while scrolling.
+ * Project covers and principle cards are left out: they stay square to the
+ * page while scrolling.
  */
 export function initVelocityScene({ reducedMotion }: BehaviorContext): Cleanup {
   setupEngine();

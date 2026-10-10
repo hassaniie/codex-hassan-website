@@ -76,6 +76,19 @@
   --gutter: var(--space-5);
   --content-principles: 68.75rem;
   --content-statement: 70rem;
+  /* Case studies: one full first view, then a centred reading column. */
+  --case-display-size: clamp(3rem, 4.8vw, 4.75rem);
+  --case-title-size: clamp(2rem, 3.2vw, 3rem);
+  --case-section-space: clamp(3rem, 6vw, 5rem);
+  --case-content-width: 80rem;
+  --case-story-width: 50rem;
+  --case-copy-width: 40rem;
+  --case-hero-top: 7.5rem;
+  /* Air between the chapter guide and the bottom of the screen. */
+  --case-hero-bottom: 3rem;
+  /* Height in the first view that is not the artwork: header clearance,
+     eyebrow, caption, guide and spacing. */
+  --case-hero-reserve: 25rem;
   --radius-small: 0.1875rem;
   --radius-control: 0.5rem;
   --radius-card: 0.75rem;
@@ -141,15 +154,13 @@
      which is count + hold + lift-in + exit. */
   --motion-appear-hold-ms: 2370;
   /*
-   * Entry blur. It is a softening at the very edge of the viewport, not a
-   * veil over the content: --motion-blur-band is how far into the screen
-   * (in viewport percent) the blur is allowed to persist before it must be
-   * fully resolved. Set the px values to 0 to switch blur off entirely.
+   * Depth blur on the homepage scenes: the monogram and its caption in the
+   * interlude, and the hero headline as it leaves. Scroll reveals do not
+   * blur. Set the px values to 0 to switch it off.
    */
   --motion-blur-reveal-px: 2.5;
   --motion-blur-text-px: 2.5;
   --motion-blur-exit-px: 3;
-  --motion-blur-band: 13;
   /*
    * Scroll feel. Lower --scroll-lerp is heavier and slower to settle.
    * Set --scroll-touch-sync to 0 to hand phones back their native momentum

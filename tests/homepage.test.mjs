@@ -13,6 +13,7 @@ test("homepage content is delivered as HTML, including all migrated projects and
     "Hassan Mushtaq",
     "Clean Energy Analytics",
     "CerevraX.",
+    "Neurolens.",
     "Making space",
     "Mycah.",
     "Meows Untold.",
@@ -24,7 +25,7 @@ test("homepage content is delivered as HTML, including all migrated projects and
     assert.ok(html.includes(content), `Missing rendered content: ${content}`);
   }
   assert.equal((html.match(/<h1\b/g) || []).length, 1);
-  assert.equal((html.match(/class="project reveal"/g) || []).length, 5);
+  assert.equal((html.match(/class="project reveal"/g) || []).length, 6);
   assert.equal((html.match(/class="experience-row reveal"/g) || []).length, 4);
 });
 
@@ -77,7 +78,7 @@ test("all rendered buttons use the shared Action component", () => {
     assert.match(attributes, /class="[^"]*\baction\b/);
     assert.match(attributes, /data-appearance="/);
   }
-  assert.equal((html.match(/data-appearance="media"/g) || []).length, 3);
+  assert.equal((html.match(/data-appearance="media"/g) || []).length, 4);
   const interactiveStack = [];
   for (const [, closing, tag] of html.matchAll(/<(\/)?(a|button)\b[^>]*>/g)) {
     if (closing) assert.equal(interactiveStack.pop(), tag);
@@ -116,4 +117,23 @@ test("action palettes retain readable text and icon contrast", async () => {
       rgb("--color-action-dark-surface"),
     ) >= 4.5,
   );
+});
+
+test("case study pages are built, linked from their project, and resolve their assets", async () => {
+  const page = await readFile(
+    new URL("works/clean-energy-analytics/index.html", root),
+    "utf8",
+  );
+  assert.ok(html.includes('href="/works/clean-energy-analytics/"'));
+  assert.equal((page.match(/<h1\b/g) || []).length, 1);
+  for (const id of ["problem", "approach", "visual-language", "reflection"])
+    assert.ok(page.includes(`id="${id}"`), `Missing section: ${id}`);
+  const assets = new Set(
+    [...page.matchAll(/(?:src|href)="(\/[^"#]+)"/g)].map((match) => match[1]),
+  );
+  for (const [, list] of page.matchAll(/srcset="([^"]+)"/g))
+    for (const entry of list.split(","))
+      assets.add(entry.trim().split(/\s+/)[0]);
+  for (const path of assets)
+    if (!path.endsWith("/")) await access(new URL(`.${path}`, root));
 });

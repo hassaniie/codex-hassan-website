@@ -9,6 +9,15 @@ interface Props {
 }
 const { project, variant = 0 } = Astro.props;
 const paragraphs = [project.description].flat();
+// A case study on this site opens in place; Behance opens in a new tab.
+const external = Boolean(project.href?.startsWith("http"));
+const name = project.title.join(" ");
+// What the cursor circle says over the cover: where it leads, two lines.
+const cursorLabel = !project.href
+  ? "Coming|soon"
+  : external
+    ? "View on|Behance"
+    : "View|more";
 ---
 
 <article class="project reveal" data-categories={project.categories.join("|")}>
@@ -18,13 +27,19 @@ const paragraphs = [project.description].flat();
       label="Explore project ↗"
       class={`project-media ${project.id}-media`}
       href={project.href}
-      external
-      aria-label={`View ${project.title.join(" ")} on Behance`}
+      external={external}
+      data-cursor-label={cursorLabel}
+      aria-label={
+        external ? `View ${name} on Behance` : `Read the ${name} case study`
+      }
     >
       <img {...project.image} loading="lazy" decoding="async" />
     </Action>
   ) : (
-    <div class={`project-media ${project.id}-media`} data-cursor="soon">
+    <div
+      class={`project-media ${project.id}-media`}
+      data-cursor-label={cursorLabel}
+    >
       <img {...project.image} loading="lazy" decoding="async" />
     </div>
   )}
@@ -59,7 +74,7 @@ const paragraphs = [project.description].flat();
           label="View case study"
           weight="light"
           arrow
-          external
+          external={external}
         />
       ) : (
         <span class="project-soon">Case study coming soon</span>

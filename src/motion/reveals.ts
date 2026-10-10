@@ -1,32 +1,9 @@
 import { queryAll, type BehaviorContext, type Cleanup } from "../utilities/dom";
 import { gsap, ScrollTrigger, setupEngine } from "./engine";
-import { motionPresets } from "./presets";
-
-/** Split a heading into per-character spans, preserving its accessible text. */
-function split(element: HTMLElement) {
-  const text = element.innerText.replace(/\s+/g, " ").trim();
-  element.setAttribute("aria-label", text);
-  element.replaceChildren();
-  text.split(/\s+/).forEach((word, index) => {
-    if (index) element.append(document.createTextNode(" "));
-    const span = document.createElement("span");
-    span.className = "word";
-    span.setAttribute("aria-hidden", "true");
-    for (const character of word) {
-      const char = document.createElement("span");
-      char.className = "char";
-      char.textContent = character;
-      span.append(char);
-    }
-    element.append(span);
-  });
-  return queryAll(".char", element);
-}
+import { cascade } from "./text-cascade";
 
 export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
   setupEngine();
-  const presets = motionPresets();
-  const originals = new Map<HTMLElement, string>();
   const tweens: gsap.core.Tween[] = [];
 
   if (reducedMotion) {
@@ -35,93 +12,27 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
   }
   document.body.classList.add("motion-ready");
 
-  /**
-   * Blur runs on its own short trigger rather than alongside the travel, so
-   * it is a softening as content clears the edge of the viewport instead of a
-   * veil that follows it well into the page. It resolves within
-   * --motion-blur-band percent of the viewport and is skipped at zero.
-   */
-  const edgeBlur = (
-    targets: HTMLElement[],
-    trigger: HTMLElement,
-    amount: number,
-    stagger: number,
-  ) => {
-    if (amount <= 0 || !targets.length) return;
-    tweens.push(
-      gsap.fromTo(
-        targets,
-        { filter: `blur(${amount}px)` },
-        {
-          filter: "blur(0px)",
-          ease: "none",
-          stagger,
-          // A resting blur(0px) still routes the element through a filter
-          // pass, which Safari draws at reduced resolution: images and text
-          // in it stay soft. Drop the filter once it has resolved; scrolling
-          // back re-renders the tween and brings the blur back as needed.
-          onComplete: () => gsap.set(targets, { filter: "none" }),
-          scrollTrigger: {
-            trigger,
-            start: "top 99%",
-            end: `top ${Math.max(40, 99 - presets.blurBand)}%`,
-            scrub: 0.6,
-          },
-        },
-      ),
-    );
-  };
+  // Page headlines (h1) cascade on the entrance ladder instead.
+  const cascades = queryAll(".text-cascade")
+    .filter((element) => element.tagName !== "H1")
+    .map((element) => cascade(element, { scroll: true }));
 
-  queryAll(".split-reveal").forEach((element) => {
-    // The hero headline belongs to the entrance now: it arrives as one
-    // element on the shared curve rather than character by character.
-    if (element.tagName === "H1") return;
-    originals.set(element, element.innerHTML);
-    const chars = split(element);
-    if (!chars.length) return;
-    const from = {
-      opacity: 0.04,
-      yPercent: 60,
-      rotateX: -55,
-      transformPerspective: 600,
-      transformOrigin: "50% 100%",
-    };
-    const to = { opacity: 1, yPercent: 0, rotateX: 0, ease: "none" as const };
-    // Scroll drives the reveal, but it finishes well before the text exits.
-    tweens.push(
-      gsap.fromTo(chars, from, {
-        ...to,
-        stagger: presets.stagger / 1000,
-        scrollTrigger: {
-          trigger: element,
-          start: "top 88%",
-          end: "top 50%",
-          scrub: 1.1,
-        },
-      }),
-    );
-    edgeBlur(chars, element, presets.blurText, presets.stagger / 2000);
-  });
-
+  // Blocks arrive the way headings do: a short fade and rise that plays
+  // once as they come into view, then stays put.
   queryAll(".reveal").forEach((element) => {
     tweens.push(
       gsap.fromTo(
         element,
-        { opacity: 0, y: 48 },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: element,
-            start: "top 92%",
-            end: "top 62%",
-            scrub: 1.1,
-          },
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: element, start: "top 90%", once: true },
         },
       ),
     );
-    edgeBlur([element], element, presets.blurReveal, 0);
   });
 
   ScrollTrigger.refresh();
@@ -131,11 +42,7 @@ export function initReveals({ reducedMotion }: BehaviorContext): Cleanup {
       tween.scrollTrigger?.kill();
       tween.kill();
     });
-    originals.forEach((markup, element) => {
-      gsap.set(element, { clearProps: "all" });
-      element.innerHTML = markup;
-      element.removeAttribute("aria-label");
-    });
+    cascades.forEach((revert) => revert());
     queryAll(".reveal").forEach((element) =>
       gsap.set(element, { clearProps: "all" }),
     );

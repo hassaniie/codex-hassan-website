@@ -1,6 +1,6 @@
 .project {
   border-top: 1px solid var(--line);
-  padding: 32px 0;
+  padding: 23px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-6);
@@ -25,16 +25,12 @@
   overflow: hidden;
   isolation: isolate;
 }
+/* Covers stay still on hover; the cursor circle says where they lead. */
 .project-media img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: scale 0.9s var(--ease-out);
-}
-/* Only a cover that opens a case study zooms on hover. */
-a.project-media:hover img {
-  scale: 1.04;
 }
 .project-info {
   display: flex;
@@ -134,7 +130,7 @@ a.project-media:hover img {
   .project {
     grid-template-columns: 1fr;
     gap: var(--space-5);
-    padding: 22px 0 35px;
+    padding: 20px 0 28px;
   }
   .project-media {
     border-radius: var(--radius-control);

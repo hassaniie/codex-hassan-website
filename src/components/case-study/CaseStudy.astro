@@ -1,0 +1,129 @@
+---
+import "./case-study.css";
+import type { CaseStudy } from "../../content/case-studies";
+import { projects } from "../../content/projects";
+import Action from "../ui/Action.astro";
+import Figure from "./CaseFigure.astro";
+
+interface Props {
+  study: CaseStudy;
+}
+const { study } = Astro.props;
+const project = projects.find(({ id }) => id === study.projectId)!;
+let figures = 1;
+---
+
+<article class="case section-pad" id="case">
+  {/* The first view: who, what and why beside the work, filling the screen,
+      with the way into the story along its bottom edge. */}
+  <header class="case-hero" id="case-top">
+    <div class="case-eyebrow mono">
+      <Action
+        href="/works/"
+        label="← All works"
+        size="small"
+        data-case-return
+        data-case-back
+      />
+      <span>
+        {project.title[0]} / {project.year}
+      </span>
+    </div>
+    <div class="case-hero-layout">
+      <div class="case-hero-brief">
+        <h1 class="text-cascade">
+          {study.headline.map((line) => (
+            <span>{line}</span>
+          ))}
+        </h1>
+        <p class="case-intro">{study.intro}</p>
+        <dl class="case-brief">
+          {study.brief.map((item) => (
+            <div>
+              <dt class="mono">{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <Figure
+        image={project.image}
+        view="landscape"
+        caption={study.heroCaption}
+        number="01"
+        fullSrc={study.fullArtwork}
+        eager
+      />
+    </div>
+    <nav class="case-guide" aria-label="Case study chapters">
+      <span class="mono case-guide-label">Explore the story</span>
+      <ol>
+        {study.chapters.map((chapter) => (
+          <li>
+            <Action
+              href={`#${chapter.id}`}
+              label={chapter.label}
+              size="small"
+              data-chapter-link
+            />
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </header>
+
+  <div class="case-story">
+    {study.chapters.map((chapter) => (
+      <section
+        class="case-chapter"
+        id={chapter.id}
+        aria-labelledby={`${chapter.id}-title`}
+        data-case-chapter
+      >
+        <span class="mono case-kicker reveal">
+          ({chapter.number}) / {chapter.label}
+        </span>
+        <h2 id={`${chapter.id}-title`} class="text-cascade">
+          {chapter.title}
+        </h2>
+        <div class="case-copy reveal">
+          {chapter.paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+        {chapter.decisions && (
+          <ol class="case-decisions">
+            {chapter.decisions.map((decision) => (
+              <li class="case-decision reveal">
+                <h3>{decision.question}</h3>
+                <p>{decision.description}</p>
+              </li>
+            ))}
+          </ol>
+        )}
+        {chapter.figure && (
+          <div class="reveal">
+            <Figure
+              image={project.image}
+              view={chapter.figure.view}
+              caption={chapter.figure.caption}
+              number={String(++figures).padStart(2, "0")}
+              fullSrc={study.fullArtwork}
+            />
+          </div>
+        )}
+        {chapter.note && <p class="mono case-note">{chapter.note}</p>}
+      </section>
+    ))}
+  </div>
+
+  <nav class="case-end" aria-label="Continue exploring">
+    <Action
+      href="/works/"
+      label="← Back to all works"
+      weight="light"
+      data-case-back
+    />
+    <Action href="#case-top" label="Back to top ↑" weight="light" />
+  </nav>
+</article>

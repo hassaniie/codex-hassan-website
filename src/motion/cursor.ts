@@ -3,8 +3,8 @@ import { gsap, setupEngine } from "./engine";
 import { motionPresets } from "./presets";
 
 const INTERACTIVE = "a[href], button:not([disabled])";
-/** Covers whose case study is still to come. */
-const SOON = '[data-cursor="soon"]';
+/** Covers that open the dot into a labelled circle. */
+const LABELLED = "[data-cursor-label]";
 /** Probe count per ring; more points detect controls sooner. */
 const PROBES = 8;
 /**
@@ -29,6 +29,18 @@ export function initCursor({
   const maxPull = presets.cursorMagnetPull;
 
   gsap.set(dot, { xPercent: -50, yPercent: -50 });
+  // The label is "first line|second line"; the ring repeats it in one line.
+  const label = query(".cursor-label", dot);
+  const ringText = query("textPath", dot);
+  let shown = "";
+  const setLabel = (text: string) => {
+    if (text === shown) return;
+    shown = text;
+    const [first, second = ""] = text.split("|");
+    label?.replaceChildren(first, document.createElement("br"), second);
+    const line = `${first} ${second}`.trim().toUpperCase();
+    if (ringText) ringText.textContent = `${line} • ${line} •\u00a0`;
+  };
   const setX = gsap.quickSetter(dot, "x", "px");
   const setY = gsap.quickSetter(dot, "y", "px");
 
@@ -57,11 +69,12 @@ export function initCursor({
 
   const magnet = () => {
     const under = document.elementFromPoint(pointerX, pointerY);
-    // Over a cover whose case study is still to come, the dot opens into a
-    // "Coming soon" circle and settles under the pointer without any pull.
-    const soon = Boolean(under?.closest(SOON));
-    dot.classList.toggle("is-soon", soon);
-    if (soon) {
+    // Over a project cover, the dot opens into a circle that says where the
+    // cover leads, and settles under the pointer without any pull.
+    const cover = under?.closest<HTMLElement>(LABELLED);
+    if (cover) setLabel(cover.dataset.cursorLabel ?? "");
+    dot.classList.toggle("is-soon", Boolean(cover));
+    if (cover) {
       pullX = 0;
       pullY = 0;
       return;

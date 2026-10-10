@@ -126,10 +126,10 @@
   bottom: 0;
 }
 .menu-toggle[aria-expanded="true"] .menu-icon i:first-child {
-  transform: translateY(3px) rotate(45deg);
+  transform: translateY(3px) rotate(30deg);
 }
 .menu-toggle[aria-expanded="true"] .menu-icon i:last-child {
-  transform: translateY(-3px) rotate(-45deg);
+  transform: translateY(-3px) rotate(-30deg);
 }
 
 /*
@@ -298,6 +298,23 @@
 }
 .location .timezone {
   opacity: 1;
+}
+/* A step smaller than the Figma frame. The label and the time row are
+   centred on each other, and the whole block on the page. */
+.location {
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: -0.22px;
+}
+.location .clock-unit {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+}
+.location .clock-unit,
+.location .timezone {
+  font-size: 12px;
+  letter-spacing: -0.24px;
 }
 .site-header[data-theme="light"] .clock-unit {
   background: rgb(23 24 25 / 8%);

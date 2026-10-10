@@ -1,6 +1,17 @@
 import { query, type BehaviorContext, type Cleanup } from "../utilities/dom";
 import { lockScroll } from "./smooth-scroll";
 
+let leave: ((navigate: () => void) => void) | undefined;
+
+/**
+ * Leaves the page under the same cut a link gets, for a way out that is not
+ * a plain link, such as a step back through history.
+ */
+export function leavePage(navigate: () => void) {
+  if (leave) leave(navigate);
+  else navigate();
+}
+
 /**
  * Leaving a route puts the curtain up in one frame, with no wipe, because
  * that is what the source does and because there is nothing here to wipe
@@ -20,7 +31,7 @@ export function initPageTransition({
   let leaving = false;
   let fallback: ReturnType<typeof setTimeout> | undefined;
 
-  const go = (href: string) => {
+  const go = (to: () => void) => {
     if (leaving) return;
     leaving = true;
     lockScroll(true);
@@ -30,9 +41,12 @@ export function initPageTransition({
     intro.classList.add("covering");
     // Navigate once the cover has actually been painted, so the page is never
     // still visible at the moment it is replaced.
+    let sent = false;
     const navigate = () => {
       clearTimeout(fallback);
-      location.href = href;
+      if (sent) return;
+      sent = true;
+      to();
     };
     requestAnimationFrame(() => requestAnimationFrame(navigate));
     fallback = setTimeout(navigate, 160);
@@ -52,10 +66,13 @@ export function initPageTransition({
       // Same-document hashes belong to the damped scroller, not to a curtain.
       if (url.pathname === location.pathname) return;
       event.preventDefault();
-      go(url.href);
+      go(() => {
+        location.href = url.href;
+      });
     },
     { signal },
   );
+  leave = go;
 
   // Returning through history must never land on a page still under a curtain.
   const reset = (event: PageTransitionEvent) => {
@@ -69,6 +86,7 @@ export function initPageTransition({
   window.addEventListener("pageshow", reset, { signal });
 
   return () => {
+    if (leave === go) leave = undefined;
     clearTimeout(fallback);
     intro.classList.remove("covering");
     leaving = false;

@@ -25,8 +25,9 @@
     background-color 0.25s;
   will-change: transform;
 }
-/* Over a cover whose case study is still to come, the dot opens into an ink
-   circle. Blending is switched off so it stays ink and the label reads. */
+/* Over a project cover, the dot opens into an ink circle that says where
+   the cover leads, or that it is coming soon. Blending is switched off so it
+   stays ink and the label reads. */
 .cursor-dot.is-soon {
   width: 96px;
   height: 96px;
@@ -81,7 +82,7 @@
 }
 /* The circle stands in for the system arrow there, wherever the dot runs. */
 @media (min-width: 901px) {
-  .cursor-live [data-cursor="soon"] {
+  .cursor-live [data-cursor-label] {
     cursor: none;
   }
 }
@@ -114,28 +115,57 @@
   width: 138px;
   height: 64px;
   display: flex;
-  align-items: stretch;
-  gap: 2px;
   position: relative;
   color: var(--ink);
+  /* The name's line at the foot of the bars, and how much of its cut-out is
+     open (the loading screen opens it as the name wipes in). */
+  --label-band: 12px;
+  --label-cut: 1;
+  /* Geist Mono's advance (0.6em) at the label's 9px. In px because the
+     browser resolves em inside a mask gradient against the root size. */
+  --label-char: 5.4px;
+}
+.barcode-bars {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
 }
 .barcode i {
   display: block;
   flex: var(--bar) 1 0;
   background: currentColor;
   border-radius: 1px;
-  transform-origin: center;
-  animation: barcode-breathe 5s ease-in-out infinite alternate;
-  animation-delay: calc(var(--i) * -180ms);
+}
+.barcode small,
+.barcode.labelled .barcode-bars {
+  font: 9px var(--mono);
 }
 .barcode small {
   position: absolute;
-  bottom: -13px;
+  bottom: 0;
   left: 15%;
-  background: white;
-  font: 9px var(--mono);
+  line-height: var(--label-band);
   white-space: nowrap;
-  padding: 0 3px;
+}
+/* The bars stop around the name rather than a box covering them: full
+   height everywhere except a notch, one character per letter plus 3px either
+   side, in the band the name sits on. */
+.barcode.labelled .barcode-bars {
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--label-band))
+      no-repeat,
+    linear-gradient(
+        90deg,
+        #000 calc(15% - 3px),
+        transparent 0
+          calc(
+            15% - 3px + (var(--label-length) * var(--label-char) + 6px) *
+              var(--label-cut)
+          ),
+        #000 0
+      )
+      bottom / 100% var(--label-band) no-repeat;
 }
 .barcode.accent {
   color: var(--accent);

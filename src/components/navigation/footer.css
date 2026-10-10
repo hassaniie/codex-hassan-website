@@ -19,9 +19,6 @@ footer {
   color: #e0e1ff;
 }
 
-.footer-barcode .barcode small {
-  background: transparent;
-}
 .footer-barcode {
   padding-bottom: 20px;
 }

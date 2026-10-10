@@ -11,8 +11,7 @@ const stamp = `${first[0]}. ${rest.join(" ")}`.toUpperCase();
 <div class="intro" aria-hidden="true">
   <div class="intro-inner">
     <div class="intro-loader">
-      <Barcode />
-      <small class="intro-name">{stamp}</small>
+      <Barcode label={stamp} />
       <span class="intro-count">(0)</span>
     </div>
   </div>
