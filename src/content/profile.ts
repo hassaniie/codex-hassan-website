@@ -11,7 +11,7 @@ export const profile = {
   availability: "Open to opportunities",
   title: "Hassan Mushtaq — Product Designer & Engineer",
   description:
-    "Hassan Mushtaq is a product designer and engineer in Lahore, creating thoughtful digital products, complex interfaces, and scalable design systems.",
+    "Senior product designer and engineer in Lahore, building complex digital interfaces for companies and brands that move forward.",
   socialLinks: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/uxhassan/" },
     { label: "Behance", href: "https://www.behance.net/uxhassan" },
